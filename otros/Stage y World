@@ -1,0 +1,12 @@
+En LibGDX, las coordenadas de los sistemas `world` y `stage` tienen diferentes orígenes:
+
+1. **World (Box2D)**:
+   - El origen de coordenadas está en la esquina inferior izquierda.
+   - Las coordenadas en `world` son típicamente medidas en metros, ya que Box2D utiliza un sistema métrico para la simulación física.
+
+2. **Stage (Scene2D)**:
+   - El origen de coordenadas está en la esquina inferior izquierda por defecto.
+   - Las coordenadas en `stage` están generalmente medidas en píxeles y se utilizan para la representación gráfica de actores y sprites en la pantalla.
+
+Así que, en resumen, ambos sistemas utilizan la esquina inferior izquierda como el origen de sus coordenadas, pero se aplican en diferentes contextos: `world` maneja la simulación física en metros, mientras que `stage` gestiona la representación gráfica en píxeles.
+

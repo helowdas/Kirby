@@ -1,0 +1,31 @@
+        //PARA CARGAR LOS BLOQUES COLISIONABLES EN EL MAPA
+        /* SI SE DESEA HACER MAS BLOQUES QUE CUENTEN CON COLISION DESDE TILED, SUSTITUIR "N" POR EL NUMERO DE LAYER EN EL EDITOR TILED
+        for (MapObject object : map.getLayers().get(----->    N    <-------).getObjects().getByType(RectangleMapObject.class) ) {
+
+                Rectangle rect = ((RectangleMapObject) object).getRectangle();
+                System.out.println("Rectangle (pixels): x = " + rect.getX() + ", y = " + rect.getY() + ", width = " + rect.getWidth() + ", height = " + rect.getHeight());
+
+                bdef.type = BodyDef.BodyType.StaticBody;
+
+                // Ajuste de la posición considerando la conversión correcta
+                float posX = (rect.getX() + rect.getWidth() / 2) / PPM;
+                float posY = (rect.getY() + rect.getHeight() / 2) / PPM;
+                System.out.println("Position (meters): x = " + posX + ", y = " + posY);
+
+                bdef.position.set(posX, posY);
+
+                body = world.createBody(bdef);
+
+                shape = new PolygonShape();
+
+                float width = rect.getWidth() / PPM;
+                float height = rect.getHeight() / PPM;
+                System.out.println("Dimensions (meters): width = " + width + ", height = " + height);
+
+                shape.setAsBox(width / 2, height / 2); // Asegúrate de usar width / 2 y height / 2 para crear el rectángulo
+
+                fdef.shape = shape;
+
+                body.createFixture(fdef);
+                shape.dispose(); // Asegúrate de liberar los recursos
+        }*/
