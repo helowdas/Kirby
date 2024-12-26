@@ -1,0 +1,1 @@
+rd /s /q "C:\Users\leyni\OneDrive\Escritorio\Mario Bro\core\build\classes\java\main"

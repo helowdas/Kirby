@@ -1,0 +1,9 @@
+// Supongamos que tienes un cuerpo Box2D asignado a tu actor.
+Body body = actor.getBody();  // Obtén el cuerpo del actor en Box2D
+Vec2 velocity = body.getLinearVelocity();  // Obtén la velocidad lineal del cuerpo
+
+if (velocity.y < 0) {
+    System.out.println("El actor está cayendo");
+} else {
+    System.out.println("El actor no está cayendo");
+}
