@@ -202,7 +202,6 @@ public class Kirby extends Actor{
     }
 
 
-    // Método para actualizar el estado del jugador
     public void updatePlayerState(float delta) {
         Vector2 vel = body.getLinearVelocity();
 

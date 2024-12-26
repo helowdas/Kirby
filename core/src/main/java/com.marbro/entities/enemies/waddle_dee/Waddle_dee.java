@@ -142,7 +142,6 @@ public class Waddle_dee extends Actor implements Enemy {
     }
 
     public void detach() {
-        // Asegúrate de que todo esté destruido y con referencias nulas
         if (fixture != null) {
             body.destroyFixture(fixture);
             fixture = null;
@@ -182,8 +181,6 @@ public class Waddle_dee extends Actor implements Enemy {
         return frame;
     }
 
-
-    // Método para actualizar el estado del jugador
     @Override
     public void updateEnemyState() {
         if (onGround || onSpike) {

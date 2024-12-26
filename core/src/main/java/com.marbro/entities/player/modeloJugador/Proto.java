@@ -139,8 +139,6 @@ public class Proto extends Actor {
         return frame;
     }
 
-
-    // Método para actualizar el estado del jugador
     public void updatePlayerState() {
         Vector2 vel = body.getLinearVelocity();
 
