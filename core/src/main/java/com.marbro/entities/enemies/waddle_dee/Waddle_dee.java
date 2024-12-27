@@ -210,7 +210,7 @@ public class Waddle_dee extends Actor implements Enemy {
             body.applyLinearImpulse(new Vector2(forceX, forceY), body.getWorldCenter(), true);
 
             // Deshabilitar la colisión entre el enemigo y el jugador por 3 segundos
-            disableCollisionForSeconds(body, 0.5f);
+            disableCollisionForSeconds(body, 1.5f);
 
             pain.start();
         }
@@ -225,7 +225,6 @@ public class Waddle_dee extends Actor implements Enemy {
     public void resetTimer(ActionTimer timer){
         timer.reset();
     }
-
 
     public boolean isAlive(){
         return life;

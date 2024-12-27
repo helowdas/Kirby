@@ -26,6 +26,7 @@ public class Kirby extends Actor{
     private Animation_Base_Loop fall2;
     private Animation_Base_Loop jumping;
     private Animation_Base_Normal abs;
+    private AnimationHelperKirby animations;
 
     //Atributos de box2d
     private World world;
@@ -90,6 +91,8 @@ public class Kirby extends Actor{
         cal = new CalculadoraDistancia();
 
         contador = new ActionTimer();
+
+        animations = new AnimationHelperKirby();
     }
 
     public void defBody(float x, float y) {
@@ -136,13 +139,7 @@ public class Kirby extends Actor{
             contador.start();
         }
 
-        //Actualizar las animaciones
-        stand.update(delta);
-        walk.update(delta);
-        fall1.update(delta);
-        fall2.update(delta);
-        jumping.update(delta);
-        abs.update(delta);
+        animations.update(delta);
         updatePlayerState(delta);
     }
 
@@ -170,26 +167,7 @@ public class Kirby extends Actor{
 
     public TextureRegion drawKirby() {
         TextureRegion frame;
-        switch (estado) {
-            case CAMINANDO:
-                frame = walk.getFrame();
-                break;
-            case SALTANDO:
-                frame = jumping.getFrame();
-                break;
-            case CAYENDO1:
-                frame = fall1.getFrame();
-                break;
-            case CAYENDO2:
-                frame = fall2.getFrame();
-                break;
-            case ASPIRANDO:
-                frame = abs.getFrame();
-                break;
-            default:
-                frame = stand.getFrame();
-                break;
-        }
+        frame = animations.getFrame(estado);
 
         // Reflejar la imagen de Kirby si está moviéndose a la izquierda
         if (lastmove == -1 && !frame.isFlipX()) {

@@ -203,7 +203,7 @@ public class Level1 implements Screen {
 
         //Para reproducir la música
         playMusic();
-        music.setVolume(0.0625f);
+        music.setVolume(0);
 
     }
 
@@ -261,7 +261,7 @@ public class Level1 implements Screen {
             //Dibuja el HUD
             hud.stage.draw();
         } else {
-            ((MainGame) Gdx.app.getApplicationListener()).setScreen(new GameOverScreen());
+            ((MainGame) Gdx.app.getApplicationListener()).setScreen(new GameOverScreen(game));
         }
     }
 
