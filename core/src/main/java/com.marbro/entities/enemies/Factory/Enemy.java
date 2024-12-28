@@ -1,4 +1,4 @@
-package com.marbro.entities.enemies;
+package com.marbro.entities.enemies.Factory;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;

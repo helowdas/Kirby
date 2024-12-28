@@ -14,7 +14,7 @@ import com.marbro.animation.Animation_Base_Normal;
 import com.marbro.colisions.Controlador_Colisiones;
 import com.marbro.contador.ActionTimer;
 import com.marbro.distance.CalculadoraDistancia;
-import com.marbro.entities.enemies.Enemy;
+import com.marbro.entities.enemies.Factory.Enemy;
 
 import static com.marbro.constants.Constantes.*;
 

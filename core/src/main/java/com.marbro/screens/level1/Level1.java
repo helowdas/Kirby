@@ -23,7 +23,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.marbro.MainGame;
 import com.marbro.colisions.Controlador_Colisiones;
-import com.marbro.entities.enemies.EnemyFactory;
+import com.marbro.entities.enemies.Factory.EnemyFactory;
 import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
 import com.marbro.entities.player.Kirby;
 import com.marbro.scenes.Hud;
@@ -198,8 +198,13 @@ public class Level1 implements Screen {
         kirby = new Kirby(world, stage,5, 7, stand, walk, fall1, fall2, jump, abs, controlador);
         stage.addActor(kirby);
 
-        waddle = (Waddle_dee) EnemyFactory.createEnemy("Waddle_dee", world, stage, 10, 8, controlador);
+        //waddle = (Waddle_dee) EnemyFactory.createEnemy("Waddle_dee", world, stage, 10, 8, controlador);
+        //stage.addActor(waddle);
+
+        waddle = new Waddle_dee(world, stage, 10, 8, controlador);
         stage.addActor(waddle);
+
+
 
         //Para reproducir la música
         playMusic();

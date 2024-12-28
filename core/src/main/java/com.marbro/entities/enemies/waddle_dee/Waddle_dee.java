@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.marbro.animation.Animation_Base_Loop;
 import com.marbro.colisions.Controlador_Colisiones;
 import com.marbro.contador.ActionTimer;
-import com.marbro.entities.enemies.Enemy;
+import com.marbro.entities.enemies.Factory.Enemy;
 
 import static com.marbro.constants.Constantes.*;
 
