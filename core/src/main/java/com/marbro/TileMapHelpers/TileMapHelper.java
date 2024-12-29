@@ -10,13 +10,22 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.marbro.entities.player.Kirby;
 import com.marbro.screens.level1.Level1;
 import static com.marbro.constants.Constantes.*;
 
 public class TileMapHelper
 {
+        //atributos
         private TiledMap tiledMap;
         private Level1 gameScreen;
+        private BodyHelperService bodyHelperService;
+
+        //player
+        private Kirby kirby;
+
+        //fixture
+        private Fixture fixture;
 
         //Tamaño mapa tiled
         private float mapWidth;
@@ -25,6 +34,7 @@ public class TileMapHelper
         public TileMapHelper(Level1 gameScreen)
         {
             this.gameScreen = gameScreen;
+            this.bodyHelperService = new BodyHelperService();
         }
 
         public OrthogonalTiledMapRenderer setupMap()
@@ -37,6 +47,7 @@ public class TileMapHelper
             parseMapObjects(tiledMap.getLayers().get("pincho").getObjects(), "spike");
             parseMapObjects(tiledMap.getLayers().get("pared").getObjects(), "wall");
             parseMapObjects(tiledMap.getLayers().get("suelo").getObjects(), "block");
+            parseMapObjects(tiledMap.getLayers().get("player").getObjects(), "player");
             return new OrthogonalTiledMapRenderer(tiledMap, 1/PPM);
         }
 
@@ -55,16 +66,42 @@ public class TileMapHelper
                     Rectangle rectangle = ((RectangleMapObject)mapObject).getRectangle();
                     String rectangleName = mapObject.getName();
 
-                    Body body = BodyHelperService.createBody(
-                            rectangle.getX() + rectangle.getWidth()/2,
-                            rectangle.getY() + rectangle.getHeight()/2,
-                            rectangle.getWidth(),
-                            rectangle.getHeight(),
-                            true,
-                            gameScreen.getWorld()
-                    );
+                    if(rectangleName != null)
+                    {
+                        if(rectangleName.equals("player"))
+                        {
+                            Body body = bodyHelperService.createBody(
+                                rectangle.getX() + rectangle.getWidth() / 2,
+                                rectangle.getY() + rectangle.getHeight() / 2,
+                                rectangle.getWidth(),
+                                rectangle.getHeight(),
+                                false,
+                                gameScreen.getWorld()
+                            );
 
-                    body.getFixtureList().get(0).setUserData(UserData);
+                            kirby = new Kirby(gameScreen.getWorld(),
+                                gameScreen.getStage(), body, gameScreen.getStand(), gameScreen.getWalk(),
+                                gameScreen.getFall1(), gameScreen.getFall2(), gameScreen.getJump(),
+                                gameScreen.getAbs(), gameScreen.getControlador(), rectangle.width, rectangle.height);
+
+                            gameScreen.setKirby(kirby);
+                        }
+
+                    }
+                    else
+                    {
+                        Body body = bodyHelperService.createBody(
+                                rectangle.getX() + rectangle.getWidth()/2,
+                                rectangle.getY() + rectangle.getHeight()/2,
+                                rectangle.getWidth(),
+                                rectangle.getHeight(),
+                                true,
+                                gameScreen.getWorld()
+                        );
+
+                        body.getFixtureList().get(0).setUserData(UserData);
+                    }
+
                 }
             }
         }

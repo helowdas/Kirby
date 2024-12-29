@@ -79,6 +79,13 @@ public class Level1 implements Screen {
     private float camX;
     private float camY;
 
+    //atributos de animacion
+    private Array<TextureRegion> walk;
+    private Array<TextureRegion> stand;
+    private Array<TextureRegion> fall1;
+    private Array<TextureRegion> fall2;
+    private Array<TextureRegion> jump;
+    private Array<TextureRegion> abs;
 
 
     public Level1(MainGame game) {
@@ -97,6 +104,26 @@ public class Level1 implements Screen {
         //Esto es para manejar las colisiones a través de un contact listener
         controlador = new Controlador_Colisiones();
         world.setContactListener(controlador);
+
+
+        //Ejemplo de como se carga una animacion
+        walk = new Array<>();
+        loadTexture(walk, "entities/player/kirby_walk/kirby_walk_", 1, 10);
+
+        stand = new Array<>();
+        loadTexture(stand, "entities/player/kirby_stand/kirby_stand_", 1, 1);
+
+        fall1 = new Array<>();
+        loadTexture(fall1, "entities/player/kirby_fall/kirby_fall_", 1, 7);
+
+        fall2 = new Array<>();
+        loadTexture(fall2,"entities/player/kirby_fall/kirby_fall_" , 8, 9);
+
+        jump = new Array<>();
+        loadTexture(jump, "entities/player/kirby_jump/kirby_jump_", 1, 1);
+
+        abs = new Array<>();
+        loadTexture(abs, "entities/player/kirby_abs/kirby_abs_", 1, 7);
 
         //cargar tilemap
         this.tileMapHelper = new TileMapHelper(this);
@@ -120,7 +147,10 @@ public class Level1 implements Screen {
         world.setContactListener(controlador);
 
         //Cargar la musica
-        music = Gdx.audio.newMusic(Gdx.files.internal("music/RandomLevel.ogg"));
+        music = game.getAssetManager().get("music/RandomLevel.ogg");
+
+        //cargar animaciones
+
     }
 
     /*
@@ -186,28 +216,31 @@ public class Level1 implements Screen {
     }*/
 
     @Override
-    public void show() {
+    public void show()
+    {
         //Ejemplo de como se carga una animacion
-        Array<TextureRegion> walk = new Array<>();
+        /*walk = new Array<>();
         loadTexture(walk, "entities/player/kirby_walk/kirby_walk_", 1, 10);
 
-        Array<TextureRegion> stand = new Array<>();
+        stand = new Array<>();
         loadTexture(stand, "entities/player/kirby_stand/kirby_stand_", 1, 1);
 
-        Array<TextureRegion> fall1 = new Array<>();
+        fall1 = new Array<>();
         loadTexture(fall1, "entities/player/kirby_fall/kirby_fall_", 1, 7);
 
-        Array<TextureRegion> fall2 = new Array<>();
+        fall2 = new Array<>();
         loadTexture(fall2,"entities/player/kirby_fall/kirby_fall_" , 8, 9);
 
-        Array<TextureRegion> jump = new Array<>();
+        jump = new Array<>();
         loadTexture(jump, "entities/player/kirby_jump/kirby_jump_", 1, 1);
 
-        Array<TextureRegion> abs = new Array<>();
-        loadTexture(abs, "entities/player/kirby_abs/kirby_abs_", 1, 7);
+        abs = new Array<>();
+        loadTexture(abs, "entities/player/kirby_abs/kirby_abs_", 1, 7);*/
+
+        //cargar mapa
+        //this.renderer = tileMapHelper.setupMap();
 
         //Crear la entidad y añadirla al stage
-        kirby = new Kirby(world, stage,5, 7, stand, walk, fall1, fall2, jump, abs, controlador);
         stage.addActor(kirby);
 
         //tomar posicion Y de la camara
@@ -288,7 +321,8 @@ public class Level1 implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) {
+    public void resize(int width, int height)
+    {
         gameport.update(width, height);
     }
 
@@ -336,5 +370,44 @@ public class Level1 implements Screen {
 
     public World getWorld() {
         return world;
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public Controlador_Colisiones getControlador() {
+        return controlador;
+    }
+
+    //animaciones
+    public Array<TextureRegion> getWalk() {
+        return walk;
+    }
+
+    public Array<TextureRegion> getFall1() {
+        return fall1;
+    }
+
+    public Array<TextureRegion> getFall2() {
+        return fall2;
+    }
+
+    public Array<TextureRegion> getJump() {
+        return jump;
+    }
+
+    public Array<TextureRegion> getStand() {
+        return stand;
+    }
+
+    public Array<TextureRegion> getAbs() {
+        return abs;
+    }
+
+    //set kirby
+
+    public void setKirby(Kirby kirby) {
+        this.kirby = kirby;
     }
 }

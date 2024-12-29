@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.marbro.TileMapHelpers.BodyHelperService;
 import com.marbro.animation.Animation_Base_Loop;
 import com.marbro.animation.Animation_Base_Normal;
 import com.marbro.colisions.Controlador_Colisiones;
@@ -35,6 +36,8 @@ public class Kirby extends Actor{
     private Stage stage;
     private Fixture fixture;
     private Fixture fixture2;
+    private float width;
+    private float height;
 
     //Estado del jugador
     private EstadoKirby estado;
@@ -96,6 +99,47 @@ public class Kirby extends Actor{
 
         animations = new AnimationHelperKirby();
     }
+    //segundo constructor
+    public Kirby(World world, Stage stage, Body body,
+                 Array<TextureRegion> stand,
+                 Array<TextureRegion> walk,
+                 Array<TextureRegion> fall1,
+                 Array<TextureRegion> fall2,
+                 Array<TextureRegion> jumping,
+                 Array<TextureRegion> abs,
+                 Controlador_Colisiones controlador,
+                 float width, float height)
+    {
+        this.world = world;
+        this.stage = stage;
+        this.body = body;
+        body.getFixtureList().get(0).setUserData("player");
+        body.getFixtureList().get(1).setUserData(this);
+        this.width = width;
+        this.height = height;
+
+
+        //Cargar las animaciones
+        this.stand = new Animation_Base_Loop(stand, 0.06f);
+        this.walk = new Animation_Base_Loop(walk, 0.06f);
+        this.fall1 = new Animation_Base_Loop(fall1, 0.08f);
+        this.fall2 = new Animation_Base_Loop(fall2, 0.2f);
+        this.jumping = new Animation_Base_Loop(jumping, 0.5f);
+        this.abs = new Animation_Base_Normal(abs, 0.08f);
+
+        this.estado = EstadoKirby.QUIETO;
+        life = true;
+        this.controlador = controlador;
+
+        createContactListener();
+
+        cal = new CalculadoraDistancia();
+
+        contador = new ActionTimer();
+
+        animations = new AnimationHelperKirby();
+        System.out.println(body.getFixtureList().size);
+    }
 
     public void defBody(float x, float y) {
         // Define las propiedades del cuerpo
@@ -130,7 +174,7 @@ public class Kirby extends Actor{
 
         shape.dispose();
     }
-
+    //segunda funcion para cargar body
 
     private void createContactListener(){
         ColisionesHandlerKirby colisionesHandler = new ColisionesHandlerKirby(this);
@@ -153,21 +197,23 @@ public class Kirby extends Actor{
         super.draw(batch, parentAlpha);
 
         // Ajustar la posicion del sprite
-        float posX = (body.getPosition().x * 1) - (getWidth() / 2);
-        float posY = (body.getPosition().y * 1) - (getHeight() / 2) + 0.25f;
+        float posX = (body.getPosition().x ) - (getWidth() / 2);
+        float posY = (body.getPosition().y ) - (getHeight() / 2);
 
         setPosition(posX, posY);
 
         // Ajustar el tamaño del actor en píxeles, considerando PPM
-        setSize(1f, 1f); // Ajusta estos valores según el tamaño deseado de tu sprite en el mundo Box2D
+        setSize(width/PPM, height/PPM); // Ajusta estos valores según el tamaño deseado de tu sprite en el mundo Box2D
         TextureRegion frame = drawKirby();
         batch.draw(frame, getX(), getY(), getWidth(), getHeight());
     }
 
     public void detach()
     {
-        body.destroyFixture(fixture);
-        body.destroyFixture(fixture2);
+        for (Fixture aux:body.getFixtureList() )
+        {
+            body.destroyFixture(aux);
+        }
         world.destroyBody(body);
     }
 
@@ -198,9 +244,9 @@ public class Kirby extends Actor{
     }
 
     private void manejarMovimiento(Vector2 vel) {
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && !onWall) {
             moverDerecha(vel);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.A) && !onWall) {
             moverIzquierda(vel);
         } else {
             mantenerseQuieto(vel);

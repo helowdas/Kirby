@@ -4,9 +4,13 @@ import com.badlogic.gdx.physics.box2d.*;
 
 import static com.marbro.constants.Constantes.*;
 
+
 public class BodyHelperService
 {
-    public static Body createBody(float x, float y, float width, float height, boolean isStatic, World world)
+    //atributos
+    private FixtureDef fixtureDef;
+
+    public Body createBody(float x, float y, float width, float height, boolean isStatic, World world)
     {
         //bodydef
         BodyDef bodyDef = new BodyDef();
@@ -21,11 +25,21 @@ public class BodyHelperService
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
 
-        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
+
+        if(!isStatic)
+        {
+            body.createFixture(fixtureDef);
+        }
         shape.dispose();
 
         return body;
+    }
+
+    public FixtureDef getFixtureDef()
+    {
+        return fixtureDef;
     }
 }
