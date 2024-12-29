@@ -17,6 +17,7 @@ import com.marbro.distance.CalculadoraDistancia;
 import com.marbro.entities.enemies.Factory.Enemy;
 
 import static com.marbro.constants.Constantes.*;
+import static com.marbro.constants.ConstantesKirby.*;
 
 public class Kirby extends Actor{
     //Animaciones
@@ -206,7 +207,7 @@ public class Kirby extends Actor{
     }
 
     private void moverDerecha(Vector2 vel) {
-        body.setLinearVelocity(5f, vel.y);
+        body.setLinearVelocity(VELOCIDAD, vel.y);
         lastmove = 1;
         if (onGround && !jump && estado != EstadoKirby.ASPIRANDO) {
             estado = EstadoKirby.CAMINANDO;
@@ -214,7 +215,7 @@ public class Kirby extends Actor{
     }
 
     private void moverIzquierda(Vector2 vel) {
-        body.setLinearVelocity(-5f, vel.y);
+        body.setLinearVelocity(-VELOCIDAD, vel.y);
         lastmove = -1;
         if (onGround && !jump && estado != EstadoKirby.ASPIRANDO) {
             estado = EstadoKirby.CAMINANDO;
@@ -233,7 +234,7 @@ public class Kirby extends Actor{
             if (estado != EstadoKirby.ASPIRANDO){
                 estado = EstadoKirby.SALTANDO;
             }
-            body.setLinearVelocity(vel.x, 5f);
+            body.setLinearVelocity(vel.x, IMPULSE_SALTO);
             jump = true;
         }
     }
