@@ -224,7 +224,7 @@ public class Level1 implements Screen {
 
         //Para reproducir la música
         playMusic();
-        music.setVolume(0);
+        music.setVolume(VOLUMEN);
 
     }
 
