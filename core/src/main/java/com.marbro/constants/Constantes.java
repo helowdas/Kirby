@@ -10,4 +10,7 @@ public class Constantes {
 
     //constantes de ZOOM
     public static  final float ZOOM = 0.5f;
+
+    //constantes de Gravedad
+    public static  final float GRAVEDAD = -10f;
 }

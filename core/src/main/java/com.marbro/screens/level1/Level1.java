@@ -81,7 +81,7 @@ public class Level1 implements Screen {
         hud = new Hud(game.batch);
 
         //Creacion del world y el box2d
-        world = new World(new Vector2(0,-9.81f), true);
+        world = new World(new Vector2(0,GRAVEDAD), true);
         b2dr = new Box2DDebugRenderer();
         stage = new Stage(gameport);
         Gdx.input.setInputProcessor(stage);
