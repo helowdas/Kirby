@@ -223,19 +223,21 @@ public class Kirby extends Actor{
     }
 
     private void mantenerseQuieto(Vector2 vel) {
-        if (onGround && !jump && estado != EstadoKirby.ASPIRANDO) {
+        if (estado != EstadoKirby.ASPIRANDO) {
             body.setLinearVelocity(0f, vel.y);
-            estado = EstadoKirby.QUIETO;
+            if(body.getLinearVelocity().y == 0){
+                estado = EstadoKirby.QUIETO;
+            }
         }
     }
 
     private void manejarSalto(Vector2 vel) {
-        if (onGround && Gdx.input.isKeyPressed(Input.Keys.W)) {
-            if (estado != EstadoKirby.ASPIRANDO){
-                estado = EstadoKirby.SALTANDO;
-            }
-            body.setLinearVelocity(vel.x, IMPULSE_SALTO);
+        if (!jump && onGround && Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+            body.applyLinearImpulse(0, IMPULSE_SALTO, body.getPosition().x, body.getPosition().y, true);
             jump = true;
+        }
+        if (estado != EstadoKirby.ASPIRANDO && body.getLinearVelocity().y > 0) {
+            estado = EstadoKirby.SALTANDO;
         }
     }
 
