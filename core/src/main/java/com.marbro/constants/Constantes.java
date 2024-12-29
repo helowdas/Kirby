@@ -19,5 +19,8 @@ public class Constantes {
 
     //constantes movimiento kirby
     public static final float VELOCIDAD = 5f;
-    public static final float IMPULSE_SALTO = 5f;
+    public static final float IMPULSE_SALTO = 6.3f;
+
+    //constantes Volumen
+    public static final float VOLUMEN = 0.01f;
 }

@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.marbro.MainGame;
+import com.marbro.TileMapHelpers.TileMapHelper;
 import com.marbro.colisions.Controlador_Colisiones;
 import com.marbro.entities.enemies.Factory.EnemyFactory;
 import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
@@ -42,8 +43,9 @@ public class Level1 implements Screen {
     private Texture texture;
 
     //Atributos de tiled y tmx
-    private TmxMapLoader maploader;
-    private TiledMap map;
+    //private TmxMapLoader maploader;
+    //private TiledMap map;
+    private TileMapHelper tileMapHelper;
 
     //camara del tiled
     private OrthogonalTiledMapRenderer renderer;
@@ -77,6 +79,15 @@ public class Level1 implements Screen {
     private float camX;
     private float camY;
 
+    //atributos de animacion
+    private Array<TextureRegion> walk;
+    private Array<TextureRegion> stand;
+    private Array<TextureRegion> fall1;
+    private Array<TextureRegion> fall2;
+    private Array<TextureRegion> jump;
+    private Array<TextureRegion> abs;
+
+
     public Level1(MainGame game) {
         //Crear camara y hud
         this.game = game;
@@ -94,32 +105,59 @@ public class Level1 implements Screen {
         controlador = new Controlador_Colisiones();
         world.setContactListener(controlador);
 
+
+        //Ejemplo de como se carga una animacion
+        walk = new Array<>();
+        loadTexture(walk, "entities/player/kirby_walk/kirby_walk_", 1, 10);
+
+        stand = new Array<>();
+        loadTexture(stand, "entities/player/kirby_stand/kirby_stand_", 1, 1);
+
+        fall1 = new Array<>();
+        loadTexture(fall1, "entities/player/kirby_fall/kirby_fall_", 1, 7);
+
+        fall2 = new Array<>();
+        loadTexture(fall2,"entities/player/kirby_fall/kirby_fall_" , 8, 9);
+
+        jump = new Array<>();
+        loadTexture(jump, "entities/player/kirby_jump/kirby_jump_", 1, 1);
+
+        abs = new Array<>();
+        loadTexture(abs, "entities/player/kirby_abs/kirby_abs_", 1, 7);
+
+        //cargar tilemap
+        this.tileMapHelper = new TileMapHelper(this);
+        this.renderer = tileMapHelper.setupMap();
+
         //colisiones = new Colisiones();
         //world.setContactListener(colisiones);
 
         //Cargar el mapa creado en tiled
-        loadMap("map/level1/level1.tmx");
+        //loadMap("map/level1/level1.tmx");
 
         //Colocar y ajustar la cámara
         gamecame.zoom = ZOOM;
         gamecame.position.set(((Gdx.graphics.getWidth() * 0.64f) / (2f * PPM)),  (Gdx.graphics.getHeight() * 1f) / (2f * PPM), 0);
 
         //Cargar bloques creados en el tiled
-        loadBlocks(1, "block", CATEGORY_BLOCK, CATEGORY_PLAYER, CATEGORY_ENEMY);
+        /*loadBlocks(1, "block", CATEGORY_BLOCK, CATEGORY_PLAYER, CATEGORY_ENEMY);
         loadBlocks(2, "wall", CATEGORY_WALL, CATEGORY_PLAYER, CATEGORY_ENEMY);
-        loadBlocks(3, "spikes", CATEGORY_SPIKE, CATEGORY_PLAYER, CATEGORY_ENEMY);
+        loadBlocks(3, "spikes", CATEGORY_SPIKE, CATEGORY_PLAYER, CATEGORY_ENEMY);*/
 
         world.setContactListener(controlador);
 
         //Cargar la musica
-        music = Gdx.audio.newMusic(Gdx.files.internal("music/RandomLevel.ogg"));
+        music = game.getAssetManager().get("music/RandomLevel.ogg");
+
+        //cargar animaciones
+
     }
 
     /*
     loadMap: Sirve para cargar el mapa de tiled a libgdx
     @Param path: es la ruta y nombre del mapa a cargar
      */
-    public void loadMap(String path){
+    /*public void loadMap(String path){
         maploader = new TmxMapLoader();
         map = maploader.load(path);
         mapWidth = map.getProperties().get("width", Integer.class) * PPM / 1;
@@ -127,10 +165,10 @@ public class Level1 implements Screen {
         renderer = new OrthogonalTiledMapRenderer(map, 1 / PPM);
     }
 
-    /*
+
     loadBlocks: sirve para añadir a box2d los objetos creados en tiled
     @Param layer: es el id de capa que tienen los objetos dentro de tiled, empieza desde 0
-    */
+
     public void loadBlocks(int layer, String uData, short category, short coll1, short coll2){
         //Creacion del bodydef
         BodyDef bdef = new BodyDef(); //Se encarga de definir posición y tipo de body
@@ -175,31 +213,34 @@ public class Level1 implements Screen {
 
             shape.dispose(); // Asegúrate de liberar los recursos
         }
-    }
+    }*/
 
     @Override
-    public void show() {
+    public void show()
+    {
         //Ejemplo de como se carga una animacion
-        Array<TextureRegion> walk = new Array<>();
+        /*walk = new Array<>();
         loadTexture(walk, "entities/player/kirby_walk/kirby_walk_", 1, 10);
 
-        Array<TextureRegion> stand = new Array<>();
+        stand = new Array<>();
         loadTexture(stand, "entities/player/kirby_stand/kirby_stand_", 1, 1);
 
-        Array<TextureRegion> fall1 = new Array<>();
+        fall1 = new Array<>();
         loadTexture(fall1, "entities/player/kirby_fall/kirby_fall_", 1, 7);
 
-        Array<TextureRegion> fall2 = new Array<>();
+        fall2 = new Array<>();
         loadTexture(fall2,"entities/player/kirby_fall/kirby_fall_" , 8, 9);
 
-        Array<TextureRegion> jump = new Array<>();
+        jump = new Array<>();
         loadTexture(jump, "entities/player/kirby_jump/kirby_jump_", 1, 1);
 
-        Array<TextureRegion> abs = new Array<>();
-        loadTexture(abs, "entities/player/kirby_abs/kirby_abs_", 1, 7);
+        abs = new Array<>();
+        loadTexture(abs, "entities/player/kirby_abs/kirby_abs_", 1, 7);*/
+
+        //cargar mapa
+        //this.renderer = tileMapHelper.setupMap();
 
         //Crear la entidad y añadirla al stage
-        kirby = new Kirby(world, stage,5, 7, stand, walk, fall1, fall2, jump, abs, controlador);
         stage.addActor(kirby);
 
         //tomar posicion Y de la camara
@@ -216,7 +257,7 @@ public class Level1 implements Screen {
 
         //Para reproducir la música
         playMusic();
-        music.setVolume(0);
+        music.setVolume(VOLUMEN);
 
     }
 
@@ -238,7 +279,7 @@ public class Level1 implements Screen {
         //Calculos para fijar los límites de la cámara (mejorarlos)
         float x = kirby.getX() + kirby.getWidth() / 2 / PPM;
 
-        camX = MathUtils.clamp(x, gamecame.viewportWidth / PPM, (mapWidth - gamecame.viewportWidth)/ PPM);
+        camX = MathUtils.clamp(x, gamecame.viewportWidth / PPM, (tileMapHelper.getMapWidth() - gamecame.viewportWidth)/ PPM);
 
         gamecame.position.set(camX, camY, 0);
         gamecame.update();
@@ -280,7 +321,8 @@ public class Level1 implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) {
+    public void resize(int width, int height)
+    {
         gameport.update(width, height);
     }
 
@@ -322,5 +364,50 @@ public class Level1 implements Screen {
         if (music.isPlaying()) {
             music.stop();
         }
+    }
+
+    //metodos gets
+
+    public World getWorld() {
+        return world;
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public Controlador_Colisiones getControlador() {
+        return controlador;
+    }
+
+    //animaciones
+    public Array<TextureRegion> getWalk() {
+        return walk;
+    }
+
+    public Array<TextureRegion> getFall1() {
+        return fall1;
+    }
+
+    public Array<TextureRegion> getFall2() {
+        return fall2;
+    }
+
+    public Array<TextureRegion> getJump() {
+        return jump;
+    }
+
+    public Array<TextureRegion> getStand() {
+        return stand;
+    }
+
+    public Array<TextureRegion> getAbs() {
+        return abs;
+    }
+
+    //set kirby
+
+    public void setKirby(Kirby kirby) {
+        this.kirby = kirby;
     }
 }

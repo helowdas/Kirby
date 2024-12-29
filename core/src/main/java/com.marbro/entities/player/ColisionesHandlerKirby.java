@@ -4,81 +4,62 @@ import com.badlogic.gdx.physics.box2d.*;
 
 import static com.marbro.constants.Constantes.*;
 
-public class ColisionesHandlerKirby implements ContactListener {
+public class ColisionesHandlerKirby implements ContactListener
+{
+    //atributos
     private Kirby actor;
 
+    //constructor
     public ColisionesHandlerKirby(Kirby actor) {
         this.actor = actor;
     }
 
     @Override
-    public void beginContact(Contact contact) {
-        Fixture fixtureA = contact.getFixtureA();
-        Fixture fixtureB = contact.getFixtureB();
-
-        Object userDataA = fixtureA.getUserData();
-        Object userDataB = fixtureB.getUserData();
-
-        if (userDataA instanceof Kirby || userDataB instanceof Kirby) {
-            Kirby actor = userDataA instanceof Kirby ? (Kirby) userDataA : (Kirby) userDataB;
-
-            if (fixtureA.getFilterData().categoryBits == CATEGORY_BLOCK ||
-                fixtureB.getFilterData().categoryBits == CATEGORY_BLOCK) {
+    public void beginContact(Contact contact)
+    {
+            if (hanColisionado(contact, actor, "block"))
+            {
                 actor.setOnGround(true);
             }
 
-            if (fixtureA.getFilterData().categoryBits == CATEGORY_SPIKE||
-                fixtureB.getFilterData().categoryBits == CATEGORY_SPIKE) {
+            if (hanColisionado(contact, actor, "spike"))
+            {
                 actor.setOnSpike(true);
             }
 
-            if (fixtureA.getFilterData().categoryBits == CATEGORY_WALL||
-                fixtureB.getFilterData().categoryBits == CATEGORY_WALL) {
+            if (hanColisionado(contact, actor, "wall"))
+            {
                 actor.setOnWall(true);
             }
 
-            if (fixtureA.getFilterData().categoryBits == CATEGORY_ENEMY||
-                fixtureB.getFilterData().categoryBits == CATEGORY_ENEMY) {
+            if (hanColisionado(contact, actor, "waddle_dee")) {
                 actor.setCol(true);
             }
             //Aqui se pueden agregar más CATEGORY_TIPOCOLISION HACERLO EN EL END CONTACT TAMBIEN
-        }
     }
 
 
     @Override
-    public void endContact(Contact contact) {
-        Fixture fixtureA = contact.getFixtureA();
-        Fixture fixtureB = contact.getFixtureB();
-
-        Object userDataA = fixtureA.getUserData();
-        Object userDataB = fixtureB.getUserData();
-
-        if (userDataA instanceof Kirby || userDataB instanceof Kirby) {
-            Kirby actor = userDataA instanceof Kirby ? (Kirby) userDataA : (Kirby) userDataB;
-
-            if (fixtureA.getFilterData().categoryBits == CATEGORY_BLOCK ||
-                fixtureB.getFilterData().categoryBits == CATEGORY_BLOCK) {
+    public void endContact(Contact contact)
+    {
+            if (hanColisionado(contact, actor, "block"))
+            {
                 actor.setOnGround(false);
             }
 
-            if (fixtureA.getFilterData().categoryBits == CATEGORY_SPIKE||
-                fixtureB.getFilterData().categoryBits == CATEGORY_SPIKE) {
+            if (hanColisionado(contact, actor, "spike")) {
                 actor.setOnSpike(false);
             }
 
-            if (fixtureA.getFilterData().categoryBits == CATEGORY_WALL||
-                fixtureB.getFilterData().categoryBits == CATEGORY_WALL) {
+            if (hanColisionado(contact, actor, "wall")) {
                 actor.setOnWall(false);
             }
 
-            if (fixtureA.getFilterData().categoryBits == CATEGORY_ENEMY||
-                fixtureB.getFilterData().categoryBits == CATEGORY_ENEMY) {
+            if (hanColisionado(contact, actor, "waddle_dee")) {
                 actor.setCol(false);
             }
 
             //Agregar aquí
-        }
     }
 
 
@@ -88,7 +69,13 @@ public class ColisionesHandlerKirby implements ContactListener {
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {}
 
+    private boolean hanColisionado(Contact contact, Object userA, Object userB)
+    {
+        return (contact.getFixtureA().getUserData().equals(userA) && contact.getFixtureB().getUserData().equals(userB))
+            || (contact.getFixtureA().getUserData().equals(userB) && contact.getFixtureB().getUserData().equals(userA));
+    }
 }
+
 
 
 
