@@ -73,6 +73,10 @@ public class Level1 implements Screen {
     //Clase controladora de colisiones
     private Controlador_Colisiones controlador;
 
+    //atributos posicion Camara
+    private float camX;
+    private float camY;
+
     public Level1(MainGame game) {
         //Crear camara y hud
         this.game = game;
@@ -198,6 +202,10 @@ public class Level1 implements Screen {
         kirby = new Kirby(world, stage,5, 7, stand, walk, fall1, fall2, jump, abs, controlador);
         stage.addActor(kirby);
 
+        //tomar posicion Y de la camara
+        float y = kirby.getY() + kirby.getHeight() / 2 / PPM;
+        camY = MathUtils.clamp(y, 5.7f, Gdx.graphics.getHeight() / PPM - gamecame.viewportHeight / 2/ PPM);
+
         //waddle = (Waddle_dee) EnemyFactory.createEnemy("Waddle_dee", world, stage, 10, 8, controlador);
         //stage.addActor(waddle);
 
@@ -229,10 +237,8 @@ public class Level1 implements Screen {
     public void update(float delta) {
         //Calculos para fijar los límites de la cámara (mejorarlos)
         float x = kirby.getX() + kirby.getWidth() / 2 / PPM;
-        float y = kirby.getY() + kirby.getHeight() / 2 / PPM;
 
-        float camX = MathUtils.clamp(x, gamecame.viewportWidth / PPM, (mapWidth - gamecame.viewportWidth)/ PPM);
-        float camY = MathUtils.clamp(y, 5.7f, Gdx.graphics.getHeight() / PPM - gamecame.viewportHeight / 2/ PPM);
+        camX = MathUtils.clamp(x, gamecame.viewportWidth / PPM, (mapWidth - gamecame.viewportWidth)/ PPM);
 
         gamecame.position.set(camX, camY, 0);
         gamecame.update();
@@ -258,7 +264,10 @@ public class Level1 implements Screen {
             stage.draw();
 
             //Esta línea dibuja el body de box2d
-            //b2dr.render(world, gamecame.combined);
+            if (DEBUG)
+            {
+                b2dr.render(world, gamecame.combined);
+            }
 
             //Establece una matriz de proyeccion que encaja con el HUD
             game.batch.setProjectionMatrix(hud.stage.getCamera().combined);

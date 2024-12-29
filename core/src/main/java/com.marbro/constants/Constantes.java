@@ -13,4 +13,7 @@ public class Constantes {
 
     //constantes de Gravedad
     public static  final float GRAVEDAD = -10f;
+
+    //constante Debuguer
+    public static  final boolean DEBUG = true;
 }
