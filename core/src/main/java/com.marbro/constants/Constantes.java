@@ -7,4 +7,7 @@ public class Constantes {
     public static final short CATEGORY_BLOCK= 0x0004;  // 00000100
     public static final short CATEGORY_SPIKE= 0x0008;
     public static final short CATEGORY_WALL= 0x0010;
+
+    //constantes de ZOOM
+    public static  final float ZOOM = 0.5f;
 }

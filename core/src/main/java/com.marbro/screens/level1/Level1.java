@@ -97,7 +97,7 @@ public class Level1 implements Screen {
         loadMap("map/level1/level1.tmx");
 
         //Colocar y ajustar la cámara
-        gamecame.zoom = 0.25f;
+        gamecame.zoom = ZOOM;
         gamecame.position.set(((Gdx.graphics.getWidth() * 0.64f) / (2f * PPM)),  (Gdx.graphics.getHeight() * 1f) / (2f * PPM), 0);
 
         //Cargar bloques creados en el tiled
