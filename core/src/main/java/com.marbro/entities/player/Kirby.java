@@ -34,6 +34,7 @@ public class Kirby extends Actor{
     private Body body;
     private Stage stage;
     private Fixture fixture;
+    private Fixture fixture2;
 
     //Estado del jugador
     private EstadoKirby estado;
@@ -123,6 +124,9 @@ public class Kirby extends Actor{
 
         fixture = body.createFixture(fixDef); // Crear la fixture con `fixDef`
         fixture.setUserData(this); // Asegúrate de que `userData` se asigna correctamente
+        //crear segunda fixture con diferente user data
+        fixture2 = body.createFixture(fixDef);
+        fixture2.setUserData("player");
 
         shape.dispose();
     }
@@ -163,6 +167,7 @@ public class Kirby extends Actor{
     public void detach()
     {
         body.destroyFixture(fixture);
+        body.destroyFixture(fixture2);
         world.destroyBody(body);
     }
 
@@ -243,7 +248,7 @@ public class Kirby extends Actor{
 
     private void manejarEstadoEnCaida(Vector2 vel) {
         if (estado != EstadoKirby.ASPIRANDO) {
-            System.out.println(vel.y);
+            //System.out.println(vel.y);
             if (jump && -3.5f < vel.y && vel.y < 0f) {
                     estado = EstadoKirby.CAYENDO1;
             } else {

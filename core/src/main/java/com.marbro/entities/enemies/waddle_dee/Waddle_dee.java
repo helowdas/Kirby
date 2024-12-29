@@ -29,6 +29,7 @@ public class Waddle_dee extends Actor implements Enemy {
     private World world;
     private Body body;
     private Fixture fixture;
+    private Fixture fixture2;
 
     //Estado del jugador
     private EstadoWaddleDee estado;
@@ -102,7 +103,8 @@ public class Waddle_dee extends Actor implements Enemy {
 
         fixture = body.createFixture(fixtureDef);
         fixture.setUserData(this); // Asegúrate de que `userData` se asigna correctamente
-
+        fixture2 = body.createFixture(fixtureDef);
+        fixture2.setUserData("waddle_dee");
         shape.dispose();
     }
 
@@ -145,6 +147,10 @@ public class Waddle_dee extends Actor implements Enemy {
         if (fixture != null) {
             body.destroyFixture(fixture);
             fixture = null;
+        }
+        if (fixture2 != null) {
+            body.destroyFixture(fixture2);
+            fixture2 = null;
         }
 
         if (body != null) {
