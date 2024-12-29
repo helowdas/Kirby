@@ -17,7 +17,7 @@ import com.marbro.distance.CalculadoraDistancia;
 import com.marbro.entities.enemies.Factory.Enemy;
 
 import static com.marbro.constants.Constantes.*;
-import static com.marbro.constants.ConstantesKirby.*;
+//import static com.marbro.constants.ConstantesKirby.*;
 
 public class Kirby extends Actor{
     //Animaciones
