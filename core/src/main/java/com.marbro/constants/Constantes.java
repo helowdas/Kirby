@@ -22,5 +22,5 @@ public class Constantes {
     public static final float IMPULSE_SALTO = 6.3f;
 
     //constantes Volumen
-    public static final float VOLUMEN = 0f;
+    public static final float VOLUMEN = 0.01f;
 }
