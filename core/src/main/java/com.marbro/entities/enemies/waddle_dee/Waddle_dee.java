@@ -210,7 +210,7 @@ public class Waddle_dee extends Actor implements Enemy {
         if (colPlayer) {
             // Dirección de retroceso basada en la dirección actual del movimiento
             float forceX = lastmove == -1 ? 4f : -4f;
-            float forceY = 5f;
+            float forceY = 1f;
 
             // Aplicar la fuerza al enemigo
             body.applyLinearImpulse(new Vector2(forceX, forceY), body.getWorldCenter(), true);
