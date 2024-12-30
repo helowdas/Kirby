@@ -1,4 +1,4 @@
-package com.marbro.entities.enemies.Sir_kibble;
+package com.marbro.entities.enemies.SirKibble;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,11 +14,11 @@ import com.marbro.animation.Animation_Base_Loop;
 import com.marbro.colisions.Controlador_Colisiones;
 import com.marbro.contador.ActionTimer;
 import com.marbro.entities.enemies.Factory.Enemy;
-import com.marbro.entities.enemies.waddle_dee.EstadoWaddleDee;
 
 import static com.marbro.constants.Constantes.*;
 
-public class sir_kibble extends Actor implements Enemy {
+public class Sir_Kibble extends Actor implements Enemy {
+
     //Private animaciones
     private Animation_Base_Loop walk;
     private Animation_Base_Loop fall;
@@ -31,9 +31,11 @@ public class sir_kibble extends Actor implements Enemy {
     private Body body;
     private Fixture fixture;
     private Fixture fixture2;
+    private float width;
+    private float height;
 
     //Estado del jugador
-    private EstadoSirKibble estado;
+    private EstadoWaddleDee estado;
     private int lastmove = -1;
 
     //Atributos del jugador
@@ -52,57 +54,33 @@ public class sir_kibble extends Actor implements Enemy {
     private ActionTimer contador;
     private ActionTimer pain;
 
-    public sir_kibble(){
-
-    }
-
-    public sir_kibble(World world, Stage stage, float x, float y, Controlador_Colisiones controlador)
+    //constructor
+    public Waddle_dee(World world, Body body,
+                      Controlador_Colisiones controlador,
+                      float width, float height)
     {
         this.world = world;
-        //cargar las animaciones
-        loadAnimations();
-        defBody(x,y);
+        this.body = body;
+        body.getFixtureList().get(0).setUserData("waddle_dee");
+        body.getFixtureList().get(1).setUserData(this);
+        this.width = width;
+        this.height = height;
 
-        this.estado = EstadoSirKibble.CAYENDO;
+        loadAnimations();
+
+        this.estado = EstadoWaddleDee.CAYENDO;
 
         life = true;
-        this.controlador = controlador;
 
+        this.controlador = controlador;
         createContactListener();
 
         contador = new ActionTimer();
         pain = new ActionTimer();
-
-    }
-
-    public void defBody(float x, float y){
-        BodyDef def = new BodyDef();
-        def.position.set(x,y);
-        def.type = BodyDef.BodyType.DynamicBody;
-        body = world.createBody(def);
-
-        body = world.createBody(def);
-
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(0.25f,0.25f);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.density = 0f;
-        fixtureDef.friction = 5f;
-        fixtureDef.restitution = 0.3f;
-
-        fixtureDef.filter.categoryBits = CATEGORY_ENEMY;
-
-        fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(this);
-        fixture2 = body.createFixture(fixtureDef);
-        fixture2.setUserData("Sir_kibble");
-        shape.dispose();
     }
 
     private void createContactListener(){
-        ColisionesHandlerSirKibble colisionesHandler = new ColisionesHandlerSirKibble(this);
+        ColisionesHandlerWaddle colisionesHandler = new ColisionesHandlerWaddle(this);
         controlador.addListener(colisionesHandler);
     }
 
@@ -125,25 +103,22 @@ public class sir_kibble extends Actor implements Enemy {
 
         // Ajustar la posicion del sprite
         float posX = (body.getPosition().x * 1) - (getWidth() / 2);
-        float posY = (body.getPosition().y * 1) - (getHeight() / 2) + 0.25f;
+        float posY = (body.getPosition().y * 1) - (getHeight() / 2);
 
         setPosition(posX, posY);
 
         // Ajustar el tamaño del actor en píxeles, considerando PPM
-        setSize(1f, 1f); // Ajusta estos valores según el tamaño deseado de tu sprite en el mundo Box2D
+        setSize(width/PPM, height/PPM); // Ajusta estos valores según el tamaño deseado de tu sprite en el mundo Box2D
 
         TextureRegion frame = drawEnemy();
         batch.draw(frame, getX(), getY(), getWidth(), getHeight());
     }
 
-    public void detach() {
-        if (fixture != null) {
-            body.destroyFixture(fixture);
-            fixture = null;
-        }
-        if (fixture2 != null) {
-            body.destroyFixture(fixture2);
-            fixture2 = null;
+    public void detach()
+    {
+        for (Fixture aux:body.getFixtureList() )
+        {
+            body.destroyFixture(aux);
         }
 
         if (body != null) {
@@ -153,6 +128,7 @@ public class sir_kibble extends Actor implements Enemy {
 
         this.remove(); // Asegúrate de eliminar la entidad del mundo del juego, si es necesario
     }
+
 
     @Override
     public TextureRegion drawEnemy() {
@@ -179,20 +155,19 @@ public class sir_kibble extends Actor implements Enemy {
         return frame;
     }
 
-
     @Override
     public void updateEnemyState() {
         if (onGround || onSpike) {
-            estado = EstadoSirKibble.CAMINANDO;
+            estado = EstadoWaddleDee.CAMINANDO;
         }
 
         if (!onGround && !pain.isRunning() && !onSpike) {
-            estado = EstadoSirKibble.CAYENDO;
+            estado = EstadoWaddleDee.CAYENDO;
         } else if (pain.isRunning()){
-            estado = EstadoSirKibble.HURT;
+            estado = EstadoWaddleDee.HURT;
         }
 
-        if (estado == EstadoSirKibble.CAMINANDO) {
+        if (estado == EstadoWaddleDee.CAMINANDO) {
             if (contador.getElapsedTime() > 1f) {
                 lastmove *= -1;
                 resetTimer(contador);
@@ -203,7 +178,7 @@ public class sir_kibble extends Actor implements Enemy {
         if (colPlayer) {
             // Dirección de retroceso basada en la dirección actual del movimiento
             float forceX = lastmove == -1 ? 4f : -4f;
-            float forceY = 5f;
+            float forceY = 1f;
 
             // Aplicar la fuerza al enemigo
             body.applyLinearImpulse(new Vector2(forceX, forceY), body.getWorldCenter(), true);
@@ -221,15 +196,9 @@ public class sir_kibble extends Actor implements Enemy {
         }
     }
 
-
-    public void attack(){
-        //poner logica de ataque
-
+    public void resetTimer(ActionTimer timer){
+        timer.reset();
     }
-
-        public void resetTimer(ActionTimer timer){
-            timer.reset();
-        }
 
     public boolean isAlive(){
         return life;
@@ -284,15 +253,15 @@ public class sir_kibble extends Actor implements Enemy {
 
     public void loadAnimations() {
         Array<TextureRegion> walk_waddle = new Array<>();
-        loadTexture(walk_waddle, "entities/Sir_Kibble/caminar/caminar_kibble_", 0, 4);
+        loadTexture(walk_waddle, "entities/waddle_dee/waddle_dee_walk/waddle_dee_walk_", 1, 4);
         this.walk = new Animation_Base_Loop( walk_waddle,0.1f);
 
         Array<TextureRegion> fall_waddle = new Array<>();
-        loadTexture(fall_waddle, "entities/Sir_Kibble/fall/fall_", 0, 0);
+        loadTexture(fall_waddle, "entities/waddle_dee/waddle_dee_fall/waddle_dee_fall_", 1, 2);
         this.fall = new Animation_Base_Loop(fall_waddle,0.1f);
 
         Array<TextureRegion> hurt_waddle = new Array<>();
-        loadTexture(hurt_waddle, "entities/Sir_Kibble/hurt/hurt_", 0, 0);
+        loadTexture(hurt_waddle, "entities/waddle_dee/waddle_dee_hurt/waddle_dee_hurt_", 1, 1);
         this.hurt = new Animation_Base_Loop(hurt_waddle,0.1f);
     }
 
@@ -306,9 +275,3 @@ public class sir_kibble extends Actor implements Enemy {
     }
 
 }
-
-
-
-
-
-

@@ -1,4 +1,4 @@
-package com.marbro.entities.enemies.Sir_kibble;
+package com.marbro.entities.enemies.SirKibble;
 
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -6,10 +6,11 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
 
-public class ColisionesHandlerSirKibble implements ContactListener {
-    private sir_kibble actor;
+public class ColisionesSirKibble implements ContactListener {
 
-    public ColisionesHandlerSirKibble(sir_kibble actor) {
+    private Waddle_dee actor;
+
+    public ColisionesHandlerWaddle(Waddle_dee actor) {
         this.actor = actor;
     }
 
@@ -72,4 +73,5 @@ public class ColisionesHandlerSirKibble implements ContactListener {
         return (contact.getFixtureA().getUserData().equals(userA) && contact.getFixtureB().getUserData().equals(userB))
             || (contact.getFixtureA().getUserData().equals(userB) && contact.getFixtureB().getUserData().equals(userA));
     }
+
 }
