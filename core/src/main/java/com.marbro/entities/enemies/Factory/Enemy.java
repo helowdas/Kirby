@@ -8,5 +8,5 @@ public interface Enemy {
     public TextureRegion drawEnemy();
     Body getBody();
     void removeEnemy();
-
+    void attack();
 }

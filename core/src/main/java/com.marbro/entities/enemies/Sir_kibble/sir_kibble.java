@@ -1,4 +1,4 @@
-package com.marbro.entities.enemies.waddle_dee;
+package com.marbro.entities.enemies.Sir_kibble;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,10 +14,11 @@ import com.marbro.animation.Animation_Base_Loop;
 import com.marbro.colisions.Controlador_Colisiones;
 import com.marbro.contador.ActionTimer;
 import com.marbro.entities.enemies.Factory.Enemy;
+import com.marbro.entities.enemies.waddle_dee.EstadoWaddleDee;
 
 import static com.marbro.constants.Constantes.*;
 
-public class Waddle_dee extends Actor implements Enemy {
+public class sir_kibble extends Actor implements Enemy {
     //Private animaciones
     private Animation_Base_Loop walk;
     private Animation_Base_Loop fall;
@@ -32,7 +33,7 @@ public class Waddle_dee extends Actor implements Enemy {
     private Fixture fixture2;
 
     //Estado del jugador
-    private EstadoWaddleDee estado;
+    private EstadoSirKibble estado;
     private int lastmove = -1;
 
     //Atributos del jugador
@@ -51,22 +52,20 @@ public class Waddle_dee extends Actor implements Enemy {
     private ActionTimer contador;
     private ActionTimer pain;
 
-    public Waddle_dee(){
+    public sir_kibble(){
 
     }
 
-    public Waddle_dee(World world, Stage stage, float x, float y, Controlador_Colisiones controlador)
+    public sir_kibble(World world, Stage stage, float x, float y, Controlador_Colisiones controlador)
     {
         this.world = world;
-
-        //Cargar las animaciones
+        //cargar las animaciones
         loadAnimations();
         defBody(x,y);
 
-        this.estado = EstadoWaddleDee.CAYENDO;
+        this.estado = EstadoSirKibble.CAYENDO;
 
         life = true;
-
         this.controlador = controlador;
 
         createContactListener();
@@ -76,40 +75,34 @@ public class Waddle_dee extends Actor implements Enemy {
 
     }
 
-    public void defBody(float x, float y) {
-        // Define las propiedades del cuerpo
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(x, y);
+    public void defBody(float x, float y){
+        BodyDef def = new BodyDef();
+        def.position.set(x,y);
+        def.type = BodyDef.BodyType.DynamicBody;
+        body = world.createBody(def);
 
-        // Añade al mundo el nuevo cuerpo creado
-        body = world.createBody(bodyDef);
+        body = world.createBody(def);
 
-        // Atributos físicos del cuerpo
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(0.25f, 0.25f); // Tamaño del body (hitbox)
+        shape.setAsBox(0.25f,0.25f);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.density = 0.0f;
+        fixtureDef.density = 0f;
         fixtureDef.friction = 5f;
         fixtureDef.restitution = 0.3f;
 
-        //categoryBits: es una etiqueta a una fixture, que será utilizada para manejar colisiones
         fixtureDef.filter.categoryBits = CATEGORY_ENEMY;
 
-        //maskBits: define con qué otras entidades u objetos puede colisiones una fixture
-        //fixtureDef.filter.maskBits = CATEGORY_PLAYER | CATEGORY_BLOCK | CATEGORY_WALL;
-
         fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(this); // Asegúrate de que `userData` se asigna correctamente
+        fixture.setUserData(this);
         fixture2 = body.createFixture(fixtureDef);
-        fixture2.setUserData("waddle_dee");
+        fixture2.setUserData("Sir_kibble");
         shape.dispose();
     }
 
     private void createContactListener(){
-        ColisionesHandlerWaddle colisionesHandler = new ColisionesHandlerWaddle(this);
+        ColisionesHandlerSirKibble colisionesHandler = new ColisionesHandlerSirKibble(this);
         controlador.addListener(colisionesHandler);
     }
 
@@ -161,7 +154,6 @@ public class Waddle_dee extends Actor implements Enemy {
         this.remove(); // Asegúrate de eliminar la entidad del mundo del juego, si es necesario
     }
 
-
     @Override
     public TextureRegion drawEnemy() {
         TextureRegion frame;
@@ -187,19 +179,20 @@ public class Waddle_dee extends Actor implements Enemy {
         return frame;
     }
 
+
     @Override
     public void updateEnemyState() {
         if (onGround || onSpike) {
-            estado = EstadoWaddleDee.CAMINANDO;
+            estado = EstadoSirKibble.CAMINANDO;
         }
 
         if (!onGround && !pain.isRunning() && !onSpike) {
-            estado = EstadoWaddleDee.CAYENDO;
+            estado = EstadoSirKibble.CAYENDO;
         } else if (pain.isRunning()){
-            estado = EstadoWaddleDee.HURT;
+            estado = EstadoSirKibble.HURT;
         }
 
-        if (estado == EstadoWaddleDee.CAMINANDO) {
+        if (estado == EstadoSirKibble.CAMINANDO) {
             if (contador.getElapsedTime() > 1f) {
                 lastmove *= -1;
                 resetTimer(contador);
@@ -228,13 +221,15 @@ public class Waddle_dee extends Actor implements Enemy {
         }
     }
 
+
     public void attack(){
-        //ESTE ENEMIGO NO TIENE ATAQUE, SOLO COLISIONA CON EL KIRBY Y LE HACE DAÑO
+        //poner logica de ataque
+
     }
 
-    public void resetTimer(ActionTimer timer){
-        timer.reset();
-    }
+        public void resetTimer(ActionTimer timer){
+            timer.reset();
+        }
 
     public boolean isAlive(){
         return life;
@@ -289,15 +284,15 @@ public class Waddle_dee extends Actor implements Enemy {
 
     public void loadAnimations() {
         Array<TextureRegion> walk_waddle = new Array<>();
-        loadTexture(walk_waddle, "entities/waddle_dee/waddle_dee_walk/waddle_dee_walk_", 1, 4);
+        loadTexture(walk_waddle, "entities/Sir_Kibble/caminar/caminar_kibble_", 0, 4);
         this.walk = new Animation_Base_Loop( walk_waddle,0.1f);
 
         Array<TextureRegion> fall_waddle = new Array<>();
-        loadTexture(fall_waddle, "entities/waddle_dee/waddle_dee_fall/waddle_dee_fall_", 1, 2);
+        loadTexture(fall_waddle, "entities/Sir_Kibble/fall/fall_", 0, 0);
         this.fall = new Animation_Base_Loop(fall_waddle,0.1f);
 
         Array<TextureRegion> hurt_waddle = new Array<>();
-        loadTexture(hurt_waddle, "entities/waddle_dee/waddle_dee_hurt/waddle_dee_hurt_", 1, 1);
+        loadTexture(hurt_waddle, "entities/Sir_Kibble/hurt/hurt_", 0, 0);
         this.hurt = new Animation_Base_Loop(hurt_waddle,0.1f);
     }
 
@@ -309,6 +304,11 @@ public class Waddle_dee extends Actor implements Enemy {
     public void removeEnemy(){
         detach();
     }
+
 }
+
+
+
+
 
 
