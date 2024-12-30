@@ -17,7 +17,6 @@ public class MainGame extends Game
     {
         //Cargar assets
         assetManager.load("music/RandomLevel.ogg", Music.class);
-        //assetManager.load("entities/player/kirby_stand/kirby_stand_1.png", Texture.class);
         assetManager.finishLoading(); //assets cargados
 
         batch = new SpriteBatch();

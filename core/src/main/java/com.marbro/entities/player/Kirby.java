@@ -101,12 +101,6 @@ public class Kirby extends Actor{
     }
     //segundo constructor
     public Kirby(World world, Stage stage, Body body,
-                 Array<TextureRegion> stand,
-                 Array<TextureRegion> walk,
-                 Array<TextureRegion> fall1,
-                 Array<TextureRegion> fall2,
-                 Array<TextureRegion> jumping,
-                 Array<TextureRegion> abs,
                  Controlador_Colisiones controlador,
                  float width, float height)
     {
@@ -120,12 +114,12 @@ public class Kirby extends Actor{
 
 
         //Cargar las animaciones
-        this.stand = new Animation_Base_Loop(stand, 0.06f);
+        /*this.stand = new Animation_Base_Loop(stand, 0.06f);
         this.walk = new Animation_Base_Loop(walk, 0.06f);
         this.fall1 = new Animation_Base_Loop(fall1, 0.08f);
         this.fall2 = new Animation_Base_Loop(fall2, 0.2f);
         this.jumping = new Animation_Base_Loop(jumping, 0.5f);
-        this.abs = new Animation_Base_Normal(abs, 0.08f);
+        this.abs = new Animation_Base_Normal(abs, 0.08f);*/
 
         this.estado = EstadoKirby.QUIETO;
         life = true;

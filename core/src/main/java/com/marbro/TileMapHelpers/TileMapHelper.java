@@ -80,9 +80,8 @@ public class TileMapHelper
                             );
 
                             kirby = new Kirby(gameScreen.getWorld(),
-                                gameScreen.getStage(), body, gameScreen.getStand(), gameScreen.getWalk(),
-                                gameScreen.getFall1(), gameScreen.getFall2(), gameScreen.getJump(),
-                                gameScreen.getAbs(), gameScreen.getControlador(), rectangle.width, rectangle.height);
+                                gameScreen.getStage(), body, gameScreen.getControlador(),
+                                    rectangle.width, rectangle.height);
 
                             gameScreen.setKirby(kirby);
                         }
