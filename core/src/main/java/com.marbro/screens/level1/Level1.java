@@ -30,6 +30,8 @@ import com.marbro.entities.player.Kirby;
 import com.marbro.scenes.Hud;
 import com.marbro.screens.GameOverScreen;
 
+import java.util.ArrayList;
+
 import static com.marbro.constants.Constantes.*;
 
 public class Level1 implements Screen {
@@ -63,7 +65,7 @@ public class Level1 implements Screen {
 
     //Entidades del juego
     private Kirby kirby;
-    private Waddle_dee waddle;
+    private ArrayList<Waddle_dee> waddle_dees;
 
     //Animaciones
     private TextureAtlas atlas;
@@ -117,7 +119,9 @@ public class Level1 implements Screen {
         //Cargar la musica
         music = game.getAssetManager().get("music/RandomLevel.ogg");
 
-        //cargar animaciones
+        //crear arreglos de entidades
+        waddle_dees = new ArrayList<Waddle_dee>();
+
 
     }
 
@@ -138,9 +142,11 @@ public class Level1 implements Screen {
         //waddle = (Waddle_dee) EnemyFactory.createEnemy("Waddle_dee", world, stage, 10, 8, controlador);
         //stage.addActor(waddle);
 
-        waddle = new Waddle_dee(world, stage, 10, 8, controlador);
-        stage.addActor(waddle);
+        for (Waddle_dee waddle_dee : waddle_dees)
+        {
+            stage.addActor(waddle_dee);
 
+        }
 
 
         //Para reproducir la música
@@ -216,9 +222,16 @@ public class Level1 implements Screen {
         stopMusic();
         kirby.detach();
         kirby.remove();
-        if (waddle != null) {
-            waddle.detach();
-            waddle.remove();
+        if (waddle_dees != null)
+        {
+            for (Waddle_dee waddle_dee : waddle_dees)
+            {
+                waddle_dee.detach();
+                waddle_dee.remove();
+            }
+            //!!Vaciar la lista, muy importante
+            waddle_dees.clear();
+
         }
     }
 
@@ -258,5 +271,11 @@ public class Level1 implements Screen {
     //set kirby
     public void setKirby(Kirby kirby) {
         this.kirby = kirby;
+    }
+
+    //get entities
+
+    public ArrayList<Waddle_dee> getWaddle_dees() {
+        return waddle_dees;
     }
 }

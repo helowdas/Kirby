@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
 import com.marbro.entities.player.Kirby;
 import com.marbro.screens.level1.Level1;
 import static com.marbro.constants.Constantes.*;
@@ -84,6 +85,22 @@ public class TileMapHelper
                                     rectangle.width, rectangle.height);
 
                             gameScreen.setKirby(kirby);
+                        }
+
+                        else if(rectangleName.equals("waddle_dee"))
+                        {
+                            Body body = bodyHelperService.createBody(
+                                    rectangle.getX() + rectangle.getWidth() / 2,
+                                    rectangle.getY() + rectangle.getHeight() / 2,
+                                    rectangle.getWidth(),
+                                    rectangle.getHeight(),
+                                    false,
+                                    gameScreen.getWorld()
+                            );
+
+                            gameScreen.getWaddle_dees().add(new Waddle_dee(gameScreen.getWorld(), body, gameScreen.getControlador(), rectangle.width, rectangle.height));
+
+
                         }
 
                     }

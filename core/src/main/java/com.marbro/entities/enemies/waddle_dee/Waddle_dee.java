@@ -30,6 +30,8 @@ public class Waddle_dee extends Actor implements Enemy {
     private Body body;
     private Fixture fixture;
     private Fixture fixture2;
+    private float width;
+    private float height;
 
     //Estado del jugador
     private EstadoWaddleDee estado;
@@ -51,61 +53,29 @@ public class Waddle_dee extends Actor implements Enemy {
     private ActionTimer contador;
     private ActionTimer pain;
 
-    public Waddle_dee(){
-
-    }
-
-    public Waddle_dee(World world, Stage stage, float x, float y, Controlador_Colisiones controlador)
+    //constructor
+    public Waddle_dee(World world, Body body,
+                      Controlador_Colisiones controlador,
+                      float width, float height)
     {
         this.world = world;
+        this.body = body;
+        body.getFixtureList().get(0).setUserData("waddle_dee");
+        body.getFixtureList().get(1).setUserData(this);
+        this.width = width;
+        this.height = height;
 
-        //Cargar las animaciones
         loadAnimations();
-        defBody(x,y);
 
         this.estado = EstadoWaddleDee.CAYENDO;
 
         life = true;
 
         this.controlador = controlador;
-
         createContactListener();
 
         contador = new ActionTimer();
         pain = new ActionTimer();
-
-    }
-
-    public void defBody(float x, float y) {
-        // Define las propiedades del cuerpo
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(x, y);
-
-        // Añade al mundo el nuevo cuerpo creado
-        body = world.createBody(bodyDef);
-
-        // Atributos físicos del cuerpo
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(0.25f, 0.25f); // Tamaño del body (hitbox)
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.density = 0.0f;
-        fixtureDef.friction = 5f;
-        fixtureDef.restitution = 0.3f;
-
-        //categoryBits: es una etiqueta a una fixture, que será utilizada para manejar colisiones
-        fixtureDef.filter.categoryBits = CATEGORY_ENEMY;
-
-        //maskBits: define con qué otras entidades u objetos puede colisiones una fixture
-        //fixtureDef.filter.maskBits = CATEGORY_PLAYER | CATEGORY_BLOCK | CATEGORY_WALL;
-
-        fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(this); // Asegúrate de que `userData` se asigna correctamente
-        fixture2 = body.createFixture(fixtureDef);
-        fixture2.setUserData("waddle_dee");
-        shape.dispose();
     }
 
     private void createContactListener(){
@@ -132,25 +102,22 @@ public class Waddle_dee extends Actor implements Enemy {
 
         // Ajustar la posicion del sprite
         float posX = (body.getPosition().x * 1) - (getWidth() / 2);
-        float posY = (body.getPosition().y * 1) - (getHeight() / 2) + 0.25f;
+        float posY = (body.getPosition().y * 1) - (getHeight() / 2);
 
         setPosition(posX, posY);
 
         // Ajustar el tamaño del actor en píxeles, considerando PPM
-        setSize(1f, 1f); // Ajusta estos valores según el tamaño deseado de tu sprite en el mundo Box2D
+        setSize(width/PPM, height/PPM); // Ajusta estos valores según el tamaño deseado de tu sprite en el mundo Box2D
 
         TextureRegion frame = drawEnemy();
         batch.draw(frame, getX(), getY(), getWidth(), getHeight());
     }
 
-    public void detach() {
-        if (fixture != null) {
-            body.destroyFixture(fixture);
-            fixture = null;
-        }
-        if (fixture2 != null) {
-            body.destroyFixture(fixture2);
-            fixture2 = null;
+    public void detach()
+    {
+        for (Fixture aux:body.getFixtureList() )
+        {
+            body.destroyFixture(aux);
         }
 
         if (body != null) {

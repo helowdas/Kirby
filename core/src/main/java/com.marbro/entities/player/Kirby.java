@@ -18,7 +18,6 @@ import com.marbro.distance.CalculadoraDistancia;
 import com.marbro.entities.enemies.Factory.Enemy;
 
 import static com.marbro.constants.Constantes.*;
-//import static com.marbro.constants.ConstantesKirby.*;
 
 public class Kirby extends Actor{
     //Animaciones
@@ -66,40 +65,7 @@ public class Kirby extends Actor{
     private float aspiracionTimer = 0;
     private float aspiracionDelayTimer = 0;
 
-    public Kirby(World world, Stage stage, float x, float y,
-                 Array<TextureRegion> stand,
-                 Array<TextureRegion> walk,
-                 Array<TextureRegion> fall1,
-                 Array<TextureRegion> fall2,
-                 Array<TextureRegion> jumping,
-                 Array<TextureRegion> abs,
-                 Controlador_Colisiones controlador)
-    {
-        this.world = world;
-        this.stage = stage;
-
-        //Cargar las animaciones
-        this.stand = new Animation_Base_Loop(stand, 0.06f);
-        this.walk = new Animation_Base_Loop(walk, 0.06f);
-        this.fall1 = new Animation_Base_Loop(fall1, 0.08f);
-        this.fall2 = new Animation_Base_Loop(fall2, 0.2f);
-        this.jumping = new Animation_Base_Loop(jumping, 0.5f);
-        this.abs = new Animation_Base_Normal(abs, 0.08f);
-        defBody(x,y);
-
-        this.estado = EstadoKirby.QUIETO;
-        life = true;
-        this.controlador = controlador;
-
-        createContactListener();
-
-        cal = new CalculadoraDistancia();
-
-        contador = new ActionTimer();
-
-        animations = new AnimationHelperKirby();
-    }
-    //segundo constructor
+    //constructor
     public Kirby(World world, Stage stage, Body body,
                  Controlador_Colisiones controlador,
                  float width, float height)
@@ -113,18 +79,10 @@ public class Kirby extends Actor{
         this.height = height;
 
 
-        //Cargar las animaciones
-        /*this.stand = new Animation_Base_Loop(stand, 0.06f);
-        this.walk = new Animation_Base_Loop(walk, 0.06f);
-        this.fall1 = new Animation_Base_Loop(fall1, 0.08f);
-        this.fall2 = new Animation_Base_Loop(fall2, 0.2f);
-        this.jumping = new Animation_Base_Loop(jumping, 0.5f);
-        this.abs = new Animation_Base_Normal(abs, 0.08f);*/
-
         this.estado = EstadoKirby.QUIETO;
         life = true;
-        this.controlador = controlador;
 
+        this.controlador = controlador;
         createContactListener();
 
         cal = new CalculadoraDistancia();
@@ -135,40 +93,6 @@ public class Kirby extends Actor{
         System.out.println(body.getFixtureList().size);
     }
 
-    public void defBody(float x, float y) {
-        // Define las propiedades del cuerpo
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(x, y);
-
-        // Añade al mundo el nuevo cuerpo creado
-        body = world.createBody(bodyDef);
-
-        // Atributos físicos del cuerpo
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(0.25f, 0.25f); // Tamaño del body (hitbox)
-
-        // Crear y asignar la fixture usando `fixDef`
-        FixtureDef fixDef = new FixtureDef();
-        fixDef.shape = shape;
-        fixDef.density = 0.0f;
-        fixDef.friction = 10f;
-
-        //categoryBits: es una etiqueta a una fixture, que será utilizada para manejar colisiones
-        fixDef.filter.categoryBits = CATEGORY_PLAYER;
-
-        //maskBits: define con qué otras entidades u objetos puede colisiones una fixture
-        //fixDef.filter.maskBits = CATEGORY_BLOCK | CATEGORY_WALL;
-
-        fixture = body.createFixture(fixDef); // Crear la fixture con `fixDef`
-        fixture.setUserData(this); // Asegúrate de que `userData` se asigna correctamente
-        //crear segunda fixture con diferente user data
-        fixture2 = body.createFixture(fixDef);
-        fixture2.setUserData("player");
-
-        shape.dispose();
-    }
-    //segunda funcion para cargar body
 
     private void createContactListener(){
         ColisionesHandlerKirby colisionesHandler = new ColisionesHandlerKirby(this);
