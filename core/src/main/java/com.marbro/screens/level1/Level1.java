@@ -26,6 +26,7 @@ import com.marbro.TileMapHelpers.TileMapHelper;
 import com.marbro.colisions.Controlador_Colisiones;
 import com.marbro.entities.enemies.Factory.EnemyFactory;
 import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
+import com.marbro.entities.enemies.Sir_Kibble.Sir_Kibble;
 import com.marbro.entities.player.Kirby;
 import com.marbro.scenes.Hud;
 import com.marbro.screens.GameOverScreen;
@@ -63,6 +64,7 @@ public class Level1 implements Screen {
 
     //Entidades del juego
     private Kirby kirby;
+    private Sir_Kibble sir_kibble;
     private Waddle_dee waddle;
 
     //Animaciones
@@ -252,6 +254,9 @@ public class Level1 implements Screen {
 
         waddle = new Waddle_dee(world, stage, 10, 8, controlador);
         stage.addActor(waddle);
+
+        sir_kibble = new Sir_Kibble(world, stage, 10, 8, controlador);
+        stage.addActor(sir_kibble);
 
 
 
