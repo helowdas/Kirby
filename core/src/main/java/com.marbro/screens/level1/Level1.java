@@ -268,11 +268,15 @@ public class Level1 implements Screen {
         return controlador;
     }
 
-    //set kirby
+    //kirby
     public void setKirby(Kirby kirby) {
         this.kirby = kirby;
     }
 
+    public Kirby getKirby()
+    {
+        return kirby;
+    }
     //get entities
 
     public ArrayList<Waddle_dee> getWaddle_dees() {

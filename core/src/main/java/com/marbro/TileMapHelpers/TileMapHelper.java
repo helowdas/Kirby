@@ -98,7 +98,8 @@ public class TileMapHelper
                                     gameScreen.getWorld()
                             );
 
-                            gameScreen.getWaddle_dees().add(new Waddle_dee(gameScreen.getWorld(), body, gameScreen.getControlador(), rectangle.width, rectangle.height));
+                            gameScreen.getWaddle_dees().add(new Waddle_dee(gameScreen.getWorld(), body,
+                                    gameScreen.getControlador(), rectangle.width, rectangle.height, gameScreen.getKirby()));
 
 
                         }

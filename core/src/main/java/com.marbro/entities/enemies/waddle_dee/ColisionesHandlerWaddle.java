@@ -1,14 +1,18 @@
 package com.marbro.entities.enemies.waddle_dee;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.marbro.entities.player.Kirby;
 
 import static com.marbro.constants.Constantes.*;;
 
 public class ColisionesHandlerWaddle implements ContactListener {
     private Waddle_dee actor;
+    private Kirby kirby;
 
-    public ColisionesHandlerWaddle(Waddle_dee actor) {
+    public ColisionesHandlerWaddle(Waddle_dee actor, Kirby kirby)
+    {
         this.actor = actor;
+        this.kirby = kirby;
     }
 
     @Override
@@ -29,8 +33,8 @@ public class ColisionesHandlerWaddle implements ContactListener {
             actor.setOnWall(true);
         }
 
-        if (hanColisionado(contact, actor, "player")) {
-            actor.setColPlayer(true);
+        if (hanColisionado(contact, actor, kirby)) {
+            //actor.setColPlayer(true);
         }
     }
 
@@ -53,14 +57,20 @@ public class ColisionesHandlerWaddle implements ContactListener {
             actor.setOnWall(true);
         }
 
-        if (hanColisionado(contact, actor, "player")) {
-            actor.setColPlayer(true);
+        if (hanColisionado(contact, actor, kirby)) {
+            //actor.setColPlayer(true);
         }
     }
 
 
     @Override
-    public void preSolve(Contact contact, Manifold oldManifold) {}
+    public void preSolve(Contact contact, Manifold oldManifold)
+    {
+        if (hanColisionado(contact, actor, kirby))
+        {
+            contact.setEnabled(false);
+        }
+    }
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {}

@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.marbro.entities.player.Kirby;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,6 @@ import java.util.List;
 // Clase para manejar múltiples colisiones
 public class Controlador_Colisiones implements ContactListener {
     private List<ContactListener> listeners = new ArrayList<>();
-
     public void addListener(ContactListener listener) {
         listeners.add(listener);
     }

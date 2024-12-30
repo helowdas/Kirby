@@ -64,15 +64,28 @@ public class ColisionesHandlerKirby implements ContactListener
 
 
     @Override
-    public void preSolve(Contact contact, Manifold oldManifold) {}
+    public void preSolve(Contact contact, Manifold oldManifold)
+    {
+
+        /*if (hanColisionado(contact, actor, "waddle_dee"))
+        {
+            //System.out.println("kirby choco con waddle");
+            //contact.setEnabled(false);
+        }*/
+    }
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {}
 
     private boolean hanColisionado(Contact contact, Object userA, Object userB)
     {
-        return (contact.getFixtureA().getUserData().equals(userA) && contact.getFixtureB().getUserData().equals(userB))
-            || (contact.getFixtureA().getUserData().equals(userB) && contact.getFixtureB().getUserData().equals(userA));
+        Object fixtureA = contact.getFixtureA().getUserData();
+        Object fixtureB = contact.getFixtureB().getUserData();
+
+        boolean isContact = (fixtureA.equals(userA) && fixtureB.equals(userB))
+                || (fixtureA.equals(userB) && fixtureB.equals(userA));
+
+        return isContact;
     }
 }
 

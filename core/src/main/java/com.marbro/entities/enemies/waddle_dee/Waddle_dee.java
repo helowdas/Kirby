@@ -14,6 +14,7 @@ import com.marbro.animation.Animation_Base_Loop;
 import com.marbro.colisions.Controlador_Colisiones;
 import com.marbro.contador.ActionTimer;
 import com.marbro.entities.enemies.Factory.Enemy;
+import com.marbro.entities.player.Kirby;
 
 import static com.marbro.constants.Constantes.*;
 
@@ -56,12 +57,13 @@ public class Waddle_dee extends Actor implements Enemy {
     //constructor
     public Waddle_dee(World world, Body body,
                       Controlador_Colisiones controlador,
-                      float width, float height)
+                      float width, float height, Kirby kirby)
     {
         this.world = world;
         this.body = body;
-        body.getFixtureList().get(0).setUserData("waddle_dee");
-        body.getFixtureList().get(1).setUserData(this);
+        body.getFixtureList().get(0).setUserData(this);
+        body.destroyFixture(body.getFixtureList().get(1));
+        //body.getFixtureList().get(1).setUserData(this);
         this.width = width;
         this.height = height;
 
@@ -72,14 +74,14 @@ public class Waddle_dee extends Actor implements Enemy {
         life = true;
 
         this.controlador = controlador;
-        createContactListener();
+        createContactListener(kirby);
 
         contador = new ActionTimer();
         pain = new ActionTimer();
     }
 
-    private void createContactListener(){
-        ColisionesHandlerWaddle colisionesHandler = new ColisionesHandlerWaddle(this);
+    private void createContactListener(Kirby kirby){
+        ColisionesHandlerWaddle colisionesHandler = new ColisionesHandlerWaddle(this, kirby);
         controlador.addListener(colisionesHandler);
     }
 
@@ -181,9 +183,10 @@ public class Waddle_dee extends Actor implements Enemy {
 
             // Aplicar la fuerza al enemigo
             body.applyLinearImpulse(new Vector2(forceX, forceY), body.getWorldCenter(), true);
+            System.out.println("chocaron");
 
             // Deshabilitar la colisión entre el enemigo y el jugador por 3 segundos
-            disableCollisionForSeconds(body, 1.5f);
+            //disableCollisionForSeconds(body, 1.5f);
 
             pain.start();
         }

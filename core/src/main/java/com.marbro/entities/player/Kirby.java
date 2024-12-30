@@ -65,6 +65,9 @@ public class Kirby extends Actor{
     private float aspiracionTimer = 0;
     private float aspiracionDelayTimer = 0;
 
+    //instancia
+    private static Kirby instance;
+
     //constructor
     public Kirby(World world, Stage stage, Body body,
                  Controlador_Colisiones controlador,
@@ -73,8 +76,9 @@ public class Kirby extends Actor{
         this.world = world;
         this.stage = stage;
         this.body = body;
-        body.getFixtureList().get(0).setUserData("player");
-        body.getFixtureList().get(1).setUserData(this);
+        body.getFixtureList().get(0).setUserData(this);
+        body.destroyFixture(body.getFixtureList().get(1));
+        //body.getFixtureList().get(1).setUserData(this);
         this.width = width;
         this.height = height;
 
@@ -82,15 +86,15 @@ public class Kirby extends Actor{
         this.estado = EstadoKirby.QUIETO;
         life = true;
 
-        this.controlador = controlador;
-        createContactListener();
 
         cal = new CalculadoraDistancia();
 
         contador = new ActionTimer();
 
         animations = new AnimationHelperKirby();
-        System.out.println(body.getFixtureList().size);
+
+        this.controlador = controlador;
+        createContactListener();
     }
 
 
@@ -314,4 +318,6 @@ public class Kirby extends Actor{
     public void setCol(boolean col) {
         this.col = col;
     }
+
+
 }
