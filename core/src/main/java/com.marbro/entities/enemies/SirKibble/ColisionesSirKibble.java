@@ -4,13 +4,13 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
+
 
 public class ColisionesSirKibble implements ContactListener {
 
-    private Waddle_dee actor;
+    private Sir_Kibble actor;
 
-    public ColisionesHandlerWaddle(Waddle_dee actor) {
+    public ColisionesSirKibble(Sir_Kibble actor) {
         this.actor = actor;
     }
 

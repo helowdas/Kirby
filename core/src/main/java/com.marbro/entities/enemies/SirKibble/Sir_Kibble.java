@@ -15,6 +15,7 @@ import com.marbro.colisions.Controlador_Colisiones;
 import com.marbro.contador.ActionTimer;
 import com.marbro.entities.enemies.Factory.Enemy;
 
+
 import static com.marbro.constants.Constantes.*;
 
 public class Sir_Kibble extends Actor implements Enemy {
@@ -35,7 +36,7 @@ public class Sir_Kibble extends Actor implements Enemy {
     private float height;
 
     //Estado del jugador
-    private EstadoWaddleDee estado;
+    private EstadoSirKibble estado;
     private int lastmove = -1;
 
     //Atributos del jugador
@@ -55,7 +56,7 @@ public class Sir_Kibble extends Actor implements Enemy {
     private ActionTimer pain;
 
     //constructor
-    public Waddle_dee(World world, Body body,
+    public Sir_Kibble(World world, Body body,
                       Controlador_Colisiones controlador,
                       float width, float height)
     {
@@ -68,7 +69,7 @@ public class Sir_Kibble extends Actor implements Enemy {
 
         loadAnimations();
 
-        this.estado = EstadoWaddleDee.CAYENDO;
+        this.estado = EstadoSirKibble.CAYENDO;
 
         life = true;
 
@@ -80,7 +81,7 @@ public class Sir_Kibble extends Actor implements Enemy {
     }
 
     private void createContactListener(){
-        ColisionesHandlerWaddle colisionesHandler = new ColisionesHandlerWaddle(this);
+        ColisionesSirKibble colisionesHandler = new ColisionesSirKibble(this);
         controlador.addListener(colisionesHandler);
     }
 
@@ -158,16 +159,16 @@ public class Sir_Kibble extends Actor implements Enemy {
     @Override
     public void updateEnemyState() {
         if (onGround || onSpike) {
-            estado = EstadoWaddleDee.CAMINANDO;
+            estado = EstadoSirKibble.CAMINANDO;
         }
 
         if (!onGround && !pain.isRunning() && !onSpike) {
-            estado = EstadoWaddleDee.CAYENDO;
+            estado = EstadoSirKibble.CAYENDO;
         } else if (pain.isRunning()){
-            estado = EstadoWaddleDee.HURT;
+            estado = EstadoSirKibble.HURT;
         }
 
-        if (estado == EstadoWaddleDee.CAMINANDO) {
+        if (estado == EstadoSirKibble.CAMINANDO) {
             if (contador.getElapsedTime() > 1f) {
                 lastmove *= -1;
                 resetTimer(contador);
@@ -194,6 +195,10 @@ public class Sir_Kibble extends Actor implements Enemy {
             pain.reset();
             pain.pause();
         }
+    }
+
+    public void attack(){
+        //Ataque del Sir_Kibble
     }
 
     public void resetTimer(ActionTimer timer){
@@ -253,7 +258,7 @@ public class Sir_Kibble extends Actor implements Enemy {
 
     public void loadAnimations() {
         Array<TextureRegion> walk_waddle = new Array<>();
-        loadTexture(walk_waddle, "entities/waddle_dee/waddle_dee_walk/waddle_dee_walk_", 1, 4);
+        loadTexture(walk_waddle, "entities/walk//waddle_dee_walk_", 1, 4);
         this.walk = new Animation_Base_Loop( walk_waddle,0.1f);
 
         Array<TextureRegion> fall_waddle = new Array<>();
