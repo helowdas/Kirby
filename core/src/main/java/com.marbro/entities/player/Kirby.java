@@ -61,8 +61,8 @@ public class Kirby extends Actor{
 
     //Contador
     ActionTimer contador;
-    private static final float ASPIRACION_DURATION = 2f;
-    private static final float ASPIRACION_DELAY = 1.5f;
+    private static final float ASPIRACION_DURATION = 2f; // poner en el archivo de constantes por favor
+    private static final float ASPIRACION_DELAY = 1.5f;// poner en el archivo de constantes por favor
     private float aspiracionTimer = 0;
     private float aspiracionDelayTimer = 0;
 
