@@ -35,6 +35,7 @@ public class ColisionesHandlerWaddle implements ContactListener {
 
         if (hanColisionado(contact, actor, kirby)) {
             //actor.setColPlayer(true);
+            kirby.setCol(true);
         }
     }
 
@@ -59,6 +60,7 @@ public class ColisionesHandlerWaddle implements ContactListener {
 
         if (hanColisionado(contact, actor, kirby)) {
             //actor.setColPlayer(true);
+            kirby.setCol(false);
         }
     }
 

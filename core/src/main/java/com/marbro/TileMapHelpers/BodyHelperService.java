@@ -29,12 +29,6 @@ public class BodyHelperService
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
 
-        if(!isStatic)
-        {
-            body.createFixture(fixtureDef);
-        }
-        shape.dispose();
-
         return body;
     }
 

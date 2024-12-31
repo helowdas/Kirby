@@ -32,9 +32,6 @@ public class ColisionesHandlerKirby implements ContactListener
                 actor.setOnWall(true);
             }
 
-            if (hanColisionado(contact, actor, "waddle_dee")) {
-                actor.setCol(true);
-            }
             //Aqui se pueden agregar más CATEGORY_TIPOCOLISION HACERLO EN EL END CONTACT TAMBIEN
     }
 
@@ -54,10 +51,7 @@ public class ColisionesHandlerKirby implements ContactListener
             if (hanColisionado(contact, actor, "wall")) {
                 actor.setOnWall(false);
             }
-
-            if (hanColisionado(contact, actor, "waddle_dee")) {
-                actor.setCol(false);
-            }
+            
 
             //Agregar aquí
     }
@@ -67,11 +61,6 @@ public class ColisionesHandlerKirby implements ContactListener
     public void preSolve(Contact contact, Manifold oldManifold)
     {
 
-        /*if (hanColisionado(contact, actor, "waddle_dee"))
-        {
-            //System.out.println("kirby choco con waddle");
-            //contact.setEnabled(false);
-        }*/
     }
 
     @Override

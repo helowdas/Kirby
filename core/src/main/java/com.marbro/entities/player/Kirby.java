@@ -77,8 +77,6 @@ public class Kirby extends Actor{
         this.stage = stage;
         this.body = body;
         body.getFixtureList().get(0).setUserData(this);
-        body.destroyFixture(body.getFixtureList().get(1));
-        //body.getFixtureList().get(1).setUserData(this);
         this.width = width;
         this.height = height;
 
