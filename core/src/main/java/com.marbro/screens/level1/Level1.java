@@ -120,7 +120,7 @@ public class Level1 implements Screen {
 
 
         //Cargar la musica
-        music = game.getAssetManager().get("music/RandomLevel.ogg");
+        music = MainGame.getAssetManager().get("music/RandomLevel.ogg");
 
         //crear arreglos de entidades
         entidades = new ArrayList<Entity>();

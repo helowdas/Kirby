@@ -17,11 +17,13 @@ public class MainGame extends Game
     {
         //Cargar assets
         assetManager.load("music/RandomLevel.ogg", Music.class);
+        assetManager.load("entities/platform/platformWood.png", Texture.class);
         assetManager.finishLoading(); //assets cargados
 
         batch = new SpriteBatch();
         setScreen(new MenuScreen(   this));
     }
+
 
     @Override
     public void render()

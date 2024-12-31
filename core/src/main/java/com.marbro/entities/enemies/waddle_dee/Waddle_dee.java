@@ -177,13 +177,9 @@ public class Waddle_dee extends Actor implements Enemy {
 
                 // Aplicar la fuerza al enemigo
                 body.applyLinearImpulse(new Vector2(forceX, forceY), body.getWorldCenter(), true);
-                System.out.println("fuerza");
 
-                // Aquí puedes deshabilitar la colisión por un tiempo si es necesario
-                // disableCollisionForSeconds(body, 1.5f);
 
                 pain.start();
-                // setColPlayer(false);
             }
         }
 
@@ -218,32 +214,7 @@ public class Waddle_dee extends Actor implements Enemy {
         colPlayer = colision;
     }
 
-    public void disableCollisionForSeconds(Body body, float seconds) {
-        for (Fixture fixture : body.getFixtureList()) {
-            Filter filter = fixture.getFilterData();
-            filter.maskBits &= ~CATEGORY_PLAYER; // Excluir la categoría del jugador
-            fixture.setFilterData(filter);
-        }
-
-        // Establecer un temporizador para reactivar la colisión después de 'seconds' segundos
-        Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                enableCollisionWithPlayer(body);
-            }
-        }, seconds);
-    }
-
-    public void enableCollisionWithPlayer(Body body) {
-        for (Fixture fixture : body.getFixtureList()) {
-            Filter filter = fixture.getFilterData();
-            filter.maskBits |= CATEGORY_PLAYER; // Incluir de nuevo la categoría del jugador
-            fixture.setFilterData(filter);
-        }
-    }
-
-
-
+    
     public Body getBody(){
         return body;
     }

@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.marbro.entities.Platforms.PlatformVertical;
 import com.marbro.entities.enemies.Sir_Kibble.Sir_Kibble;
 import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
 import com.marbro.entities.player.Kirby;
@@ -77,7 +78,7 @@ public class TileMapHelper
                                 rectangle.getY() + rectangle.getHeight() / 2,
                                 rectangle.getWidth(),
                                 rectangle.getHeight(),
-                                false,
+                                false, false,
                                 gameScreen.getWorld()
                             );
 
@@ -95,7 +96,7 @@ public class TileMapHelper
                                     rectangle.getY() + rectangle.getHeight() / 2,
                                     rectangle.getWidth(),
                                     rectangle.getHeight(),
-                                    false,
+                                    false, false,
                                     gameScreen.getWorld()
                             );
 
@@ -111,13 +112,42 @@ public class TileMapHelper
                                 rectangle.getY() + rectangle.getHeight() / 2,
                                 rectangle.getWidth(),
                                 rectangle.getHeight(),
-                                false,
+                                false, false,
                                 gameScreen.getWorld()
                             );
 
                             gameScreen.getEntidades().add(new Sir_Kibble(gameScreen.getWorld(), body,
                                 gameScreen.getControlador(), rectangle.width, rectangle.height, gameScreen.getKirby()));
 
+                        }
+                        else if (rectangleName.equals("platform"))
+                        {
+                            Body body = bodyHelperService.createBody(
+                                rectangle.getX() + rectangle.getWidth()/2,
+                                rectangle.getY() + rectangle.getHeight()/2,
+                                rectangle.getWidth(),
+                                rectangle.getHeight(),
+                                false, true,
+                                gameScreen.getWorld()
+                            );
+
+                            gameScreen.getEntidades().add(new PlatformVertical(gameScreen.getWorld(), body,
+                                rectangle.width, rectangle.height, false));
+
+                        }
+                        else if (rectangleName.equals("platform_invert"))
+                        {
+                            Body body = bodyHelperService.createBody(
+                                rectangle.getX() + rectangle.getWidth()/2,
+                                rectangle.getY() + rectangle.getHeight()/2,
+                                rectangle.getWidth(),
+                                rectangle.getHeight(),
+                                false, true,
+                                gameScreen.getWorld()
+                            );
+
+                            gameScreen.getEntidades().add(new PlatformVertical(gameScreen.getWorld(), body,
+                                rectangle.width, rectangle.height, true));
 
                         }
 
@@ -130,11 +160,12 @@ public class TileMapHelper
                                 rectangle.getY() + rectangle.getHeight()/2,
                                 rectangle.getWidth(),
                                 rectangle.getHeight(),
-                                true,
+                                true, false,
                                 gameScreen.getWorld()
                         );
 
                         body.getFixtureList().get(0).setUserData(UserData);
+
                     }
 
                 }

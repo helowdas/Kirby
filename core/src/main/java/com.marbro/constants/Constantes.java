@@ -23,4 +23,8 @@ public class Constantes {
 
     //constantes Volumen
     public static final float VOLUMEN = 0.01f;
+
+    //constantes movimiento plataforma
+    public static final float VELOCIDAD_PLATFORM = 1.5f;
+    public static final float DELAY = 1.0f;
 }

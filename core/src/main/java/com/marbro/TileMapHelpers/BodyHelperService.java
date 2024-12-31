@@ -10,11 +10,18 @@ public class BodyHelperService
     //atributos
     private FixtureDef fixtureDef;
 
-    public Body createBody(float x, float y, float width, float height, boolean isStatic, World world)
+    public Body createBody(float x, float y, float width, float height, boolean isStatic, boolean isKinetic, World world)
     {
         //bodydef
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = isStatic ? BodyDef.BodyType.StaticBody : BodyDef.BodyType.DynamicBody;
+        if(isKinetic)
+        {
+            bodyDef.type = BodyDef.BodyType.KinematicBody;
+        }
+        else
+        {
+            bodyDef.type = isStatic ? BodyDef.BodyType.StaticBody : BodyDef.BodyType.DynamicBody;
+        }
         bodyDef.position.set(x / PPM, y / PPM);
         bodyDef.fixedRotation = true;
 
