@@ -64,12 +64,10 @@ public class ColisionesHandlerKirby implements ContactListener
             if(normal.x < 0)
             {
                 actor.setOnWallRight(true);
-                System.out.println("Derecha");
             }
             else if(normal.x > 0)
             {
                 actor.setOnWallLeft(true);
-                System.out.println("izquierda");
             }
         }
     }

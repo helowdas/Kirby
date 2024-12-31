@@ -166,9 +166,6 @@ public class Kirby extends Actor{
 
     private void manejarMovimiento(Vector2 vel)
     {
-        System.out.println("onWallRight  " + onWallRight);
-        System.out.println("onWallLeft  " + onWallLeft);
-
         if (Gdx.input.isKeyPressed(Input.Keys.D) && !onWallRight)
         {
             moverDerecha(vel);
