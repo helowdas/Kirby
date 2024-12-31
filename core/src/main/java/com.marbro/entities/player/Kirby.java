@@ -49,6 +49,7 @@ public class Kirby extends Actor{
     public boolean onWallRight = false;
     public boolean onWallLeft = false;
     public boolean onPlatform = false;
+    public boolean fly = false;
     public boolean col = false;
 
     //Controlador de colisiones
@@ -161,7 +162,7 @@ public class Kirby extends Actor{
         manejarSalto(vel);
         manejarEstadoEnCaida(vel);
         ajustarEstadoQuieto(vel);
-        verificarCondicionesEspeciales();
+        verificarCondicionesEspeciales(vel);
         manejarAspiracion(delta);
     }
 
@@ -214,12 +215,11 @@ public class Kirby extends Actor{
     {
         if (!jump && onGround && Gdx.input.isKeyJustPressed(Input.Keys.W))
         {
-            System.out.println("salto");
             body.applyLinearImpulse(0, IMPULSE_SALTO, body.getPosition().x, body.getPosition().y, true);
             jump = true;
         }
 
-        if (estado != EstadoKirby.ASPIRANDO && body.getLinearVelocity().y > 0 && !onPlatform) {
+        if (estado != EstadoKirby.ASPIRANDO && body.getLinearVelocity().y > 0 && !onPlatform && !fly) {
             estado = EstadoKirby.SALTANDO;
         }
 
@@ -227,7 +227,6 @@ public class Kirby extends Actor{
 
     private void manejarEstadoEnCaida(Vector2 vel) {
         if (estado != EstadoKirby.ASPIRANDO) {
-            //System.out.println(vel.y);
             if (jump && -3.5f < vel.y && vel.y < 0f) {
                     estado = EstadoKirby.CAYENDO1;
             } else {
@@ -249,23 +248,35 @@ public class Kirby extends Actor{
         if (vel.x == 0 && vel.y == 0 && onGround && estado != EstadoKirby.ASPIRANDO) {
             estado = EstadoKirby.QUIETO;
             jump = false; // Resetear salto al tocar el suelo
-            System.out.println("salto reset");
         }
         else if (onPlatform && vel.x == 0 && estado != EstadoKirby.ASPIRANDO)
         {
             estado = EstadoKirby.QUIETO;
             jump = false;
-            System.out.println("salto reset");
         }
     }
 
-    private void verificarCondicionesEspeciales() {
+    private void verificarCondicionesEspeciales(Vector2 vel) {
         if (onSpike || body.getPosition().y < -8) {
             life = false;
         }
 
-        //if (onWall) {
-            // Lógica cuando choca con una pared
+        if((jump && Gdx.input.isKeyPressed(Input.Keys.W)) || (Gdx.input.isKeyPressed(Input.Keys.W) && vel.y < 0))
+        {
+            if(vel.y <= 1.8f)
+            {
+                jump = true;
+                estado = EstadoKirby.VOLAR;
+                fly = true;
+                body.setLinearVelocity(vel.x, VEL_FLY);
+
+            }
+
+        }
+        else
+        {
+            fly = false;
+        }
 
     }
 

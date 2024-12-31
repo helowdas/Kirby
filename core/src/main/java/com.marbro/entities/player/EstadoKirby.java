@@ -6,5 +6,8 @@ public enum EstadoKirby {
     SALTANDO,
     CAYENDO1,
     CAYENDO2,
-    ASPIRANDO;
+    ASPIRANDO,
+    PREVOLAR,
+    VOLAR;
+
 }

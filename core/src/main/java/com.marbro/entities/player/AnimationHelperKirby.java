@@ -15,6 +15,9 @@ public class AnimationHelperKirby {
     private Animation_Base_Loop fall2;
     private Animation_Base_Loop jumping;
     private Animation_Base_Normal abs;
+    private Animation_Base_Loop fly1;
+    private Animation_Base_Loop fly2;
+
 
     public AnimationHelperKirby() {
         loadAnimations();
@@ -51,6 +54,14 @@ public class AnimationHelperKirby {
         Array<TextureRegion> abs = new Array<>();
         loadTexture(abs, "entities/player/kirby_abs/kirby_abs_", 1, 7);
         this.abs = new Animation_Base_Normal(abs, 0.08f);
+
+        Array<TextureRegion> fly1 = new Array<>();
+        loadTexture(fly1, "entities/player/kirby_fly/", 0, 3);
+        this.fly1 = new Animation_Base_Loop(fly1, 0.1f);
+
+        Array<TextureRegion> fly2 = new Array<>();
+        loadTexture(fly2, "entities/player/kirby_fly/", 4, 9);
+        this.fly2 = new Animation_Base_Loop(fly2, 0.08f);
     }
 
     public TextureRegion getFrame(EstadoKirby estado) {
@@ -71,6 +82,12 @@ public class AnimationHelperKirby {
             case ASPIRANDO:
                 frame = abs.getFrame();
                 break;
+            case VOLAR:
+                frame = fly2.getFrame();
+                break;
+            case PREVOLAR:
+                frame = fly1.getFrame();
+                break;
             default:
                 frame = stand.getFrame();
                 break;
@@ -85,5 +102,7 @@ public class AnimationHelperKirby {
         fall2.update(delta);
         jumping.update(delta);
         abs.update(delta);
+        fly1.update(delta);
+        fly2.update(delta);
     }
 }
