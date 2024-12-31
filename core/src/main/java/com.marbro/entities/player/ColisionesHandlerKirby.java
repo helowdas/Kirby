@@ -1,5 +1,6 @@
 package com.marbro.entities.player;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
 import static com.marbro.constants.Constantes.*;
@@ -27,10 +28,6 @@ public class ColisionesHandlerKirby implements ContactListener
                 actor.setOnSpike(true);
             }
 
-            if (hanColisionado(contact, actor, "wall"))
-            {
-                actor.setOnWall(true);
-            }
 
             //Aqui se pueden agregar más CATEGORY_TIPOCOLISION HACERLO EN EL END CONTACT TAMBIEN
     }
@@ -48,10 +45,11 @@ public class ColisionesHandlerKirby implements ContactListener
                 actor.setOnSpike(false);
             }
 
-            if (hanColisionado(contact, actor, "wall")) {
-                actor.setOnWall(false);
+            if(hanColisionado(contact, actor, "wall"))
+            {
+                actor.setOnWallRight(false);
+                actor.setOnWallLeft(false);
             }
-            
 
             //Agregar aquí
     }
@@ -60,7 +58,20 @@ public class ColisionesHandlerKirby implements ContactListener
     @Override
     public void preSolve(Contact contact, Manifold oldManifold)
     {
-
+        if (hanColisionado(contact, actor, "wall"))
+        {
+            Vector2 normal = oldManifold.getLocalNormal();
+            if(normal.x < 0)
+            {
+                actor.setOnWallRight(true);
+                System.out.println("Derecha");
+            }
+            else if(normal.x > 0)
+            {
+                actor.setOnWallLeft(true);
+                System.out.println("izquierda");
+            }
+        }
     }
 
     @Override

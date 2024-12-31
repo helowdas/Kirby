@@ -46,7 +46,8 @@ public class Kirby extends Actor{
     //Colisiones del jugador
     public boolean onGround = false;
     public boolean onSpike = false;
-    public boolean onWall = false;
+    public boolean onWallRight = false;
+    public boolean onWallLeft = false;
     public boolean col = false;
 
     //Controlador de colisiones
@@ -163,12 +164,21 @@ public class Kirby extends Actor{
         manejarAspiracion(delta);
     }
 
-    private void manejarMovimiento(Vector2 vel) {
-        if (Gdx.input.isKeyPressed(Input.Keys.D) && !onWall) {
+    private void manejarMovimiento(Vector2 vel)
+    {
+        System.out.println("onWallRight  " + onWallRight);
+        System.out.println("onWallLeft  " + onWallLeft);
+
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && !onWallRight)
+        {
             moverDerecha(vel);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.A) && !onWall) {
+            onWallLeft = false;
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.A) && !onWallLeft) {
             moverIzquierda(vel);
-        } else {
+            onWallRight = false;
+        }
+        else {
             mantenerseQuieto(vel);
         }
 
@@ -243,9 +253,9 @@ public class Kirby extends Actor{
             life = false;
         }
 
-        if (onWall) {
+        //if (onWall) {
             // Lógica cuando choca con una pared
-        }
+
     }
 
     private void manejarAspiracion(float delta) {
@@ -309,13 +319,19 @@ public class Kirby extends Actor{
         onSpike = colision;
     }
 
-    public void setOnWall(boolean colision) {
-        onWall = colision;
+    public void setOnWallRight(boolean colision) {
+        this.onWallRight = colision;
+    }
+
+    public void setOnWallLeft(boolean onWallLeft) {
+        this.onWallLeft = onWallLeft;
     }
 
     public void setCol(boolean col) {
         this.col = col;
     }
 
-
+    public int getLastmove() {
+        return lastmove;
+    }
 }
