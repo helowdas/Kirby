@@ -17,6 +17,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -25,6 +26,7 @@ import com.marbro.MainGame;
 import com.marbro.TileMapHelpers.TileMapHelper;
 import com.marbro.colisions.Controlador_Colisiones;
 import com.marbro.entities.enemies.Factory.EnemyFactory;
+import com.marbro.entities.enemies.Factory.Entity;
 import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
 import com.marbro.entities.player.Kirby;
 import com.marbro.scenes.Hud;
@@ -65,7 +67,8 @@ public class Level1 implements Screen {
 
     //Entidades del juego
     private Kirby kirby;
-    private ArrayList<Waddle_dee> waddle_dees;
+    private ArrayList<Entity> entidades;
+
 
     //Animaciones
     private TextureAtlas atlas;
@@ -120,7 +123,7 @@ public class Level1 implements Screen {
         music = game.getAssetManager().get("music/RandomLevel.ogg");
 
         //crear arreglos de entidades
-        waddle_dees = new ArrayList<Waddle_dee>();
+        entidades = new ArrayList<Entity>();
 
 
     }
@@ -142,10 +145,9 @@ public class Level1 implements Screen {
         //waddle = (Waddle_dee) EnemyFactory.createEnemy("Waddle_dee", world, stage, 10, 8, controlador);
         //stage.addActor(waddle);
 
-        for (Waddle_dee waddle_dee : waddle_dees)
+        for (Entity entidad : entidades)
         {
-            stage.addActor(waddle_dee);
-
+            stage.addActor((Actor) entidad);
         }
 
 
@@ -222,15 +224,15 @@ public class Level1 implements Screen {
         stopMusic();
         kirby.detach();
         kirby.remove();
-        if (waddle_dees != null)
+        if (entidades != null)
         {
-            for (Waddle_dee waddle_dee : waddle_dees)
+            for (Entity entidad : entidades)
             {
-                waddle_dee.detach();
-                waddle_dee.remove();
+                entidad.detach();
+
             }
             //!!Vaciar la lista, muy importante
-            waddle_dees.clear();
+            entidades.clear();
 
         }
     }
@@ -279,7 +281,7 @@ public class Level1 implements Screen {
     }
     //get entities
 
-    public ArrayList<Waddle_dee> getWaddle_dees() {
-        return waddle_dees;
+    public ArrayList<Entity> getEntidades() {
+        return entidades;
     }
 }

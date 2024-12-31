@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.marbro.entities.enemies.Sir_Kibble.Sir_Kibble;
 import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
 import com.marbro.entities.player.Kirby;
 import com.marbro.screens.level1.Level1;
@@ -98,11 +99,28 @@ public class TileMapHelper
                                     gameScreen.getWorld()
                             );
 
-                            gameScreen.getWaddle_dees().add(new Waddle_dee(gameScreen.getWorld(), body,
+                            gameScreen.getEntidades().add(new Waddle_dee(gameScreen.getWorld(), body,
                                     gameScreen.getControlador(), rectangle.width, rectangle.height, gameScreen.getKirby()));
 
 
                         }
+                        else if(rectangleName.equals("Sir_Kibble"))
+                        {
+                            Body body = bodyHelperService.createBody(
+                                rectangle.getX() + rectangle.getWidth() / 2,
+                                rectangle.getY() + rectangle.getHeight() / 2,
+                                rectangle.getWidth(),
+                                rectangle.getHeight(),
+                                false,
+                                gameScreen.getWorld()
+                            );
+
+                            gameScreen.getEntidades().add(new Sir_Kibble(gameScreen.getWorld(), body,
+                                gameScreen.getControlador(), rectangle.width, rectangle.height, gameScreen.getKirby()));
+
+
+                        }
+
 
                     }
                     else
