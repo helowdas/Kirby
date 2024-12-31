@@ -31,6 +31,7 @@ public class Sir_Kibble extends Actor implements Enemy {
     private Animation_Base_Loop walk;
     private Animation_Base_Loop fall;
     private Animation_Base_Loop hurt;
+    private AnimationHelperSirKibble animations;
 
     //Booleanos de estado
     private boolean jump;
@@ -62,67 +63,6 @@ public class Sir_Kibble extends Actor implements Enemy {
     private ActionTimer contador;
     private ActionTimer pain;
 
-    //constructor
-
-    /*
->>>>>>> Stashed changes
-    public Sir_Kibble(World world, Stage stage, float x, float y, Controlador_Colisiones controlador)
-    {
-        this.world = world;
-
-        //Cargar las animaciones
-        loadAnimations();
-        defBody(x,y);
-
-        this.estado = EstadoSirKibble.CAYENDO;
-
-        life = true;
-
-        this.controlador = controlador;
-
-        createContactListener();
-
-        contador = new ActionTimer();
-        pain = new ActionTimer();
-
-<<<<<<< Updated upstream
-    }
-
-    public void defBody(float x, float y) {
-        // Define las propiedades del cuerpo
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(x, y);
-
-        // Añade al mundo el nuevo cuerpo creado
-        body = world.createBody(bodyDef);
-
-        // Atributos físicos del cuerpo
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(0.25f, 0.25f); // Tamaño del body (hitbox)
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.density = 0.0f;
-        fixtureDef.friction = 5f;
-        fixtureDef.restitution = 0.3f;
-
-        //categoryBits: es una etiqueta a una fixture, que será utilizada para manejar colisiones
-        fixtureDef.filter.categoryBits = CATEGORY_ENEMY;
-
-        //maskBits: define con qué otras entidades u objetos puede colisiones una fixture
-        //fixtureDef.filter.maskBits = CATEGORY_PLAYER | CATEGORY_BLOCK | CATEGORY_WALL;
-
-        fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(this); // Asegúrate de que `userData` se asigna correctamente
-        fixture2 = body.createFixture(fixtureDef);
-        fixture2.setUserData("waddle_dee");
-        shape.dispose();
-    }
-
-    private void createContactListener(){
-=======
-    }*/
 
     public Sir_Kibble(World world, Body body,Controlador_Colisiones controlador, float width, float height, Kirby kirby)
     {
@@ -132,7 +72,7 @@ public class Sir_Kibble extends Actor implements Enemy {
         this.width = width;
         this.height = height;
 
-        loadAnimations();
+        animations = new AnimationHelperSirKibble();
 
         this.estado = EstadoSirKibble.CAYENDO;
 
@@ -158,9 +98,7 @@ public class Sir_Kibble extends Actor implements Enemy {
             contador.start();
         }
         //Actualizar las animaciones
-        walk.update(delta);
-        hurt.update(delta);
-        fall.update(delta);
+        animations.update(delta);
         updateEnemyState();
     }
 
@@ -196,21 +134,10 @@ public class Sir_Kibble extends Actor implements Enemy {
         this.remove(); // Asegúrate de eliminar la entidad del mundo del juego, si es necesario
     }
 
-
     @Override
     public TextureRegion drawEnemy() {
         TextureRegion frame;
-        switch (estado) {
-            case CAYENDO:
-                frame = fall.getFrame();
-                break;
-            case HURT:
-                frame = hurt.getFrame();
-                break;
-            default:
-                frame = walk.getFrame();
-                break;
-        }
+        frame = animations.getFrame(estado);
 
         // Reflejar la imagen de Kirby si está moviéndose a la izquierda
         if (lastmove == -1 && !frame.isFlipX()) {
@@ -218,7 +145,6 @@ public class Sir_Kibble extends Actor implements Enemy {
         } else if (lastmove == 1 && frame.isFlipX()) {
             frame.flip(true, false);
         }
-
         return frame;
     }
 
@@ -315,26 +241,6 @@ public class Sir_Kibble extends Actor implements Enemy {
         }
     }
 
-    public void loadTexture(Array <TextureRegion> animation, String path, int i, int f){
-        for (int k = i; i <= f; i++){
-            Texture texture = new Texture(Gdx.files.internal(path + i + ".png"));
-            animation.add(new TextureRegion(texture));
-        }
-    }
-
-    public void loadAnimations() {
-        Array<TextureRegion> walk_waddle = new Array<>();
-        loadTexture(walk_waddle, "entities/Sir_Kibble/caminar/caminar_kibble_", 0, 4);
-        this.walk = new Animation_Base_Loop( walk_waddle,0.1f);
-
-        Array<TextureRegion> fall_waddle = new Array<>();
-        loadTexture(fall_waddle, "entities/Sir_Kibble/fall/fall_", 0, 0);
-        this.fall = new Animation_Base_Loop(fall_waddle,0.1f);
-
-        Array<TextureRegion> hurt_waddle = new Array<>();
-        loadTexture(hurt_waddle, "entities/Sir_Kibble/hurt/hurt_", 0, 0);
-        this.hurt = new Animation_Base_Loop(hurt_waddle,0.1f);
-    }
 
     public Body getBody(){
         return body;

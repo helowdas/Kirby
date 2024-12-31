@@ -23,6 +23,7 @@ public class Waddle_dee extends Actor implements Enemy {
     private Animation_Base_Loop walk;
     private Animation_Base_Loop fall;
     private Animation_Base_Loop hurt;
+    private AnimationHelperWaddle animations;
 
     //Booleanos de estado
     private boolean jump;
@@ -65,7 +66,7 @@ public class Waddle_dee extends Actor implements Enemy {
         this.width = width;
         this.height = height;
 
-        loadAnimations();
+        animations = new AnimationHelperWaddle();
 
         this.estado = EstadoWaddleDee.CAYENDO;
 
@@ -90,9 +91,7 @@ public class Waddle_dee extends Actor implements Enemy {
             contador.start();
         }
         //Actualizar las animaciones
-        walk.update(delta);
-        hurt.update(delta);
-        fall.update(delta);
+        animations.update(delta);
         updateEnemyState();
     }
 
@@ -132,17 +131,7 @@ public class Waddle_dee extends Actor implements Enemy {
     @Override
     public TextureRegion drawEnemy() {
         TextureRegion frame;
-        switch (estado) {
-            case CAYENDO:
-                frame = fall.getFrame();
-                break;
-            case HURT:
-                frame = hurt.getFrame();
-                break;
-            default:
-                frame = walk.getFrame();
-                break;
-        }
+        frame = animations.getFrame(estado);
 
         // Reflejar la imagen de Kirby si está moviéndose a la izquierda
         if (lastmove == -1 && !frame.isFlipX()) {
@@ -244,26 +233,7 @@ public class Waddle_dee extends Actor implements Enemy {
         }
     }
 
-    public void loadTexture(Array <TextureRegion> animation, String path, int i, int f){
-        for (int k = i; i <= f; i++){
-            Texture texture = new Texture(Gdx.files.internal(path + i + ".png"));
-            animation.add(new TextureRegion(texture));
-        }
-    }
 
-    public void loadAnimations() {
-        Array<TextureRegion> walk_waddle = new Array<>();
-        loadTexture(walk_waddle, "entities/waddle_dee/waddle_dee_walk/waddle_dee_walk_", 1, 4);
-        this.walk = new Animation_Base_Loop( walk_waddle,0.1f);
-
-        Array<TextureRegion> fall_waddle = new Array<>();
-        loadTexture(fall_waddle, "entities/waddle_dee/waddle_dee_fall/waddle_dee_fall_", 1, 2);
-        this.fall = new Animation_Base_Loop(fall_waddle,0.1f);
-
-        Array<TextureRegion> hurt_waddle = new Array<>();
-        loadTexture(hurt_waddle, "entities/waddle_dee/waddle_dee_hurt/waddle_dee_hurt_", 1, 1);
-        this.hurt = new Animation_Base_Loop(hurt_waddle,0.1f);
-    }
 
     public Body getBody(){
         return body;
