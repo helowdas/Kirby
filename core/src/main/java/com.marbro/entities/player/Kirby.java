@@ -48,6 +48,7 @@ public class Kirby extends Actor{
     public boolean onSpike = false;
     public boolean onWallRight = false;
     public boolean onWallLeft = false;
+    public boolean onPlatform = false;
     public boolean col = false;
 
     //Controlador de colisiones
@@ -187,7 +188,7 @@ public class Kirby extends Actor{
     private void moverDerecha(Vector2 vel) {
         body.setLinearVelocity(VELOCIDAD, vel.y);
         lastmove = 1;
-        if (onGround && !jump && estado != EstadoKirby.ASPIRANDO) {
+        if (onGround && onPlatform && !jump && estado != EstadoKirby.ASPIRANDO) {
             estado = EstadoKirby.CAMINANDO;
         }
     }
@@ -195,7 +196,7 @@ public class Kirby extends Actor{
     private void moverIzquierda(Vector2 vel) {
         body.setLinearVelocity(-VELOCIDAD, vel.y);
         lastmove = -1;
-        if (onGround && !jump && estado != EstadoKirby.ASPIRANDO) {
+        if (onGround && onPlatform && !jump && estado != EstadoKirby.ASPIRANDO) {
             estado = EstadoKirby.CAMINANDO;
         }
     }
@@ -209,14 +210,19 @@ public class Kirby extends Actor{
         }
     }
 
-    private void manejarSalto(Vector2 vel) {
-        if (!jump && onGround && Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+    private void manejarSalto(Vector2 vel)
+    {
+        if (!jump && onGround && Gdx.input.isKeyJustPressed(Input.Keys.W))
+        {
+            System.out.println("salto");
             body.applyLinearImpulse(0, IMPULSE_SALTO, body.getPosition().x, body.getPosition().y, true);
             jump = true;
         }
-        if (estado != EstadoKirby.ASPIRANDO && body.getLinearVelocity().y > 0) {
+
+        if (estado != EstadoKirby.ASPIRANDO && body.getLinearVelocity().y > 0 && !onPlatform) {
             estado = EstadoKirby.SALTANDO;
         }
+
     }
 
     private void manejarEstadoEnCaida(Vector2 vel) {
@@ -238,10 +244,18 @@ public class Kirby extends Actor{
 
 
 
-    private void ajustarEstadoQuieto(Vector2 vel) {
+    private void ajustarEstadoQuieto(Vector2 vel)
+    {
         if (vel.x == 0 && vel.y == 0 && onGround && estado != EstadoKirby.ASPIRANDO) {
             estado = EstadoKirby.QUIETO;
             jump = false; // Resetear salto al tocar el suelo
+            System.out.println("salto reset");
+        }
+        else if (onPlatform && vel.x == 0 && estado != EstadoKirby.ASPIRANDO)
+        {
+            estado = EstadoKirby.QUIETO;
+            jump = false;
+            System.out.println("salto reset");
         }
     }
 
@@ -330,5 +344,9 @@ public class Kirby extends Actor{
 
     public int getLastmove() {
         return lastmove;
+    }
+
+    public void setOnPlatform(boolean onPlatform) {
+        this.onPlatform = onPlatform;
     }
 }

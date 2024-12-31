@@ -28,7 +28,12 @@ public class ColisionesHandlerKirby implements ContactListener
                 actor.setOnSpike(true);
             }
 
-
+            if (hanColisionado(contact, actor, "platform"))
+            {
+                actor.setOnPlatform(true);
+                actor.setOnGround(true);
+                System.out.println("hola");
+            }
             //Aqui se pueden agregar más CATEGORY_TIPOCOLISION HACERLO EN EL END CONTACT TAMBIEN
     }
 
@@ -49,6 +54,13 @@ public class ColisionesHandlerKirby implements ContactListener
             {
                 actor.setOnWallRight(false);
                 actor.setOnWallLeft(false);
+            }
+
+            if (hanColisionado(contact, actor, "platform"))
+            {
+                actor.setOnPlatform(false);
+                actor.setOnGround(false);
+                System.out.println("hola final");
             }
 
             //Agregar aquí

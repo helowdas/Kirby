@@ -42,26 +42,34 @@ public class PlatformVertical extends Actor implements Entity
         this.invertir = invertir;
 
         //delay inicial
-        float delayInicial = (float) Math.random()/2;
+        float delayInicial = (float) Math.random();
         defMovimiento(body);
+
         if(!invertir)
         {
-            this.addAction(
-                Actions.forever(
-                    Actions.sequence(Actions.delay(delayInicial),Actions.run(movimientoAbajo), Actions.delay(DELAY),
+            this.addAction(Actions.sequence(
+                Actions.delay(delayInicial),
+                Actions.forever
+                    (
+                    Actions.sequence(Actions.run(movimientoAbajo), Actions.delay(DELAY),
                         Actions.run(movimientoArriba), Actions.delay(DELAY), Actions.run(movimientoArriba),
                         Actions.delay(DELAY), Actions.run(movimientoAbajo), Actions.delay(DELAY))
+                    )
                 )
             );
+
+
         }
         else
         {
-            this.addAction(
+            this.addAction(Actions.sequence(
+                Actions.delay(delayInicial),
                 Actions.forever(
-                    Actions.sequence(Actions.delay(delayInicial),Actions.run(movimientoArriba), Actions.delay(DELAY),
+                    Actions.sequence(Actions.run(movimientoArriba), Actions.delay(DELAY),
                         Actions.run(movimientoAbajo), Actions.delay(DELAY), Actions.run(movimientoAbajo),
                         Actions.delay(DELAY), Actions.run(movimientoArriba), Actions.delay(DELAY))
                 )
+            )
             );
         }
 
