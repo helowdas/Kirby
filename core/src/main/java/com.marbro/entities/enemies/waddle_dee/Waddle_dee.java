@@ -1,14 +1,10 @@
 package com.marbro.entities.enemies.waddle_dee;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.marbro.animation.Animation_Base_Loop;
 import com.marbro.colisions.Controlador_Colisiones;
@@ -54,6 +50,10 @@ public class Waddle_dee extends Actor implements Enemy {
     //Contador
     private ActionTimer contador;
     private ActionTimer pain;
+
+    // Atributos para manejar el tiempo
+     private long lastCollisionTime = 0;
+     private static final long COLLISION_COOLDOWN = 1500; // 1.5 segundos en milisegundos
 
     //constructor
     public Waddle_dee(World world, Body body,
@@ -165,19 +165,26 @@ public class Waddle_dee extends Actor implements Enemy {
         }
 
         if (colPlayer) {
-            // Dirección de retroceso basada en la dirección actual del movimiento
-            float forceX = lastmove == -1 ? 2f : -2f;
-            float forceY = 1f;
 
-            // Aplicar la fuerza al enemigo
-            body.applyLinearImpulse(new Vector2(forceX, forceY), body.getWorldCenter(), true);
-            System.out.println("fuerza");
+            // Verificar si ha pasado suficiente tiempo desde la última colisión
+            if (getTimeCollision()) {
+                // Actualizar el tiempo de la última colisión
+                lastCollisionTime = getCurrentTime();
 
-            // Deshabilitar la colisión entre el enemigo y el jugador por 3 segundos
-            //disableCollisionForSeconds(body, 1.5f);
+                // Dirección de retroceso basada en la dirección actual del movimiento
+                float forceX = lastmove == -1 ? 4.5f : -4.5f;
+                float forceY = 3f;
 
-            pain.start();
-            //setColPlayer(false);*/
+                // Aplicar la fuerza al enemigo
+                body.applyLinearImpulse(new Vector2(forceX, forceY), body.getWorldCenter(), true);
+                System.out.println("fuerza");
+
+                // Aquí puedes deshabilitar la colisión por un tiempo si es necesario
+                // disableCollisionForSeconds(body, 1.5f);
+
+                pain.start();
+                // setColPlayer(false);
+            }
         }
 
         if (pain.getElapsedTime() > 1f) {
@@ -246,7 +253,17 @@ public class Waddle_dee extends Actor implements Enemy {
         detach();
     }
 
+    public boolean getTimeCollision()
+    {
+        return getCurrentTime() - lastCollisionTime > COLLISION_COOLDOWN;
+    }
 
+    public long getCurrentTime()
+    {
+        long currentTime = System.currentTimeMillis();
+       return currentTime;
+    }
 }
+
 
 
