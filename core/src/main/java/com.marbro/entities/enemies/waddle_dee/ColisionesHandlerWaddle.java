@@ -3,11 +3,20 @@ package com.marbro.entities.enemies.waddle_dee;
 import com.badlogic.gdx.physics.box2d.*;
 import com.marbro.entities.player.Kirby;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+
 import static com.marbro.constants.Constantes.*;;
 
 public class ColisionesHandlerWaddle implements ContactListener {
     private Waddle_dee actor;
     private Kirby kirby;
+    // Atributos para controlar el tiempo de desactivación
+    private HashSet<Contact> disabledContacts = new HashSet<>();
+    private HashMap<Contact, Long> contactDisableTimes = new HashMap<>();
+    private static final long DISABLE_DURATION = 1500; // Duración en milisegundos (3 segundos)
 
     public ColisionesHandlerWaddle(Waddle_dee actor, Kirby kirby)
     {
@@ -33,8 +42,9 @@ public class ColisionesHandlerWaddle implements ContactListener {
             actor.setOnWall(true);
         }
 
-        if (hanColisionado(contact, actor, kirby)) {
-            //actor.setColPlayer(true);
+        if(hanColisionado(contact, actor, kirby))
+        {
+            actor.setColPlayer(true);
             kirby.setCol(true);
         }
     }
@@ -58,24 +68,27 @@ public class ColisionesHandlerWaddle implements ContactListener {
             actor.setOnWall(true);
         }
 
-        if (hanColisionado(contact, actor, kirby)) {
-            //actor.setColPlayer(true);
+        if(hanColisionado(contact, actor, kirby))
+        {
+            actor.setColPlayer(false);
             kirby.setCol(false);
         }
+
     }
 
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold)
     {
-        if (hanColisionado(contact, actor, kirby))
-        {
-            contact.setEnabled(false);
-        }
+
+
     }
 
     @Override
-    public void postSolve(Contact contact, ContactImpulse impulse) {}
+    public void postSolve(Contact contact, ContactImpulse impulse)
+    {
+
+    }
 
     private boolean hanColisionado(Contact contact, Object userA, Object userB)
     {
@@ -84,6 +97,5 @@ public class ColisionesHandlerWaddle implements ContactListener {
     }
 
 }
-
 
 

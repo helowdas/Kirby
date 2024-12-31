@@ -76,6 +76,7 @@ public class Waddle_dee extends Actor implements Enemy {
 
         contador = new ActionTimer();
         pain = new ActionTimer();
+        colPlayer = false;
     }
 
     private void createContactListener(Kirby kirby){
@@ -176,21 +177,22 @@ public class Waddle_dee extends Actor implements Enemy {
 
         if (colPlayer) {
             // Dirección de retroceso basada en la dirección actual del movimiento
-            float forceX = lastmove == -1 ? 4f : -4f;
+            float forceX = lastmove == -1 ? 2f : -2f;
             float forceY = 1f;
 
             // Aplicar la fuerza al enemigo
             body.applyLinearImpulse(new Vector2(forceX, forceY), body.getWorldCenter(), true);
-            System.out.println("chocaron");
+            System.out.println("fuerza");
 
             // Deshabilitar la colisión entre el enemigo y el jugador por 3 segundos
             //disableCollisionForSeconds(body, 1.5f);
 
             pain.start();
+            //setColPlayer(false);*/
         }
 
         if (pain.getElapsedTime() > 1f) {
-            enableCollisionWithPlayer(body);
+            //enableCollisionWithPlayer(body);
             pain.reset();
             pain.pause();
         }
@@ -273,6 +275,8 @@ public class Waddle_dee extends Actor implements Enemy {
     public void removeEnemy(){
         detach();
     }
+
+
 }
 
 
