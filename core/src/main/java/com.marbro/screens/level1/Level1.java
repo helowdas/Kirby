@@ -84,13 +84,6 @@ public class Level1 implements Screen {
     private float camX;
     private float camY;
 
-    //atributos de animacion
-    private Array<TextureRegion> walk;
-    private Array<TextureRegion> stand;
-    private Array<TextureRegion> fall1;
-    private Array<TextureRegion> fall2;
-    private Array<TextureRegion> jump;
-    private Array<TextureRegion> abs;
 
 
     public Level1(MainGame game) {
