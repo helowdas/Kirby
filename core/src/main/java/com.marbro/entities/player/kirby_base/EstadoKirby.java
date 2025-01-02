@@ -1,4 +1,4 @@
-package com.marbro.entities.player;
+package com.marbro.entities.player.kirby_base;
 
 public enum EstadoKirby {
     QUIETO,

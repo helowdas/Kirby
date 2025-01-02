@@ -91,6 +91,11 @@ public class PlatformVertical extends Actor implements Entity
         this.remove(); // Asegúrate de eliminar la entidad del mundo del juego, si es necesario
     }
 
+    @Override
+    public Body getBody() {
+        return body;
+    }
+
     public void defMovimiento(Body body)
     {
         this.movimientoArriba = new Runnable()

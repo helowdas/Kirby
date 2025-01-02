@@ -1,16 +1,11 @@
 package com.marbro.entities.enemies.Sir_Kibble;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import com.badlogic.gdx.scenes.scene2d.Stage;
 
-
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.marbro.animation.Animation_Base_Loop;
 import com.marbro.colisions.Controlador_Colisiones;
@@ -18,8 +13,8 @@ import com.marbro.contador.ActionTimer;
 import com.marbro.entities.enemies.Factory.Enemy;
 
 
-
 import com.marbro.entities.player.Kirby;
+import com.marbro.entities.player.kirby_base.Kirby_base;
 
 
 
@@ -85,8 +80,7 @@ public class Sir_Kibble extends Actor implements Enemy {
         pain = new ActionTimer();
     }
 
-    private void createContactListener(Kirby kirby){
-
+    private void createContactListener(Kirby kirbyBase){
         ColisionesSirKibble colisionesHandler = new ColisionesSirKibble(this);
         controlador.addListener(colisionesHandler);
     }
@@ -244,6 +238,15 @@ public class Sir_Kibble extends Actor implements Enemy {
 
     public Body getBody(){
         return body;
+    }
+
+    public String getUdata(){
+        return (String) body.getFixtureList().get(0).getUserData();
+    }
+
+    @Override
+    public void setHerido(boolean hurt) {
+        System.out.println("g");
     }
 
     public void removeEnemy(){

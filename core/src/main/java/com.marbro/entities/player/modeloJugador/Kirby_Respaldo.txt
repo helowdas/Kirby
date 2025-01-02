@@ -1,4 +1,4 @@
-package com.kirby.entities.player.modeloJugador;
+package com.kirbyBase.entities.player.modeloJugador;
 
 
 //Cambiar el nombre a Kirby

@@ -5,12 +5,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Array;
 import com.marbro.animation.Animation_Base_Loop;
 import com.marbro.colisions.Controlador_Colisiones;
 import com.marbro.contador.ActionTimer;
 import com.marbro.entities.enemies.Factory.Enemy;
 import com.marbro.entities.player.Kirby;
+import com.marbro.entities.player.kirby_base.Kirby_base;
 
 import static com.marbro.constants.Constantes.*;
 
@@ -54,6 +55,9 @@ public class Waddle_dee extends Actor implements Enemy {
     // Atributos para manejar el tiempo
      private long lastCollisionTime = 0;
      private static final long COLLISION_COOLDOWN = 1500; // 1.5 segundos en milisegundos
+
+    //Estados waddle
+    private boolean herido;
 
     //constructor
     public Waddle_dee(World world, Body body,
@@ -113,20 +117,20 @@ public class Waddle_dee extends Actor implements Enemy {
         batch.draw(frame, getX(), getY(), getWidth(), getHeight());
     }
 
-    public void detach()
-    {
-        for (Fixture aux:body.getFixtureList() )
-        {
-            body.destroyFixture(aux);
-        }
-
+    public void detach() {
         if (body != null) {
+            Array<Fixture> fixtures = new Array<>(body.getFixtureList());
+            for (Fixture fixture : fixtures) {
+                body.destroyFixture(fixture);
+            }
             world.destroyBody(body);
             body = null;
+            fixture = null;
+            this.remove(); // Eliminar la entidad del mundo de juego
         }
-
-        this.remove(); // Asegúrate de eliminar la entidad del mundo del juego, si es necesario
     }
+
+
 
 
     @Override
@@ -214,9 +218,18 @@ public class Waddle_dee extends Actor implements Enemy {
         colPlayer = colision;
     }
 
-    
+
     public Body getBody(){
         return body;
+    }
+
+    public String getUdata(){
+        return body.getFixtureList().get(0).getUserData().toString();
+    }
+
+    @Override
+    public void setHerido(boolean herido) {
+        this.herido = herido;
     }
 
 
