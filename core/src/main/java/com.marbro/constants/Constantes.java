@@ -11,7 +11,7 @@ public class Constantes {
     public static final short CATEGORY_WALL= 0x0010;
 
     //constantes de ZOOM
-    public static  final float ZOOM = 0.25f;
+    public static  final float ZOOM = 0.5f;
 
     //constantes de Gravedad
     public static  final float GRAVEDAD = -10f;
