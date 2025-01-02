@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.marbro.MainGame;
 import com.marbro.screens.level1.Level1;
+import com.marbro.screens.modeloScreen.AboutScreen;
 
 import java.util.ArrayList;
 
@@ -53,10 +54,15 @@ public class MenuScreen implements Screen {
         buttonNames.add("Jugar");
 
         //Boton de opciones
-        buttonNames.add("Opciones");
+        buttonNames.add("Ayuda");
+
+        //Boton de ayuda y controles del juego
+        buttonNames.add("Acerca de");
 
         //Boton de salir
         buttonNames.add("Salir");
+
+
     }
 
     //Este metodo sirve para crear y agregar los botones a la pantalla
@@ -81,18 +87,18 @@ public class MenuScreen implements Screen {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (name.equals("Jugar")) {
-                    game.setScreen(new Level1(game)); // Cambia a la pantalla del nivel 1
-                }
-                if (name.equals("Salir")) {
-                    Gdx.app.exit();
-                }
+                if (name.equals("Jugar")) { game.setScreen(new Level1(game));} // Cambia a la pantalla del nivel 1
+                if(name.equals("Ayuda")){ game.setScreen(new HelpScreen(game));} //cambia la pantalla a la parte de como jugar
+                if(name.equals("Acerca de")){ game.setScreen(new AboutScreen(game));}
+                //cambia a la pantalla donde se detalla el lenguaje de programacion y las librerias utilizadas y desarrolladores
+
+                if (name.equals("Salir")) { Gdx.app.exit();}
                 // Agrega más condicionales si tienes más botones con diferentes acciones
+
             }
         });
         return button;
     }
-
 
     @Override
     public void show() {
