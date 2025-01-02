@@ -8,5 +8,7 @@ public interface Enemy extends Entity {
     public TextureRegion drawEnemy();
     Body getBody();
     void removeEnemy();
+    String getUdata();
+    void setHerido(boolean hurt);
 
 }

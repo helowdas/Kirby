@@ -7,28 +7,20 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.marbro.MainGame;
 import com.marbro.TileMapHelpers.TileMapHelper;
 import com.marbro.colisions.Controlador_Colisiones;
-import com.marbro.entities.enemies.Factory.EnemyFactory;
 import com.marbro.entities.enemies.Factory.Entity;
-import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
 import com.marbro.entities.player.Kirby;
+import com.marbro.entities.player.kirby_base.Kirby_base;
 import com.marbro.scenes.Hud;
 import com.marbro.screens.GameOverScreen;
 
@@ -69,14 +61,6 @@ public class Level1 implements Screen {
     private Kirby kirby;
     private ArrayList<Entity> entidades;
 
-
-    //Animaciones
-    private TextureAtlas atlas;
-
-    //Tamaño mapa tiled
-    private float mapWidth;
-    private float mapHeight;
-
     //Clase controladora de colisiones
     private Controlador_Colisiones controlador;
 
@@ -113,7 +97,7 @@ public class Level1 implements Screen {
 
 
         //Cargar la musica
-        music = MainGame.getAssetManager().get("music/RandomLevel.ogg");
+        music = MainGame.getAssetManager().get("music/musica2.ogg");
 
         //crear arreglos de entidades
         entidades = new ArrayList<Entity>();
@@ -129,7 +113,7 @@ public class Level1 implements Screen {
         this.renderer = tileMapHelper.setupMap();
 
         //Crear la entidad y añadirla al stage
-        stage.addActor(kirby);
+        stage.addActor((Actor) kirby);
 
         //tomar posicion Y de la camara
         float y = kirby.getY() + kirby.getHeight() / 2 / PPM;
@@ -153,7 +137,7 @@ public class Level1 implements Screen {
 
     public void update(float delta) {
         //Calculos para fijar los límites de la cámara (mejorarlos)
-        float x = kirby.getX() + kirby.getWidth() / 2 / PPM;
+        float x = kirby.getBody().getPosition().x + kirby.getWidth() / 2 / PPM;
 
         camX = MathUtils.clamp(x, gamecame.viewportWidth / PPM, (tileMapHelper.getMapWidth() - gamecame.viewportWidth)/ PPM);
 
@@ -216,7 +200,7 @@ public class Level1 implements Screen {
     public void hide() {
         stopMusic();
         kirby.detach();
-        kirby.remove();
+        ((Actor) kirby).remove();
         if (entidades != null)
         {
             for (Entity entidad : entidades)
@@ -226,7 +210,6 @@ public class Level1 implements Screen {
             }
             //!!Vaciar la lista, muy importante
             entidades.clear();
-
         }
     }
 

@@ -2,9 +2,7 @@ package com.marbro.entities.enemies.waddle_dee;
 
 import com.badlogic.gdx.physics.box2d.*;
 import com.marbro.entities.player.Kirby;
-
-import java.util.HashMap;
-import java.util.HashSet;
+import com.marbro.entities.player.kirby_base.Kirby_base;
 
 ;
 

@@ -1,4 +1,4 @@
-package com.marbro.entities.player;
+package com.marbro.entities.player.kirby_base;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -32,35 +32,35 @@ public class AnimationHelperKirby {
 
     public void loadAnimations() {
         Array<TextureRegion> walk = new Array<>();
-        loadTexture(walk, "entities/player/kirby_walk/kirby_walk_", 1, 10);
+        loadTexture(walk, "entities/player/kirby_base/kirby_walk/kirby_walk_", 1, 10);
         this.walk = new Animation_Base_Loop(walk, 0.06f);
 
         Array<TextureRegion> stand = new Array<>();
-        loadTexture(stand, "entities/player/kirby_stand/kirby_stand_", 1, 1);
+        loadTexture(stand, "entities/player/kirby_base/kirby_stand/kirby_stand_", 1, 1);
         this.stand = new Animation_Base_Loop(stand, 0.06f);
 
         Array<TextureRegion> fall1 = new Array<>();
-        loadTexture(fall1, "entities/player/kirby_fall/kirby_fall_", 1, 7);
+        loadTexture(fall1, "entities/player/kirby_base/kirby_fall/kirby_fall_", 1, 7);
         this.fall1 = new Animation_Base_Loop(fall1, 0.08f);
 
         Array<TextureRegion> fall2 = new Array<>();
-        loadTexture(fall2, "entities/player/kirby_fall/kirby_fall_", 8, 9);
+        loadTexture(fall2, "entities/player/kirby_base/kirby_fall/kirby_fall_", 8, 9);
         this.fall2 = new Animation_Base_Loop(fall2, 0.2f);
 
         Array<TextureRegion> jump = new Array<>();
-        loadTexture(jump, "entities/player/kirby_jump/kirby_jump_", 1, 1);
+        loadTexture(jump, "entities/player/kirby_base/kirby_jump/kirby_jump_", 1, 1);
         this.jumping = new Animation_Base_Loop(jump, 0.5f);
 
         Array<TextureRegion> abs = new Array<>();
-        loadTexture(abs, "entities/player/kirby_abs/kirby_abs_", 1, 7);
+        loadTexture(abs, "entities/player/kirby_base/kirby_abs/kirby_abs_", 1, 7);
         this.abs = new Animation_Base_Normal(abs, 0.08f);
 
         Array<TextureRegion> fly1 = new Array<>();
-        loadTexture(fly1, "entities/player/kirby_fly/", 0, 3);
+        loadTexture(fly1, "entities/player/kirby_base/kirby_fly/", 0, 3);
         this.fly1 = new Animation_Base_Loop(fly1, 0.1f);
 
         Array<TextureRegion> fly2 = new Array<>();
-        loadTexture(fly2, "entities/player/kirby_fly/", 4, 9);
+        loadTexture(fly2, "entities/player/kirby_base/kirby_fly/", 4, 9);
         this.fly2 = new Animation_Base_Loop(fly2, 0.08f);
     }
 

@@ -1,17 +1,15 @@
-package com.marbro.entities.player;
+package com.marbro.entities.player.kirby_base;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
-import static com.marbro.constants.Constantes.*;
-
 public class ColisionesHandlerKirby implements ContactListener
 {
     //atributos
-    private Kirby actor;
+    private Kirby_base actor;
 
     //constructor
-    public ColisionesHandlerKirby(Kirby actor) {
+    public ColisionesHandlerKirby(Kirby_base actor) {
         this.actor = actor;
     }
 

@@ -16,7 +16,7 @@ public class MainGame extends Game
     public void create()
     {
         //Cargar assets
-        assetManager.load("music/RandomLevel.ogg", Music.class);
+        assetManager.load("music/musica2.ogg", Music.class);
         assetManager.load("entities/platform/platformWood.png", Texture.class);
         assetManager.finishLoading(); //assets cargados
 

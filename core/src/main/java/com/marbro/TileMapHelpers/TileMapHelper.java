@@ -13,7 +13,9 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.marbro.entities.Platforms.PlatformVertical;
 import com.marbro.entities.enemies.Sir_Kibble.Sir_Kibble;
 import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
+import com.marbro.entities.player.FactoryKirby;
 import com.marbro.entities.player.Kirby;
+import com.marbro.entities.player.kirby_base.Kirby_base;
 import com.marbro.screens.level1.Level1;
 import static com.marbro.constants.Constantes.*;
 
@@ -34,10 +36,14 @@ public class TileMapHelper
         private float mapWidth;
         private float mapHeight;
 
+        //Factory
+        private FactoryKirby factory;
+
         public TileMapHelper(Level1 gameScreen)
         {
             this.gameScreen = gameScreen;
             this.bodyHelperService = new BodyHelperService();
+            factory = new FactoryKirby();
         }
 
         public OrthogonalTiledMapRenderer setupMap()
@@ -82,9 +88,7 @@ public class TileMapHelper
                                 gameScreen.getWorld()
                             );
 
-                            kirby = new Kirby(gameScreen.getWorld(),
-                                gameScreen.getStage(), body, gameScreen.getControlador(),
-                                    rectangle.width, rectangle.height);
+                            kirby = factory.createKirby(gameScreen, body, rectangle, "kirby");
 
                             gameScreen.setKirby(kirby);
                         }

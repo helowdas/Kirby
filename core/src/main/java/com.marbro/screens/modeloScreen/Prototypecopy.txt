@@ -1,4 +1,4 @@
-package com.kirby.screens.modeloScreen;
+package com.kirbyBase.screens.modeloScreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -21,11 +21,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.kirby.MainGame;
-import com.kirby.entities.player.modeloJugador.Proto;
-import com.kirby.scenes.Hud;
+import com.kirbyBase.MainGame;
+import com.kirbyBase.entities.player.modeloJugador.Proto;
+import com.kirbyBase.scenes.Hud;
 
-import static com.kirby.constants.Constantes.PPM;
+import static com.kirbyBase.constants.Constantes.PPM;
 
 public class Prototypecopy implements Screen {
     //Atributos de camara y juego
