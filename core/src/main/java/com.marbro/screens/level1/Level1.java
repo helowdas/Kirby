@@ -20,7 +20,6 @@ import com.marbro.TileMapHelpers.TileMapHelper;
 import com.marbro.colisions.Controlador_Colisiones;
 import com.marbro.entities.enemies.Factory.Entity;
 import com.marbro.entities.player.Kirby;
-import com.marbro.entities.player.kirby_base.Kirby_base;
 import com.marbro.scenes.Hud;
 import com.marbro.screens.GameOverScreen;
 
@@ -61,12 +60,22 @@ public class Level1 implements Screen {
     private Kirby kirby;
     private ArrayList<Entity> entidades;
 
+
+    //Animaciones
+    private TextureAtlas atlas;
+
+    //Tamaño mapa tiled
+    private float mapWidth;
+    private float mapHeight;
+
     //Clase controladora de colisiones
     private Controlador_Colisiones controlador;
 
     //atributos posicion Camara
     private float camX;
     private float camY;
+
+
 
     public Level1(MainGame game) {
         //Crear camara y hud
@@ -95,7 +104,7 @@ public class Level1 implements Screen {
 
 
         //Cargar la musica
-        music = MainGame.getAssetManager().get("music/musica2.ogg");
+        music = MainGame.getAssetManager().get("music/RandomLevel.ogg");
 
         //crear arreglos de entidades
         entidades = new ArrayList<Entity>();
@@ -135,7 +144,7 @@ public class Level1 implements Screen {
 
     public void update(float delta) {
         //Calculos para fijar los límites de la cámara (mejorarlos)
-        float x = kirby.getBody().getPosition().x + kirby.getWidth() / 2 / PPM;
+        float x = kirby.getX() + kirby.getWidth() / 2 / PPM;
 
         camX = MathUtils.clamp(x, gamecame.viewportWidth / PPM, (tileMapHelper.getMapWidth() - gamecame.viewportWidth)/ PPM);
 
@@ -198,7 +207,7 @@ public class Level1 implements Screen {
     public void hide() {
         stopMusic();
         kirby.detach();
-        ((Actor) kirby).remove();
+        ((Actor)kirby).remove();
         if (entidades != null)
         {
             for (Entity entidad : entidades)
@@ -208,6 +217,7 @@ public class Level1 implements Screen {
             }
             //!!Vaciar la lista, muy importante
             entidades.clear();
+
         }
     }
 
