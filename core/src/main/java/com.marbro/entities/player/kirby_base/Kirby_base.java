@@ -61,6 +61,7 @@ public class Kirby_base extends Actor implements Kirby {
 
     //Atributos del jugador
     private boolean life;
+    private int salud;
 
     //Calculadora distancia
     CalculadoraDistancia cal;
@@ -87,7 +88,7 @@ public class Kirby_base extends Actor implements Kirby {
     //constructor
     public Kirby_base(World world, Stage stage, Body body,
                       Controlador_Colisiones controlador,
-                      float width, float height, Level1 screen)
+                      float width, float height, Level1 screen, int salud)
     {
         this.world = world;
         this.stage = stage;
@@ -115,6 +116,8 @@ public class Kirby_base extends Actor implements Kirby {
         factory = new FactoryKirby();
 
         sounds = new SoundHelperKirby();
+
+        this.salud = salud;
     }
 
 
@@ -329,8 +332,8 @@ public class Kirby_base extends Actor implements Kirby {
     }
 
     @Override
-    public boolean isAlive(){
-        return life;
+    public int getSalud(){
+        return salud;
     }
 
     @Override
@@ -414,7 +417,7 @@ public class Kirby_base extends Actor implements Kirby {
 
     public void setPower(String uData){
         Rectangle rectangle = new Rectangle(getX(), getY(), getWidth(), getHeight());
-        Kirby kirby = factory.createKirby(screen, body, rectangle, uData);
+        Kirby kirby = factory.createKirby(screen, body, rectangle, uData, salud);
         stage.addActor((Actor) kirby);
         screen.setKirby(kirby);
         remove();

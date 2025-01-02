@@ -95,7 +95,7 @@ public class TileMapHelper
                                 gameScreen.getWorld()
                             );
 
-                            kirby = factory.createKirby(gameScreen, body, rectangle, "kirby");
+                            kirby = factory.createKirby(gameScreen, body, rectangle, "kirby", 5);
 
                             gameScreen.setKirby(kirby);
                         }

@@ -9,7 +9,7 @@ import com.marbro.screens.level1.Level1;
 import static com.marbro.constants.Constantes.PPM;
 
 public class FactoryKirby {
-    public Kirby createKirby(Level1 gameScreen, Body body, Rectangle rectangle, String type_enemy) {
+    public Kirby createKirby(Level1 gameScreen, Body body, Rectangle rectangle, String type_enemy, int salud) {
         switch (type_enemy) {
             case "Waddle_dee":
                 return new Kirby_Parasol(gameScreen.getWorld(), gameScreen.getStage(), body,
@@ -18,7 +18,7 @@ public class FactoryKirby {
             default:
                 return new Kirby_base(gameScreen.getWorld(),
                     gameScreen.getStage(), body, gameScreen.getControlador(),
-                    rectangle.width / PPM, rectangle.height / PPM, gameScreen);
+                    rectangle.width / PPM, rectangle.height / PPM, gameScreen, salud);
 
         }
     }

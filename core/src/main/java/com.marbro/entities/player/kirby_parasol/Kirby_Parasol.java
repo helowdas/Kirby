@@ -57,6 +57,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
 
     //Atributos del jugador
     private boolean life;
+    private int salud;
 
     //Calculadora distancia
     CalculadoraDistancia cal;
@@ -82,6 +83,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
 
     //Otros
     private float width, height;
+
 
     public Kirby_Parasol(World world, Stage stage, Body body, Controlador_Colisiones controlador, float width, float height,
                   Level1 screen)
@@ -160,6 +162,11 @@ public class Kirby_Parasol extends Actor implements Kirby {
 
         contador = null;
         this.remove();
+    }
+
+    @Override
+    public int getSalud() {
+        return salud;
     }
 
     public void dispose(){
@@ -314,7 +321,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
             BodyHelperService helper = new BodyHelperService();
             Body body = helper.createBody(getX(), getY(), getWidth(), getHeight(), false, false, false, world);
             Rectangle rectangle = new Rectangle(getX(), getY(), getWidth(), getHeight());
-            Kirby kirby = factory.createKirby(screen, body, rectangle, "kirby");
+            Kirby kirby = factory.createKirby(screen, body, rectangle, "kirby", salud);
             screen.setKirby(kirby);
             detach();
             dispose();

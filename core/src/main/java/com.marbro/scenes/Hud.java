@@ -38,10 +38,10 @@ public class Hud {
 
     public Hud(SpriteBatch sb, Level1 screen) {
         // Inicialización de variables
-        worldTimer = 200;
+        worldTimer = 3;
         timeCount = 0;
         score = 0;
-        playerLives = 3; // Ejemplo de cantidad de vidas
+        playerLives = 5; // Ejemplo de salud
 
         viewport = new FitViewport(800, 600, new OrthographicCamera());
         stage = new Stage(viewport, sb);
@@ -57,7 +57,7 @@ public class Hud {
         levelLabel = new Label("LEVEL", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
         worldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
         kirbyLabel = new Label("JUGADOR", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
-        livesLabel = new Label(String.format("Lives: %01d", playerLives), new Label.LabelStyle(new BitmapFont(), Color.BLACK));
+        livesLabel = new Label(String.format("Salud: %01d", playerLives), new Label.LabelStyle(new BitmapFont(), Color.BLACK));
 
         // Añadir etiquetas a la tabla
         table.add(kirbyLabel).expandX().padTop(10);
@@ -96,6 +96,9 @@ public class Hud {
         livesLabel.setText(String.format("Lives: %01d", playerLives));
     }
 
+    public int getTime(){
+        return worldTimer;
+    }
 
 
 }
