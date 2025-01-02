@@ -19,6 +19,6 @@ public class RandomEnemyFactory implements EnemyFactory{
     public Enemy createEnemy(World world, Body body, Controlador_Colisiones controlador, float width, float height, Kirby kirby){
         int randomInt = random.nextInt(2);
         if(randomInt == 0) return new Waddle_dee(world, body, controlador, width, height, kirby);
-        return new Sir_Kibble(world, body, controlador, width, height, kirby);
+        else return new Sir_Kibble(world, body, controlador, width, height, kirby);
     }
 }
