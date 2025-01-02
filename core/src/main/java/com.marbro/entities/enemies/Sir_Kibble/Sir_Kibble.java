@@ -38,6 +38,10 @@ public class Sir_Kibble extends Actor implements Enemy {
     private float width;
     private float height;
 
+    // Atributos para manejar el tiempo
+    private long lastCollisionTime = 0;
+    private static final long COLLISION_COOLDOWN = 1500; // 1.5 segundos en milisegundos
+
     //Estado del jugador
     private EstadoSirKibble estado;
     private int lastmove = -1;
@@ -81,7 +85,7 @@ public class Sir_Kibble extends Actor implements Enemy {
     }
 
     private void createContactListener(Kirby kirbyBase){
-        ColisionesSirKibble colisionesHandler = new ColisionesSirKibble(this);
+        ColisionesSirKibble colisionesHandler = new ColisionesSirKibble(this,kirbyBase);
         controlador.addListener(colisionesHandler);
     }
 
@@ -163,17 +167,21 @@ public class Sir_Kibble extends Actor implements Enemy {
         }
 
         if (colPlayer) {
-            // Dirección de retroceso basada en la dirección actual del movimiento
-            float forceX = lastmove == -1 ? 4f : -4f;
-            float forceY = 1f;
+            // Verificar si ha pasado suficiente tiempo desde la última colisión
+            if (getTimeCollision()) {
+                // Actualizar el tiempo de la última colisión
+                lastCollisionTime = getCurrentTime();
 
-            // Aplicar la fuerza al enemigo
-            body.applyLinearImpulse(new Vector2(forceX, forceY), body.getWorldCenter(), true);
+                // Dirección de retroceso basada en la dirección actual del movimiento
+                float forceX = lastmove == -1 ? 4.5f : -4.5f;
+                float forceY = 3f;
 
-            // Deshabilitar la colisión entre el enemigo y el jugador por 3 segundos
-            disableCollisionForSeconds(body, 1.5f);
+                // Aplicar la fuerza al enemigo
+                body.applyLinearImpulse(new Vector2(forceX, forceY), body.getWorldCenter(), true);
 
-            pain.start();
+
+                pain.start();
+            }
         }
 
         if (pain.getElapsedTime() > 1f) {
@@ -253,5 +261,15 @@ public class Sir_Kibble extends Actor implements Enemy {
         return;
     }
 
+    public boolean getTimeCollision()
+    {
+        return getCurrentTime() - lastCollisionTime > COLLISION_COOLDOWN;
+    }
+
+    public long getCurrentTime()
+    {
+        long currentTime = System.currentTimeMillis();
+        return currentTime;
+    }
 
 }
