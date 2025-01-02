@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="350" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="512">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="350" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="523">
  <tileset firstgid="1" source="Terreno.tsx"/>
  <tileset firstgid="243" source="Pinchos.tsx"/>
  <tileset firstgid="388" source="pinchos2.tsx"/>
@@ -99,7 +99,7 @@
   <object id="337" x="4976.02" y="287.066" width="271.964" height="1.48864"/>
   <object id="341" x="5023.88" y="142.866" width="224.097" height="1.61364"/>
   <object id="343" x="5312.07" y="159.018" width="79.9414" height="1.61364"/>
-  <object id="350" x="3295.78" y="286.659" width="32.1818" height="10.1818"/>
+  <object id="350" x="3295.87" y="286.833" width="32.1818" height="10.1818"/>
   <object id="351" x="3327.94" y="270.727" width="32.1818" height="10.1818"/>
   <object id="352" x="4672.27" y="303.011" width="271.636" height="10.1818"/>
   <object id="353" x="4672.36" y="159.205" width="31.4026" height="10.6363"/>
@@ -144,11 +144,7 @@
   <object id="228" x="5392.63" y="65.5" width="14.75" height="255"/>
   <object id="242" x="3231.56" y="320.063" width="0.3125" height="79.0057"/>
   <object id="243" x="3184.16" y="320.153" width="0.3125" height="78.6307"/>
-  <object id="244" x="3263.78" y="304.153" width="0.3125" height="15.8807"/>
-  <object id="245" x="3295.72" y="288.091" width="0.3125" height="15.6932"/>
-  <object id="246" x="3327.78" y="272.028" width="0.3125" height="16.1307"/>
-  <object id="247" x="3359.59" y="256.216" width="0.3125" height="16.0057"/>
-  <object id="267" x="3391.92" y="240.039" width="0.3125" height="16.0057"/>
+  <object id="244" x="3263.61" y="304.153" width="0.703804" height="15.8807"/>
   <object id="268" x="3775.84" y="240.01" width="0.3125" height="159.943"/>
   <object id="269" x="3455.91" y="176.738" width="0.3125" height="3.62306"/>
   <object id="270" x="3775.75" y="176.759" width="0.3125" height="3.62306"/>
@@ -236,6 +232,10 @@
   <object id="509" x="3119.59" y="176.372" width="0.909091" height="15.6035"/>
   <object id="510" x="3119.38" y="128.193" width="0.909091" height="15.6035"/>
   <object id="511" x="3087.78" y="128.344" width="0.909091" height="15.6035"/>
+  <object id="513" x="3295.52" y="287.935" width="0.703804" height="15.8807"/>
+  <object id="514" x="3327.52" y="271.997" width="0.703804" height="15.8807"/>
+  <object id="515" x="3359.52" y="256.247" width="0.703804" height="15.8807"/>
+  <object id="516" x="3391.52" y="240.122" width="0.703804" height="15.8807"/>
  </objectgroup>
  <objectgroup id="10" name="pinchos">
   <object id="402" x="1023.88" y="239.92" width="7.125" height="63.2614"/>
@@ -249,16 +249,16 @@
   <object id="410" x="4432.62" y="232.998" width="158.959" height="7.17049"/>
   <object id="411" x="4751.77" y="112.165" width="7.22283" height="14.4432"/>
   <object id="412" x="4728.75" y="112.96" width="7.22283" height="14.4432"/>
-  <object id="413" x="4750.93" y="105.02" width="7.22283" height="14.8806" rotation="89.9662"/>
-  <object id="414" x="4751.93" y="127.651" width="7.22283" height="14.8806" rotation="89.9662"/>
   <object id="415" x="4808.84" y="161.687" width="7.22283" height="14.4432"/>
   <object id="416" x="4831.75" y="160.778" width="7.22283" height="14.4432"/>
-  <object id="417" x="4831.12" y="152.651" width="7.22283" height="14.8806" rotation="89.9662"/>
-  <object id="418" x="4831.93" y="175.923" width="7.22283" height="14.8806" rotation="89.9662"/>
   <object id="419" x="4895.89" y="144.028" width="7.22283" height="14.4432"/>
   <object id="420" x="4872.84" y="145.324" width="7.22283" height="14.4432"/>
-  <object id="421" x="4895.12" y="136.923" width="7.22283" height="14.8806" rotation="89.9662"/>
-  <object id="422" x="4896" y="160" width="7.22283" height="14.8806" rotation="89.9662"/>
+  <object id="517" x="4880.04" y="136.542" width="14.9167" height="7.33333"/>
+  <object id="518" x="4881.04" y="159.708" width="14.9167" height="7.33333"/>
+  <object id="519" x="4816.29" y="152.583" width="14.9167" height="7.33333"/>
+  <object id="520" x="4816.79" y="175.458" width="14.9167" height="7.33333"/>
+  <object id="521" x="4736.04" y="105.083" width="14.9167" height="7.33333"/>
+  <object id="522" x="4736.67" y="127.833" width="14.9167" height="7.33333"/>
  </objectgroup>
  <objectgroup id="8" name="entities">
   <object id="212" name="waddle_dee" x="419.333" y="297.333" width="20" height="20"/>
@@ -269,6 +269,8 @@
   <object id="369" name="waddle_dee" x="2376.67" y="192.667" width="20" height="20"/>
   <object id="370" name="waddle_dee" x="2240.67" y="122" width="20" height="20"/>
   <object id="373" name="waddle_dee" x="2768" y="197.5" width="20" height="20"/>
-  <object id="494" name="player" x="3052.67" y="293.417" width="20" height="21.1667"/>
+ </objectgroup>
+ <objectgroup id="11" name="player">
+  <object id="512" name="player" x="4556" y="131.083" width="20" height="21.1667"/>
  </objectgroup>
 </map>

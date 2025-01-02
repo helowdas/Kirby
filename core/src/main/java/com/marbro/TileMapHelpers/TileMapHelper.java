@@ -48,11 +48,12 @@ public class TileMapHelper
             mapHeight = tiledMap.getProperties().get("height", Integer.class) * PPM / 1;
 
             //obtener los objetos del mapa
+            parseMapObjects(tiledMap.getLayers().get("techo").getObjects(), "techo");
             parseMapObjects(tiledMap.getLayers().get("pinchos").getObjects(), "spike");
             parseMapObjects(tiledMap.getLayers().get("pared").getObjects(), "wall");
             parseMapObjects(tiledMap.getLayers().get("suelo").getObjects(), "block");
-            parseMapObjects(tiledMap.getLayers().get("entities").getObjects(), "player");
-            parseMapObjects(tiledMap.getLayers().get("techo").getObjects(), "techo");
+            parseMapObjects(tiledMap.getLayers().get("player").getObjects(), "player");
+            parseMapObjects(tiledMap.getLayers().get("entities").getObjects(), "entity");
             return new OrthogonalTiledMapRenderer(tiledMap, 1/PPM);
         }
 
