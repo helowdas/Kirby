@@ -2,7 +2,6 @@ package com.marbro.entities.player.kirby_parasol;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.marbro.entities.player.kirby_parasol.Kirby_Parasol;
 
 public class ColisionesHandlerKirbyParasol implements ContactListener
 {

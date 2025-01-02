@@ -44,7 +44,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
     private boolean attacking;
 
     //Colisiones del jugador
-    public boolean onGround = false;
+    public boolean onGround = true;
     public boolean onSpike = false;
     public boolean onWallRight = false;
     public boolean onWallLeft = false;
@@ -98,7 +98,6 @@ public class Kirby_Parasol extends Actor implements Kirby {
         this.estado = EstadoKirbyParasol.QUIETO;
         life = true;
 
-
         cal = new CalculadoraDistancia();
 
         contador = new ActionTimer();
@@ -111,37 +110,6 @@ public class Kirby_Parasol extends Actor implements Kirby {
         this.screen = screen;
 
         sounds = new SoundHelperKirby();
-    }
-
-    public void defBody(float x, float y) {
-        // Define las propiedades del cuerpo
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(x, y);
-
-        // Añade al mundo el nuevo cuerpo creado
-        body = world.createBody(bodyDef);
-
-        // Atributos físicos del cuerpo
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(0.25f, 0.25f); // Tamaño del body (hitbox)
-
-        // Crear y asignar la fixture usando `fixDef`
-        fixDef = new FixtureDef();
-        fixDef.shape = shape;
-        fixDef.density = 0.0f;
-        fixDef.friction = 10f;
-
-        //categoryBits: es una etiqueta a una fixture, que será utilizada para manejar colisiones
-        fixDef.filter.categoryBits = CATEGORY_PLAYER;
-
-        //maskBits: define con qué otras entidades u objetos puede colisiones una fixture
-        //fixDef.filter.maskBits = CATEGORY_BLOCK | CATEGORY_WALL;
-
-        fixture = body.createFixture(fixDef); // Crear la fixture con `fixDef`
-        fixture.setUserData(this); // Asegúrate de que `userData` se asigna correctamente
-
-        shape.dispose();
     }
 
 
@@ -225,6 +193,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
             accion(delta);
         planear(delta);
         hurt();
+        verificarCondicionesEspeciales(vel);
     }
 
     private void manejarMovimiento(Vector2 vel)
@@ -259,41 +228,85 @@ public class Kirby_Parasol extends Actor implements Kirby {
         body.setLinearVelocity(-VELOCIDAD, vel.y);
         lastmove = -1;
         if (onGround && onPlatform && !jump && estado != EstadoKirbyParasol.ATACANDO) {
-            estado = EstadoKirbyParasol.ATACANDO;
+            estado = EstadoKirbyParasol.CAMINANDO;
         }
     }
 
     private void mantenerseQuieto(Vector2 vel) {
-        if (onGround && !jump && estado != EstadoKirbyParasol.ATACANDO) {
+        if (estado != EstadoKirbyParasol.ATACANDO) {
             body.setLinearVelocity(0f, vel.y);
-            estado = EstadoKirbyParasol.QUIETO;
+            if(body.getLinearVelocity().y == 0){
+                estado = EstadoKirbyParasol.QUIETO;
+            }
         }
     }
 
-    private void manejarSalto(Vector2 vel) {
-        if (onGround && Gdx.input.isKeyPressed(Input.Keys.W)) {
-            if (estado != EstadoKirbyParasol.ATACANDO){
-                estado = EstadoKirbyParasol.SALTANDO;
-            }
-            body.setLinearVelocity(vel.x, 5f);
-            sounds.playSound("jump");
+    private void manejarSalto(Vector2 vel)
+    {
+        if (!jump && onGround && Gdx.input.isKeyJustPressed(Input.Keys.W))
+        {
+            body.applyLinearImpulse(0, IMPULSE_SALTO, body.getPosition().x, body.getPosition().y, true);
             jump = true;
+            sounds.playSound("jump");
         }
+
+        if (estado != EstadoKirbyParasol.ATACANDO && body.getLinearVelocity().y > 0 && !onPlatform && !fly) {
+            estado = EstadoKirbyParasol.SALTANDO;
+        }
+
     }
 
     private void manejarEstadoEnCaida(Vector2 vel) {
         if (estado != EstadoKirbyParasol.ATACANDO) {
-            if (vel.y < 0f) {
+            if (jump && -3.5f < vel.y && vel.y < 0f) {
                 estado = EstadoKirbyParasol.CAYENDO;
+            } else {
+                if (vel.y < 0 && !onGround) {
+                    estado = EstadoKirbyParasol.CAYENDO;
+                } else if (-0.5f < vel.y && vel.y < 0f) {
+                    estado = EstadoKirbyParasol.CAYENDO;
+                } else if (vel.y > -0.5 && vel.y <= 0f && !onGround) {
+                    estado = EstadoKirbyParasol.CAYENDO;
+                }
             }
         }
     }
 
-    private void ajustarEstadoQuieto(Vector2 vel) {
+    private void ajustarEstadoQuieto(Vector2 vel)
+    {
         if (vel.x == 0 && vel.y == 0 && onGround && estado != EstadoKirbyParasol.ATACANDO) {
+            estado = EstadoKirbyParasol.QUIETO;
+            jump = false; // Resetear salto al tocar el suelo
+        }
+        else if (onPlatform && vel.x == 0 && estado != EstadoKirbyParasol.ATACANDO)
+        {
             estado = EstadoKirbyParasol.QUIETO;
             jump = false;
         }
+    }
+
+    private void verificarCondicionesEspeciales(Vector2 vel) {
+        if (onSpike || body.getPosition().y < -8) {
+            life = false;
+        }
+
+        if((jump && Gdx.input.isKeyPressed(Input.Keys.W)) || (Gdx.input.isKeyPressed(Input.Keys.W) && vel.y < 0))
+        {
+            if(vel.y <= 1.8f)
+            {
+                jump = true;
+                estado = EstadoKirbyParasol.VOLAR;
+                fly = true;
+                body.setLinearVelocity(vel.x, VEL_FLY);
+
+            }
+
+        }
+        else
+        {
+            fly = false;
+        }
+
     }
 
     public void hurt(){

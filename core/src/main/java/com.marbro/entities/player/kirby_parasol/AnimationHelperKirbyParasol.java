@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.marbro.animation.Animation_Base_Loop;
+import com.marbro.animation.Animation_Base_Normal;
 
 public class AnimationHelperKirbyParasol {
     private Animation_Base_Loop walk;
@@ -13,6 +14,8 @@ public class AnimationHelperKirbyParasol {
     private Animation_Base_Loop plane;
     private Animation_Base_Loop stand;
     private Animation_Base_Loop attack;
+    private Animation_Base_Loop fly1;
+    private Animation_Base_Loop fly2;
 
     public AnimationHelperKirbyParasol() {
         loadAnimations();
@@ -49,6 +52,14 @@ public class AnimationHelperKirbyParasol {
         Array<TextureRegion> plane = new Array<>();
         loadTexture(plane, "entities/player/kirby_parasol/kirby_parasol_plane/kirby_parasol_plane_", 1, 20);
         this.plane = new Animation_Base_Loop(plane, 0.1f);
+
+        Array<TextureRegion> fly1 = new Array<>();
+        loadTexture(fly1, "entities/player/kirby_parasol/kirby_parasol_fly/", 0,1);
+        this.fly1 = new Animation_Base_Loop(fly1, 0.5f);
+
+        Array<TextureRegion> fly2 = new Array<>();
+        loadTexture(fly2, "entities/player/kirby_parasol/kirby_parasol_fly/", 2,7);
+        this.fly2 = new Animation_Base_Loop(fly2, 0.08f);
     }
 
     public TextureRegion getFrame(EstadoKirbyParasol estado) {
@@ -63,6 +74,10 @@ public class AnimationHelperKirbyParasol {
                 return attack.getFrame();
             case PLANEANDO:
                 return plane.getFrame();
+            case PREVOLAR:
+                return fly1.getFrame();
+            case VOLAR:
+                return fly2.getFrame();
             default:
                 return stand.getFrame();
         }
@@ -75,6 +90,8 @@ public class AnimationHelperKirbyParasol {
         jumping.update(delta);
         plane.update(delta);
         attack.update(delta);
+        fly1.update(delta);
+        fly2.update(delta);
     }
 
     public void resetAnimation(EstadoKirbyParasol estado){
@@ -89,6 +106,10 @@ public class AnimationHelperKirbyParasol {
                 attack.reset();
             case PLANEANDO:
                 plane.reset();
+            case PREVOLAR:
+                fly1.reset();
+            case VOLAR:
+                fly2.reset();
             default:
                 stand.reset();
         }

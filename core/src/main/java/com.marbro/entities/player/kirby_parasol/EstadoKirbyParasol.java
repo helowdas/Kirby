@@ -6,5 +6,7 @@ public enum EstadoKirbyParasol {
     CAYENDO,
     PLANEANDO,
     ATACANDO,
-    SALTANDO;
+    SALTANDO,
+    PREVOLAR,
+    VOLAR;
 }
