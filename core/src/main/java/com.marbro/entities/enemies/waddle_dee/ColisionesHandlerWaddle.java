@@ -87,15 +87,7 @@ public class ColisionesHandlerWaddle implements ContactListener
     {
         if(hanColisionado(contact, actor, kirby))
         {
-
-            if(actor.getTimeCollision())
-            {
-                contact.setEnabled(true);
-            }
-            else
-            {
-                contact.setEnabled(false);
-            }
+            contact.setEnabled(actor.getTimeCollision());
         }
 
     }
