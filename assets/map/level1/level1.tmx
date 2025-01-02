@@ -279,6 +279,6 @@
   <object id="373" name="waddle_dee" x="2768" y="197.5" width="20" height="20"/>
  </objectgroup>
  <objectgroup id="11" name="player">
-  <object id="512" name="player" x="4556" y="131.083" width="20" height="21.1667"/>
+  <object id="512" name="player" x="4699" y="270.083" width="20" height="21.1667"/>
  </objectgroup>
 </map>
