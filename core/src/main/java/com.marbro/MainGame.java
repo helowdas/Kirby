@@ -20,6 +20,12 @@ public class MainGame extends Game
         assetManager.load("entities/platform/platformWood.png", Texture.class);
         assetManager.load("entities/lever/0.png", Texture.class);
         assetManager.load("entities/block_Mecanismo/0.png", Texture.class);
+        assetManager.load("entities/block_Mecanismo/1-(2).png", Texture.class);
+        assetManager.load("entities/block_Mecanismo/1.png", Texture.class);
+        assetManager.load("entities/block_Mecanismo/2.png", Texture.class);
+        assetManager.load("entities/block_Mecanismo/3.png", Texture.class);
+        assetManager.load("entities/block_Mecanismo/4.png", Texture.class);
+        assetManager.load("entities/block_Mecanismo/5.png", Texture.class);
         assetManager.finishLoading(); //assets cargados
 
         batch = new SpriteBatch();
