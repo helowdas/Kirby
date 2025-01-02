@@ -149,20 +149,11 @@ public class Level1 implements Screen {
             stage.addActor((Actor) entidad);
         }
 
-
         //Para reproducir la música
         playMusic();
         music.setVolume(VOLUMEN);
 
-        /**
-         *  // Crear enemigos aleatorios y añadirlos al escenario
-         *         for (int i = 0; i < 5; i++) { // Crear 5 enemigos como ejemplo
-         *             Enemy enemy = enemyFactory.createEnemy(world, null, controlador, 1, 1, kirby);
-         *             entidades.add(enemy);
-         *             stage.addActor((Actor) enemy);
-         *         }
-         *
-         */
+
 
 
 

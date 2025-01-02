@@ -1,17 +1,19 @@
 package com.marbro.entities.enemies.Sir_Kibble;
 
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.*;
+import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
+import com.marbro.entities.player.Kirby;
 
 
 public class ColisionesSirKibble implements ContactListener {
 
     private Sir_Kibble actor;
+    private Kirby kirby;
 
-    public ColisionesSirKibble(Sir_Kibble actor) {
+    public ColisionesSirKibble(Sir_Kibble actor, Kirby kirby)
+    {
         this.actor = actor;
+        this.kirby = kirby;
     }
 
     @Override
@@ -32,8 +34,15 @@ public class ColisionesSirKibble implements ContactListener {
             actor.setOnWall(true);
         }
 
-        if (hanColisionado(contact, actor, "player")) {
+        if (hanColisionado(contact, actor, "platform"))
+        {
+            actor.setOnGround(true);
+        }
+
+        if(hanColisionado(contact, actor, kirby))
+        {
             actor.setColPlayer(true);
+            kirby.setCol(true);
         }
     }
 
@@ -56,17 +65,35 @@ public class ColisionesSirKibble implements ContactListener {
             actor.setOnWall(true);
         }
 
-        if (hanColisionado(contact, actor, "player")) {
-            actor.setColPlayer(true);
+        if (hanColisionado(contact, actor, "platform"))
+        {
+            actor.setOnGround(false);
         }
+
+        if(hanColisionado(contact, actor, kirby))
+        {
+            actor.setColPlayer(false);
+            kirby.setCol(false);
+        }
+
     }
 
 
     @Override
-    public void preSolve(Contact contact, Manifold oldManifold) {}
+    public void preSolve(Contact contact, Manifold oldManifold)
+    {
+        if(hanColisionado(contact, actor, kirby))
+        {
+            contact.setEnabled(actor.getTimeCollision());
+        }
+
+    }
 
     @Override
-    public void postSolve(Contact contact, ContactImpulse impulse) {}
+    public void postSolve(Contact contact, ContactImpulse impulse)
+    {
+
+    }
 
     private boolean hanColisionado(Contact contact, Object userA, Object userB)
     {

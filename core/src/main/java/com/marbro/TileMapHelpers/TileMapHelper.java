@@ -16,7 +16,9 @@ import com.marbro.entities.enemies.Sir_Kibble.Sir_Kibble;
 import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
 import com.marbro.entities.player.Kirby;
 import com.marbro.screens.level1.Level1;
+import com.marbro.entities.enemies.Factory.RandomEnemyFactory;
 import static com.marbro.constants.Constantes.*;
+
 
 public class TileMapHelper
 {
@@ -24,6 +26,7 @@ public class TileMapHelper
         private TiledMap tiledMap;
         private Level1 gameScreen;
         private BodyHelperService bodyHelperService;
+        RandomEnemyFactory randomEnemyFactory;
 
         //player
         private Kirby kirby;
@@ -39,6 +42,7 @@ public class TileMapHelper
         {
             this.gameScreen = gameScreen;
             this.bodyHelperService = new BodyHelperService();
+            randomEnemyFactory = new RandomEnemyFactory();
         }
 
         public OrthogonalTiledMapRenderer setupMap()
@@ -92,7 +96,7 @@ public class TileMapHelper
                             gameScreen.setKirby(kirby);
                         }
 
-                        else if(rectangleName.equals("waddle_dee"))
+                        else if(rectangleName.equals("waddle_dee_jefe"))
                         {
                             Body body = bodyHelperService.createBody(
                                     rectangle.getX() + rectangle.getWidth() / 2,
@@ -102,6 +106,7 @@ public class TileMapHelper
                                     false, false,
                                     gameScreen.getWorld()
                             );
+
 
                             gameScreen.getEntidades().add(new Waddle_dee(gameScreen.getWorld(), body,
                                     gameScreen.getControlador(), rectangle.width, rectangle.height, gameScreen.getKirby()));
@@ -123,6 +128,23 @@ public class TileMapHelper
                                 gameScreen.getControlador(), rectangle.width, rectangle.height, gameScreen.getKirby()));
 
                         }
+
+                        else if(rectangleName.equals("enemigo")){
+                            Body body = bodyHelperService.createBody(
+                                rectangle.getX() + rectangle.getWidth() / 2,
+                                rectangle.getY() + rectangle.getHeight() / 2,
+                                rectangle.getWidth(),
+                                rectangle.getHeight(),
+                                false, false,
+                                gameScreen.getWorld()
+                            );
+
+
+                            gameScreen.getEntidades().add(randomEnemyFactory.createEnemy(gameScreen.getWorld(), body,
+                                gameScreen.getControlador(), rectangle.width, rectangle.height, gameScreen.getKirby()));
+
+                        }
+
                         else if (rectangleName.equals("platform"))
                         {
                             Body body = bodyHelperService.createBody(
