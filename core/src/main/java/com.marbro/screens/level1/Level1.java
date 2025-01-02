@@ -221,7 +221,10 @@ public class Level1 implements Screen {
         {
             for (Entity entidad : entidades)
             {
-                entidad.detach();
+                if (entidad != null)
+                {
+                    entidad.detach();
+                }
 
             }
             //!!Vaciar la lista, muy importante

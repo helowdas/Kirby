@@ -10,6 +10,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.marbro.entities.Block_Mecanismo.Block_M;
+import com.marbro.entities.Palanca.Palanca;
 import com.marbro.entities.Platforms.PlatformHorizontal;
 import com.marbro.entities.Platforms.PlatformVertical;
 import com.marbro.entities.enemies.Sir_Kibble.Sir_Kibble;
@@ -52,8 +54,10 @@ public class TileMapHelper
             parseMapObjects(tiledMap.getLayers().get("pinchos").getObjects(), "spike");
             parseMapObjects(tiledMap.getLayers().get("pared").getObjects(), "wall");
             parseMapObjects(tiledMap.getLayers().get("suelo").getObjects(), "block");
+            parseMapObjects(tiledMap.getLayers().get("bloque_mecanismo").getObjects(), "wall");
             parseMapObjects(tiledMap.getLayers().get("player").getObjects(), "player");
             parseMapObjects(tiledMap.getLayers().get("entities").getObjects(), "entity");
+            parseMapObjects(tiledMap.getLayers().get("mecanismos").getObjects(), "mecanismo");
             return new OrthogonalTiledMapRenderer(tiledMap, 1/PPM);
         }
 
@@ -81,7 +85,7 @@ public class TileMapHelper
                                 rectangle.getY() + rectangle.getHeight() / 2,
                                 rectangle.getWidth(),
                                 rectangle.getHeight(),
-                                false, false,
+                                false, false, false,
                                 gameScreen.getWorld()
                             );
 
@@ -99,7 +103,7 @@ public class TileMapHelper
                                     rectangle.getY() + rectangle.getHeight() / 2,
                                     rectangle.getWidth(),
                                     rectangle.getHeight(),
-                                    false, false,
+                                    false, false, false,
                                     gameScreen.getWorld()
                             );
 
@@ -115,7 +119,7 @@ public class TileMapHelper
                                 rectangle.getY() + rectangle.getHeight() / 2,
                                 rectangle.getWidth(),
                                 rectangle.getHeight(),
-                                false, false,
+                                false, false, false,
                                 gameScreen.getWorld()
                             );
 
@@ -130,7 +134,7 @@ public class TileMapHelper
                                 rectangle.getY() + rectangle.getHeight()/2,
                                 rectangle.getWidth(),
                                 rectangle.getHeight(),
-                                false, true,
+                                false, true, false,
                                 gameScreen.getWorld()
                             );
 
@@ -145,7 +149,7 @@ public class TileMapHelper
                                 rectangle.getY() + rectangle.getHeight()/2,
                                 rectangle.getWidth(),
                                 rectangle.getHeight(),
-                                false, true,
+                                false, true, false,
                                 gameScreen.getWorld()
                             );
 
@@ -160,7 +164,7 @@ public class TileMapHelper
                                 rectangle.getY() + rectangle.getHeight()/2,
                                 rectangle.getWidth(),
                                 rectangle.getHeight(),
-                                false, true,
+                                false, true, false,
                                 gameScreen.getWorld()
                             );
 
@@ -175,7 +179,7 @@ public class TileMapHelper
                                 rectangle.getY() + rectangle.getHeight()/2,
                                 rectangle.getWidth(),
                                 rectangle.getHeight(),
-                                false, true,
+                                false, true, false,
                                 gameScreen.getWorld()
                             );
 
@@ -190,12 +194,43 @@ public class TileMapHelper
                                 rectangle.getY() + rectangle.getHeight()/2,
                                 rectangle.getWidth(),
                                 rectangle.getHeight(),
-                                false, true,
+                                false, true, false,
                                 gameScreen.getWorld()
                             );
 
                             gameScreen.getEntidades().add(new PlatformHorizontal(gameScreen.getWorld(), body,
                                 rectangle.width, rectangle.height, false, 2.5f));
+
+                        }
+                        else if (rectangleName.equals("palanca"))
+                        {
+                            Body body = bodyHelperService.createBody(
+                                rectangle.getX() + rectangle.getWidth()/2,
+                                rectangle.getY() + rectangle.getHeight()/2,
+                                rectangle.getWidth(),
+                                rectangle.getHeight(),
+                                true, false, true,
+                                gameScreen.getWorld()
+                            );
+
+                            gameScreen.getEntidades().add(new Palanca(gameScreen.getWorld(), body,
+                                rectangle.width, rectangle.height, gameScreen.getControlador(), gameScreen.getKirby(),
+                                gameScreen.getEntidades()));
+
+                        }
+                        else if (rectangleName.equals("bloque_M"))
+                        {
+                            Body body = bodyHelperService.createBody(
+                                rectangle.getX() + rectangle.getWidth()/2,
+                                rectangle.getY() + rectangle.getHeight()/2,
+                                rectangle.getWidth(),
+                                rectangle.getHeight(),
+                                true, false, false,
+                                gameScreen.getWorld()
+                            );
+
+                            gameScreen.getEntidades().add(new Block_M(gameScreen.getWorld(), body,
+                                rectangle.width, rectangle.height));
 
                         }
 
@@ -207,7 +242,7 @@ public class TileMapHelper
                                 rectangle.getY() + rectangle.getHeight()/2,
                                 rectangle.getWidth(),
                                 rectangle.getHeight(),
-                                true, false,
+                                true, false, false,
                                 gameScreen.getWorld()
                         );
 

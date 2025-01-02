@@ -10,7 +10,7 @@ public class BodyHelperService
     //atributos
     private FixtureDef fixtureDef;
 
-    public Body createBody(float x, float y, float width, float height, boolean isStatic, boolean isKinetic, World world)
+    public Body createBody(float x, float y, float width, float height, boolean isStatic, boolean isKinetic, boolean isSensor, World world)
     {
         //bodydef
         BodyDef bodyDef = new BodyDef();
@@ -35,6 +35,10 @@ public class BodyHelperService
         fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.friction = 0.5f;
+        if (isSensor)
+        {
+            fixtureDef.isSensor = true;
+        }
         body.createFixture(fixtureDef);
 
         return body;
