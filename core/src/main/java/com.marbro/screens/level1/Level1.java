@@ -68,8 +68,6 @@ public class Level1 implements Screen {
     private float camX;
     private float camY;
 
-
-
     public Level1(MainGame game) {
         //Crear camara y hud
         this.game = game;
