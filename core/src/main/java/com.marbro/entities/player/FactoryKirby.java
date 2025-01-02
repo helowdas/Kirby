@@ -14,7 +14,7 @@ public class FactoryKirby {
             case "Waddle_dee":
                 return new Kirby_Parasol(gameScreen.getWorld(), gameScreen.getStage(), body,
                     gameScreen.getControlador(), rectangle.width / PPM, rectangle.height / PPM,
-                    gameScreen);
+                    gameScreen, salud);
             default:
                 return new Kirby_base(gameScreen.getWorld(),
                     gameScreen.getStage(), body, gameScreen.getControlador(),

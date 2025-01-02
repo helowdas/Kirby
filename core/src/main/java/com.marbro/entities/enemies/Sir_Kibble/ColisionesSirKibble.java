@@ -43,6 +43,7 @@ public class ColisionesSirKibble implements ContactListener {
         {
             actor.setColPlayer(true);
             kirby.setCol(true);
+            kirby.quitarSalud(1);
         }
     }
 

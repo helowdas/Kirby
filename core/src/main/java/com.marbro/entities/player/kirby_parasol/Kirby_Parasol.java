@@ -19,6 +19,7 @@ import com.marbro.entities.player.Kirby;
 import com.marbro.entities.player.FactoryKirby;
 import com.marbro.entities.player.kirby_base.AnimationHelperKirby;
 import com.marbro.entities.player.kirby_base.EstadoKirby;
+import com.marbro.scenes.Hud;
 import com.marbro.screens.level1.Level1;
 import com.marbro.sounds.SoundHelperKirby;
 
@@ -86,7 +87,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
 
 
     public Kirby_Parasol(World world, Stage stage, Body body, Controlador_Colisiones controlador, float width, float height,
-                  Level1 screen)
+                  Level1 screen, int salud)
     {
         this.screen = screen;
 
@@ -112,6 +113,8 @@ public class Kirby_Parasol extends Actor implements Kirby {
         this.screen = screen;
 
         sounds = new SoundHelperKirby();
+
+        this.salud = salud;
     }
 
 
@@ -130,6 +133,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
 
         animations.update(delta);
         updatePlayerState(delta);
+        Hud.setPlayerHealt(salud);
     }
 
     @Override
@@ -164,9 +168,14 @@ public class Kirby_Parasol extends Actor implements Kirby {
         this.remove();
     }
 
-    @Override
+
     public int getSalud() {
         return salud;
+    }
+
+    @Override
+    public void quitarSalud(int damage_points) {
+        this.salud -= damage_points;
     }
 
     public void dispose(){

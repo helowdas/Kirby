@@ -11,6 +11,7 @@ public interface Kirby {
     public float getWidth();
     public float getHeight();
     public int getSalud();
+    public void quitarSalud(int damage_points);
     public void setCol(boolean col);
     public void accion(float delta);
     public Body getBody();

@@ -22,6 +22,7 @@ import com.marbro.entities.enemies.Factory.Entity;
 import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
 import com.marbro.entities.player.FactoryKirby;
 import com.marbro.entities.player.Kirby;
+import com.marbro.scenes.Hud;
 import com.marbro.screens.level1.Level1;
 import com.marbro.sounds.SoundHelperKirby;
 
@@ -135,6 +136,7 @@ public class Kirby_base extends Actor implements Kirby {
 
         animations.update(delta);
         updatePlayerState(delta);
+        Hud.setPlayerHealt(salud);
     }
 
     @Override
@@ -337,9 +339,14 @@ public class Kirby_base extends Actor implements Kirby {
     }
 
     @Override
+    public void quitarSalud(int puntos) {
+        this.salud -= puntos;
+    }
+
+    @Override
     public void accion(float delta) {
         ArrayList<Entity> entidades = screen.getEntidades();
-        Body body = CalculadoraDistancia.encontrarCuerpoMasCercano(this.body, this.world, 1f);
+        Body body = CalculadoraDistancia.encontrarCuerpoMasCercano(this.body, this.world, 2f);
         if (body != null) {
             for (int i = 0; i < entidades.size(); i++) {
                 Entity entidad = entidades.get(i);

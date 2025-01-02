@@ -60,14 +60,6 @@ public class Level1 implements Screen {
     private Kirby kirby;
     private ArrayList<Entity> entidades;
 
-
-    //Animaciones
-    private TextureAtlas atlas;
-
-    //Tamaño mapa tiled
-    private float mapWidth;
-    private float mapHeight;
-
     //Clase controladora de colisiones
     private Controlador_Colisiones controlador;
 
