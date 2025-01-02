@@ -18,18 +18,23 @@ import static com.marbro.constants.Constantes.*;
 public class PlatformVertical extends Actor implements Entity
 {
     //atributos
-    private World world;
-    private Body body;
-    private float width;
-    private float height;
-    private Sprite sprite;
-    private Texture texture;
+    protected World world;
+    protected Body body;
+    protected float width;
+    protected float height;
+    protected Sprite sprite;
+    protected Texture texture;
+    protected float delay;
 
     //atributos para actualizar movimiento
-    private Runnable movimientoArriba;
-    private Runnable movimientoAbajo;
-    private boolean invertir;
+    protected Runnable movimientoArriba;
+    protected Runnable movimientoAbajo;
+    protected boolean invertir;
 
+    public PlatformVertical()
+    {
+
+    }
     public PlatformVertical(World world, Body body, float width, float height, boolean invertir)
     {
         this.world = world;
@@ -40,39 +45,11 @@ public class PlatformVertical extends Actor implements Entity
         this.texture = MainGame.getAssetManager().get("entities/platform/platformWood.png");
         this.sprite = new Sprite(texture);
         this.invertir = invertir;
+        this.delay = DELAY;
 
-        //delay inicial
-        float delayInicial = (float) Math.random();
         defMovimiento(body);
 
-        if(!invertir)
-        {
-            this.addAction(Actions.sequence(
-                Actions.delay(delayInicial),
-                Actions.forever
-                    (
-                    Actions.sequence(Actions.run(movimientoAbajo), Actions.delay(DELAY),
-                        Actions.run(movimientoArriba), Actions.delay(DELAY), Actions.run(movimientoArriba),
-                        Actions.delay(DELAY), Actions.run(movimientoAbajo), Actions.delay(DELAY))
-                    )
-                )
-            );
-
-
-        }
-        else
-        {
-            this.addAction(Actions.sequence(
-                Actions.delay(delayInicial),
-                Actions.forever(
-                    Actions.sequence(Actions.run(movimientoArriba), Actions.delay(DELAY),
-                        Actions.run(movimientoAbajo), Actions.delay(DELAY), Actions.run(movimientoAbajo),
-                        Actions.delay(DELAY), Actions.run(movimientoArriba), Actions.delay(DELAY))
-                )
-            )
-            );
-        }
-
+        defAction(invertir);
 
     }
 
@@ -133,6 +110,40 @@ public class PlatformVertical extends Actor implements Entity
                 body.setLinearVelocity(0, -VELOCIDAD_PLATFORM);
             }
         };
+    }
+
+    public void defAction(boolean invertir)
+    {
+        //delay inicial
+        float delayInicial = (float) Math.random()/2;
+
+        if(!invertir)
+        {
+            this.addAction(Actions.sequence(
+                    Actions.delay(delayInicial),
+                    Actions.forever
+                        (
+                            Actions.sequence(Actions.run(movimientoAbajo), Actions.delay(delay),
+                                Actions.run(movimientoArriba), Actions.delay(delay), Actions.run(movimientoArriba),
+                                Actions.delay(delay), Actions.run(movimientoAbajo), Actions.delay(delay))
+                        )
+                )
+            );
+
+
+        }
+        else
+        {
+            this.addAction(Actions.sequence(
+                    Actions.delay(delayInicial),
+                    Actions.forever(
+                        Actions.sequence(Actions.run(movimientoArriba), Actions.delay(delay),
+                            Actions.run(movimientoAbajo), Actions.delay(delay), Actions.run(movimientoAbajo),
+                            Actions.delay(delay), Actions.run(movimientoArriba), Actions.delay(delay))
+                    )
+                )
+            );
+        }
     }
 
 }

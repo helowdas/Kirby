@@ -37,6 +37,11 @@ public class ColisionesHandlerWaddle implements ContactListener
             actor.setOnWall(true);
         }
 
+        if (hanColisionado(contact, actor, "platform"))
+        {
+            actor.setOnGround(true);
+        }
+
         if(hanColisionado(contact, actor, kirby))
         {
             actor.setColPlayer(true);
@@ -63,6 +68,11 @@ public class ColisionesHandlerWaddle implements ContactListener
             actor.setOnWall(true);
         }
 
+        if (hanColisionado(contact, actor, "platform"))
+        {
+            actor.setOnGround(false);
+        }
+
         if(hanColisionado(contact, actor, kirby))
         {
             actor.setColPlayer(false);
@@ -77,6 +87,7 @@ public class ColisionesHandlerWaddle implements ContactListener
     {
         if(hanColisionado(contact, actor, kirby))
         {
+
             if(actor.getTimeCollision())
             {
                 contact.setEnabled(true);

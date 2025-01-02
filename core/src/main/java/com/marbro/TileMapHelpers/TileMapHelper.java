@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.marbro.entities.Platforms.PlatformHorizontal;
 import com.marbro.entities.Platforms.PlatformVertical;
 import com.marbro.entities.enemies.Sir_Kibble.Sir_Kibble;
 import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
@@ -47,7 +48,7 @@ public class TileMapHelper
             mapHeight = tiledMap.getProperties().get("height", Integer.class) * PPM / 1;
 
             //obtener los objetos del mapa
-            parseMapObjects(tiledMap.getLayers().get("pincho").getObjects(), "spike");
+            parseMapObjects(tiledMap.getLayers().get("pinchos").getObjects(), "spike");
             parseMapObjects(tiledMap.getLayers().get("pared").getObjects(), "wall");
             parseMapObjects(tiledMap.getLayers().get("suelo").getObjects(), "block");
             parseMapObjects(tiledMap.getLayers().get("entities").getObjects(), "player");
@@ -151,7 +152,51 @@ public class TileMapHelper
                                 rectangle.width, rectangle.height, true));
 
                         }
+                        else if (rectangleName.equals("platform_horizontal"))
+                        {
+                            Body body = bodyHelperService.createBody(
+                                rectangle.getX() + rectangle.getWidth()/2,
+                                rectangle.getY() + rectangle.getHeight()/2,
+                                rectangle.getWidth(),
+                                rectangle.getHeight(),
+                                false, true,
+                                gameScreen.getWorld()
+                            );
 
+                            gameScreen.getEntidades().add(new PlatformHorizontal(gameScreen.getWorld(), body,
+                                rectangle.width, rectangle.height, false, DELAY));
+
+                        }
+                        else if (rectangleName.equals("platform_horizontal_invert"))
+                        {
+                            Body body = bodyHelperService.createBody(
+                                rectangle.getX() + rectangle.getWidth()/2,
+                                rectangle.getY() + rectangle.getHeight()/2,
+                                rectangle.getWidth(),
+                                rectangle.getHeight(),
+                                false, true,
+                                gameScreen.getWorld()
+                            );
+
+                            gameScreen.getEntidades().add(new PlatformHorizontal(gameScreen.getWorld(), body,
+                                rectangle.width, rectangle.height, true, DELAY));
+
+                        }
+                        else if (rectangleName.equals("platform_horizontal_S"))
+                        {
+                            Body body = bodyHelperService.createBody(
+                                rectangle.getX() + rectangle.getWidth()/2,
+                                rectangle.getY() + rectangle.getHeight()/2,
+                                rectangle.getWidth(),
+                                rectangle.getHeight(),
+                                false, true,
+                                gameScreen.getWorld()
+                            );
+
+                            gameScreen.getEntidades().add(new PlatformHorizontal(gameScreen.getWorld(), body,
+                                rectangle.width, rectangle.height, false, 2.5f));
+
+                        }
 
                     }
                     else
