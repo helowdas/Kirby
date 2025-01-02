@@ -51,6 +51,7 @@ public class TileMapHelper
             parseMapObjects(tiledMap.getLayers().get("pared").getObjects(), "wall");
             parseMapObjects(tiledMap.getLayers().get("suelo").getObjects(), "block");
             parseMapObjects(tiledMap.getLayers().get("entities").getObjects(), "player");
+            parseMapObjects(tiledMap.getLayers().get("techo").getObjects(), "techo");
             return new OrthogonalTiledMapRenderer(tiledMap, 1/PPM);
         }
 
