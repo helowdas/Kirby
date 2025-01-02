@@ -27,12 +27,15 @@ import com.marbro.TileMapHelpers.TileMapHelper;
 import com.marbro.colisions.Controlador_Colisiones;
 import com.marbro.entities.enemies.Factory.EnemyFactory;
 import com.marbro.entities.enemies.Factory.Entity;
+import com.marbro.entities.enemies.Factory.RandomEnemyFactory;
 import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
 import com.marbro.entities.player.Kirby;
 import com.marbro.scenes.Hud;
 import com.marbro.screens.GameOverScreen;
 
+
 import java.util.ArrayList;
+import java.util.Random;
 
 import static com.marbro.constants.Constantes.*;
 
@@ -118,6 +121,9 @@ public class Level1 implements Screen {
         //crear arreglos de entidades
         entidades = new ArrayList<Entity>();
 
+        //crear la fabrica de enemigos random
+        RandomEnemyFactory enemyFactory = new RandomEnemyFactory();
+
 
     }
 
@@ -147,6 +153,20 @@ public class Level1 implements Screen {
         //Para reproducir la música
         playMusic();
         music.setVolume(VOLUMEN);
+
+        /**
+         *  // Crear enemigos aleatorios y añadirlos al escenario
+         *         for (int i = 0; i < 5; i++) { // Crear 5 enemigos como ejemplo
+         *             Enemy enemy = enemyFactory.createEnemy(world, null, controlador, 1, 1, kirby);
+         *             entidades.add(enemy);
+         *             stage.addActor((Actor) enemy);
+         *         }
+         *
+         */
+
+
+
+
 
     }
 
