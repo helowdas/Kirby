@@ -154,4 +154,9 @@ public class Palanca extends Actor implements Entity, IObservable
     {
         return isActive;
     }
+
+    @Override
+    public Body getBody() {
+        return body;
+    }
 }

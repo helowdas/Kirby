@@ -92,5 +92,8 @@ public class Block_M extends Actor implements Entity, IObservador
         // Asegúrate de eliminar la entidad del mundo del juego, si es necesario
     }
 
-
+    @Override
+    public Body getBody() {
+        return body;
+    }
 }
