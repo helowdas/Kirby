@@ -315,6 +315,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
             Body body = helper.createBody(getX(), getY(), getWidth(), getHeight(), false, false, false, world);
             Rectangle rectangle = new Rectangle(getX(), getY(), getWidth(), getHeight());
             Kirby kirby = factory.createKirby(screen, body, rectangle, "kirby");
+            screen.setKirby(kirby);
             detach();
             dispose();
         }

@@ -23,6 +23,7 @@ import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
 import com.marbro.entities.player.FactoryKirby;
 import com.marbro.entities.player.Kirby;
 import com.marbro.screens.level1.Level1;
+import com.marbro.sounds.SoundHelperKirby;
 
 import java.util.ArrayList;
 
@@ -80,6 +81,9 @@ public class Kirby_base extends Actor implements Kirby {
     //Screen
     private Level1 screen;
 
+    //Efectos de sonidos
+    private SoundHelperKirby sounds;
+
     //constructor
     public Kirby_base(World world, Stage stage, Body body,
                       Controlador_Colisiones controlador,
@@ -95,7 +99,6 @@ public class Kirby_base extends Actor implements Kirby {
         this.estado = EstadoKirby.QUIETO;
         life = true;
 
-
         cal = new CalculadoraDistancia();
 
         contador = new ActionTimer();
@@ -110,6 +113,8 @@ public class Kirby_base extends Actor implements Kirby {
         this.screen = screen;
 
         factory = new FactoryKirby();
+
+        sounds = new SoundHelperKirby();
     }
 
 
@@ -232,6 +237,7 @@ public class Kirby_base extends Actor implements Kirby {
         {
             body.applyLinearImpulse(0, IMPULSE_SALTO, body.getPosition().x, body.getPosition().y, true);
             jump = true;
+            sounds.playSound("jump");
         }
 
         if (estado != EstadoKirby.ASPIRANDO && body.getLinearVelocity().y > 0 && !onPlatform && !fly) {

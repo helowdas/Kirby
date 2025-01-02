@@ -82,7 +82,7 @@ public class Level1 implements Screen {
         this.game = game;
         gamecame = new OrthographicCamera();
         gameport = new FitViewport(Gdx.graphics.getWidth() / PPM, Gdx.graphics.getHeight() / PPM, gamecame);
-        hud = new Hud(game.batch);
+        hud = new Hud(game.batch, this);
 
         //Creacion del world y el box2d
         world = new World(new Vector2(0,GRAVEDAD), true);
@@ -141,16 +141,16 @@ public class Level1 implements Screen {
 
     }
 
-
     public void update(float delta) {
         //Calculos para fijar los límites de la cámara (mejorarlos)
-        float x = kirby.getX() + kirby.getWidth() / 2 / PPM;
+        float x = kirby.getBody().getPosition().x + kirby.getWidth() / 2 / PPM;
 
         camX = MathUtils.clamp(x, gamecame.viewportWidth / PPM, (tileMapHelper.getMapWidth() - gamecame.viewportWidth)/ PPM);
 
         gamecame.position.set(camX, camY, 0);
         gamecame.update();
         renderer.setView(gamecame);
+        hud.update(delta);
     }
 
     @Override
