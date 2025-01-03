@@ -1,6 +1,5 @@
-package com.marbro.entities.Block_Mecanismo;
+package com.marbro.entities.BanderaWin;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -11,8 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.marbro.MainGame;
 import com.marbro.colisions.Controlador_Colisiones;
-import com.marbro.entities.IObserver.IObservable;
-import com.marbro.entities.IObserver.IObservador;
+import com.marbro.entities.Block_Mecanismo.Block_M;
 import com.marbro.entities.Palanca.CollisionHandlerPalanca;
 import com.marbro.entities.enemies.Factory.Entity;
 import com.marbro.entities.player.Kirby;
@@ -21,7 +19,7 @@ import java.util.ArrayList;
 
 import static com.marbro.constants.Constantes.PPM;
 
-public class Block_M extends Actor implements Entity, IObservador
+public class Bandera extends Actor implements Entity
 {
     //atributos
     protected World world;
@@ -30,26 +28,41 @@ public class Block_M extends Actor implements Entity, IObservador
     protected float height;
     protected Sprite sprite;
     protected Texture texture;
-    private Controlador_Colisiones controlador;
-    private Fixture fixture;
-    public boolean isDestroyed = false;
-    private Runnable animationRunnable;
-    private Runnable disposeRunnable;
-    private AnimationExplosion animation;
-    private float stateTime = 0f; // Estado de tiempo de la animación
 
-    public Block_M(World world, Body body, float width, float height)
+    //booleans
+    private boolean flip = false;
+    private boolean isActive = false;
+
+    //Controlador
+    private Controlador_Colisiones controlador;
+
+    //animacion
+    private OpenAnimation animation;
+    private Runnable winRunnable;
+
+    //kirby
+    Kirby kirby;
+
+    public Bandera(World world, Body body, float width, float height,
+                   Controlador_Colisiones controlador, Kirby kirby)
     {
         this.world = world;
         this.body = body;
-        fixture = body.getFixtureList().get(0);
-        fixture.setUserData("wall");
+        body.getFixtureList().get(0).setUserData(this);
         this.width = width;
         this.height = height;
-        this.texture = MainGame.getAssetManager().get("entities/block_Mecanismo/0.png");
+        this.texture = MainGame.getAssetManager().get("entities/BanderaWin/0.png");
         this.sprite = new Sprite(texture);
-        animation = new AnimationExplosion(MainGame.getAssetManager());
-        defDispose(this);
+
+        this.controlador = controlador;
+        createContactListener(kirby);
+
+        //animacion
+        animation = new OpenAnimation(MainGame.getAssetManager());
+        this.kirby = kirby;
+
+        //definir runnable
+        defWinRun(this);
 
     }
 
@@ -64,13 +77,14 @@ public class Block_M extends Actor implements Entity, IObservador
         setPosition(posX, posY);
         // Ajustar el tamaño del actor en píxeles, considerando PPM
         setSize(width/PPM, height/PPM); // Ajusta estos valores según el tamaño deseado de tu sprite en el mundo Box2D
+
         sprite.setSize(getWidth(), getHeight());
         sprite.setPosition(posX, posY);
-
-        // Actualizar el estado de tiempo y la animación
-        if (isDestroyed) {
+        if(isActive)
+        {
             sprite = animation.getFrameActual(delta);
         }
+
     }
 
     @Override
@@ -79,19 +93,9 @@ public class Block_M extends Actor implements Entity, IObservador
         sprite.draw(batch);
     }
 
-    @Override
-    public void update(IObservable observable)
-    {
-        fixture.setSensor(true);
-        isDestroyed = true;
-
-        float animationDuration = 0.8f; // Duración de la animación en segundos
-
-        this.addAction(Actions.sequence(
-            Actions.delay(animationDuration), // Esperar la duración de la animación
-            Actions.run(disposeRunnable)
-        ));
-
+    private void createContactListener(Kirby kirby){
+        ColisionHandlerBandera colisionesHandler = new ColisionHandlerBandera(this, kirby);
+        controlador.addListener(colisionesHandler);
     }
 
     @Override
@@ -107,8 +111,18 @@ public class Block_M extends Actor implements Entity, IObservador
             body = null;
         }
 
-        this.remove();
-        // Asegúrate de eliminar la entidad del mundo del juego, si es necesario
+        this.remove(); // Asegúrate de eliminar la entidad del mundo del juego, si es necesario
+    }
+
+    public void active()
+    {
+        isActive = true;
+        float timaAnimation = 0.85f;
+
+        this.addAction(Actions.sequence(
+            Actions.delay(timaAnimation), Actions.run(winRunnable)
+        ));
+
     }
 
     @Override
@@ -116,18 +130,19 @@ public class Block_M extends Actor implements Entity, IObservador
         return body;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
 
-    public void defDispose(Block_M blockM)
+    public void defWinRun(Bandera bandera)
     {
-        disposeRunnable = new Runnable()
+        winRunnable = new Runnable()
         {
             @Override
             public void run()
             {
-                blockM.remove();
+                bandera.kirby.setWin(true);
             }
         };
     }
-
-
 }
