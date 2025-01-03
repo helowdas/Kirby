@@ -40,9 +40,8 @@
   <object id="523" name="palanca" x="4978.75" y="127.25" width="15.75" height="15.5"/>
  </objectgroup>
  <objectgroup id="13" name="bloque_mecanismo">
-  <object id="528" name="bloque_M" x="4912.05" y="207.914" width="32.1679" height="32.5715"/>
-  <object id="529" name="bloque_M" x="4912.04" y="240.464" width="32.1679" height="32.5715"/>
-  <object id="530" name="bloque_M" x="4912.04" y="273.027" width="32.1679" height="29.9351"/>
+  <object id="528" name="bloque_M" x="4911.55" y="208.025" width="32.1679" height="48.7079"/>
+  <object id="529" name="bloque_M" x="4911.54" y="256.714" width="32.1679" height="46.3215"/>
  </objectgroup>
  <objectgroup id="9" name="techo">
   <object id="221" x="16.3182" y="48.5" width="5583" height="16"/>
