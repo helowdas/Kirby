@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.marbro.entities.player.Kirby;
 import com.marbro.screens.level1.Level1;
 
 public class Hud {
@@ -31,17 +32,19 @@ public class Hud {
     Label worldLabel;
     Label kirbyLabel;
 
+    public static int playerLives;
     // Hud.java
 
-    private int playerLives;
-    Label livesLabel;
+    public static Label livesLabel;
+
+    private Kirby kirby;
 
     public Hud(SpriteBatch sb, Level1 screen) {
         // Inicialización de variables
         worldTimer = 200;
         timeCount = 0;
         score = 0;
-        playerLives = 3; // Ejemplo de cantidad de vidas
+        kirby = screen.getKirby();
 
         viewport = new FitViewport(800, 600, new OrthographicCamera());
         stage = new Stage(viewport, sb);
@@ -57,7 +60,7 @@ public class Hud {
         levelLabel = new Label("LEVEL", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
         worldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
         kirbyLabel = new Label("JUGADOR", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
-        livesLabel = new Label(String.format("Lives: %01d", playerLives), new Label.LabelStyle(new BitmapFont(), Color.BLACK));
+        livesLabel = new Label(String.format("Salud: %01d", playerLives), new Label.LabelStyle(new BitmapFont(), Color.BLACK));
 
         // Añadir etiquetas a la tabla
         table.add(kirbyLabel).expandX().padTop(10);
@@ -96,6 +99,15 @@ public class Hud {
         livesLabel.setText(String.format("Lives: %01d", playerLives));
     }
 
+    public int getTime(){
+        return worldTimer;
+    }
+
+    public static void setPlayerHealt(int healt) {
+        playerLives = healt;
+        livesLabel.setText(String.format("Lives: %01d", playerLives));
+
+    }
 
 
 }

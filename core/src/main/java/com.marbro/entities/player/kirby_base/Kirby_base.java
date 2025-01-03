@@ -22,6 +22,7 @@ import com.marbro.entities.enemies.Factory.Entity;
 import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
 import com.marbro.entities.player.FactoryKirby;
 import com.marbro.entities.player.Kirby;
+import com.marbro.scenes.Hud;
 import com.marbro.screens.level1.Level1;
 import com.marbro.sounds.SoundHelperKirby;
 
@@ -61,6 +62,7 @@ public class Kirby_base extends Actor implements Kirby {
 
     //Atributos del jugador
     private boolean life;
+    private int salud;
 
     //Calculadora distancia
     CalculadoraDistancia cal;
@@ -87,7 +89,7 @@ public class Kirby_base extends Actor implements Kirby {
     //constructor
     public Kirby_base(World world, Stage stage, Body body,
                       Controlador_Colisiones controlador,
-                      float width, float height, Level1 screen)
+                      float width, float height, Level1 screen, int salud)
     {
         this.world = world;
         this.stage = stage;
@@ -115,6 +117,8 @@ public class Kirby_base extends Actor implements Kirby {
         factory = new FactoryKirby();
 
         sounds = new SoundHelperKirby();
+
+        this.salud = salud;
     }
 
 
@@ -132,6 +136,7 @@ public class Kirby_base extends Actor implements Kirby {
 
         animations.update(delta);
         updatePlayerState(delta);
+        Hud.setPlayerHealt(salud);
     }
 
     @Override
@@ -329,14 +334,19 @@ public class Kirby_base extends Actor implements Kirby {
     }
 
     @Override
-    public boolean isAlive(){
-        return life;
+    public int getSalud(){
+        return salud;
+    }
+
+    @Override
+    public void quitarSalud(int puntos) {
+        this.salud -= puntos;
     }
 
     @Override
     public void accion(float delta) {
         ArrayList<Entity> entidades = screen.getEntidades();
-        Body body = CalculadoraDistancia.encontrarCuerpoMasCercano(this.body, this.world, 1f);
+        Body body = CalculadoraDistancia.encontrarCuerpoMasCercano(this.body, this.world, 2f);
         if (body != null) {
             for (int i = 0; i < entidades.size(); i++) {
                 Entity entidad = entidades.get(i);
@@ -414,7 +424,7 @@ public class Kirby_base extends Actor implements Kirby {
 
     public void setPower(String uData){
         Rectangle rectangle = new Rectangle(getX(), getY(), getWidth(), getHeight());
-        Kirby kirby = factory.createKirby(screen, body, rectangle, uData);
+        Kirby kirby = factory.createKirby(screen, body, rectangle, uData, salud);
         stage.addActor((Actor) kirby);
         screen.setKirby(kirby);
         remove();

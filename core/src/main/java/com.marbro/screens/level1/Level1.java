@@ -60,14 +60,6 @@ public class Level1 implements Screen {
     private Kirby kirby;
     private ArrayList<Entity> entidades;
 
-
-    //Animaciones
-    private TextureAtlas atlas;
-
-    //Tamaño mapa tiled
-    private float mapWidth;
-    private float mapHeight;
-
     //Clase controladora de colisiones
     private Controlador_Colisiones controlador;
 
@@ -155,7 +147,7 @@ public class Level1 implements Screen {
 
     @Override
     public void render(float delta) {
-        if (kirby.isAlive()){
+        if (kirby.getSalud() != 0 && hud.getTime() > 0){
             update(delta);
 
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

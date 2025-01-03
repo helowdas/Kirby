@@ -14,6 +14,7 @@ import com.marbro.entities.IObserver.IObservable;
 import com.marbro.entities.IObserver.IObservador;
 import com.marbro.entities.enemies.Factory.Entity;
 import com.marbro.entities.player.Kirby;
+import com.marbro.sounds.SoundHelperLever;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,9 @@ public class Palanca extends Actor implements Entity, IObservable
     //entidades
     private ArrayList<Entity> entidades;
 
+    //sonido
+    private SoundHelperLever sounds;
+
     public Palanca(World world, Body body, float width, float height,
                    Controlador_Colisiones controlador, Kirby kirby,  ArrayList<Entity> entidades)
     {
@@ -69,6 +73,8 @@ public class Palanca extends Actor implements Entity, IObservable
                 this.suscribir((IObservador) entidad);
             }
         }
+
+        sounds = new SoundHelperLever();
     }
 
     @Override
@@ -144,6 +150,7 @@ public class Palanca extends Actor implements Entity, IObservable
         flip = true;
         sprite.flip(true, false);
         this.notificar();
+        sounds.playSound();
     }
 
     public void setFlip(boolean flip) {

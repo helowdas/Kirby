@@ -44,6 +44,7 @@ public class ColisionesHandlerWaddle implements ContactListener
         {
             actor.setColPlayer(true);
             kirby.setCol(true);
+            kirby.quitarSalud(1);
         }
     }
 
