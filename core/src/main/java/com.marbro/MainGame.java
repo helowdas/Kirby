@@ -34,6 +34,13 @@ public class MainGame extends Game
         assetManager.load("entities/BanderaWin/5.png", Texture.class);
         assetManager.load("entities/BanderaWin/6.png", Texture.class);
         assetManager.load("entities/BanderaWin/7.png", Texture.class);
+        assetManager.load("entities/explosion_enemy/0.png", Texture.class);
+        assetManager.load("entities/explosion_enemy/1.png", Texture.class);
+        assetManager.load("entities/explosion_enemy/2.png", Texture.class);
+        assetManager.load("entities/explosion_enemy/3.png", Texture.class);
+        assetManager.load("entities/explosion_enemy/4.png", Texture.class);
+        assetManager.load("entities/explosion_enemy/5.png", Texture.class);
+        assetManager.load("entities/explosion_enemy/6.png", Texture.class);
         assetManager.finishLoading(); //assets cargados
 
         batch = new SpriteBatch();
