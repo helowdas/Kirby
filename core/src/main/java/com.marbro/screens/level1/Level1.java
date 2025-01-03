@@ -23,6 +23,7 @@ import com.marbro.entities.enemies.Factory.Entity;
 import com.marbro.entities.player.Kirby;
 import com.marbro.scenes.Hud;
 import com.marbro.screens.GameOverScreen;
+import com.marbro.screens.WinScreen;
 
 
 import java.util.ArrayList;
@@ -152,7 +153,7 @@ public class Level1 implements Screen {
     {
         if(kirby.isWin())
         {
-            ((MainGame) Gdx.app.getApplicationListener()).setScreen(new GameOverScreen(game));
+            ((MainGame) Gdx.app.getApplicationListener()).setScreen(new WinScreen(game));
         }
         else if (!(kirby.getSalud() <= 0) && hud.getTime() > 0){
             update(delta);
