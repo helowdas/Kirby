@@ -41,7 +41,7 @@ public class Hud {
 
     public Hud(SpriteBatch sb, Level1 screen) {
         // Inicialización de variables
-        worldTimer = 200;
+        worldTimer = 300;
         timeCount = 0;
         score = 0;
         kirby = screen.getKirby();
