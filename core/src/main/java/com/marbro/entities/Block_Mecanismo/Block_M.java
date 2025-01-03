@@ -69,7 +69,7 @@ public class Block_M extends Actor implements Entity, IObservador
 
         // Actualizar el estado de tiempo y la animación
         if (isDestroyed) {
-            sprite.setRegion(animation.getFrameActual(delta));
+            sprite = animation.getFrameActual(delta);
         }
     }
 
