@@ -1,14 +1,19 @@
 package com.marbro.entities.enemies.waddle_dee;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
+import com.marbro.MainGame;
 import com.marbro.animation.Animation_Base_Loop;
 import com.marbro.colisions.Controlador_Colisiones;
 import com.marbro.contador.ActionTimer;
+import com.marbro.entities.AnimationExplosion.AnimationExplosionEnemy;
+import com.marbro.entities.Block_Mecanismo.Block_M;
 import com.marbro.entities.enemies.Factory.Enemy;
 import com.marbro.entities.player.Kirby;
 
@@ -43,6 +48,7 @@ public class Waddle_dee extends Actor implements Enemy {
     private boolean onSpike;
     private boolean onWall;
     private boolean colPlayer;
+    private boolean isAlive = true;
 
     //Controlador
     private Controlador_Colisiones controlador;
@@ -58,6 +64,16 @@ public class Waddle_dee extends Actor implements Enemy {
 
     //Estados waddle
     private boolean herido;
+
+    //saludo Waddle dee
+    private int salud;
+
+    //animacion muerte
+    private AnimationExplosionEnemy animationExplosive;
+    //sprite
+    Sprite sprite;
+    //Run de Muerte
+    private Runnable dieRun;
 
     //constructor
     public Waddle_dee(World world, Body body,
@@ -82,6 +98,13 @@ public class Waddle_dee extends Actor implements Enemy {
         contador = new ActionTimer();
         pain = new ActionTimer();
         colPlayer = false;
+        //cargar animacion
+        this.animationExplosive = new AnimationExplosionEnemy(MainGame.getAssetManager());
+        //definir salud
+        salud = 1;
+
+        //definir Runnable
+        defDie(this);
     }
 
     private void createContactListener(Kirby kirby){
@@ -90,8 +113,16 @@ public class Waddle_dee extends Actor implements Enemy {
     }
 
     @Override
-    public void act(float delta) {
+    public void act(float delta)
+    {
         super.act(delta);
+        if(salud <= 0)
+        {
+            setAlive(false);
+            muerte();
+            sprite = animationExplosive.getFrameActual(delta);
+        }
+
         if (!contador.isRunning()){
             contador.start();
         }
@@ -101,7 +132,8 @@ public class Waddle_dee extends Actor implements Enemy {
     }
 
     @Override
-    public void draw(Batch batch, float parentAlpha) {
+    public void draw(Batch batch, float parentAlpha)
+    {
         super.draw(batch, parentAlpha);
 
         // Ajustar la posicion del sprite
@@ -111,10 +143,20 @@ public class Waddle_dee extends Actor implements Enemy {
         setPosition(posX, posY);
 
         // Ajustar el tamaño del actor en píxeles, considerando PPM
-        setSize(width/PPM, height/PPM); // Ajusta estos valores según el tamaño deseado de tu sprite en el mundo Box2D
+        setSize(width / PPM, height / PPM); // Ajusta estos valores según el tamaño deseado de tu sprite en el mundo Box2D
 
         TextureRegion frame = drawEnemy();
-        batch.draw(frame, getX(), getY(), getWidth(), getHeight());
+
+        if(isAlive)
+        {
+            batch.draw(frame, getX(), getY(), getWidth(), getHeight());
+        }
+        else
+        {
+            sprite.setPosition(getX(), getY());
+            sprite.setSize(getWidth(), getHeight());
+            sprite.draw(batch);
+        }
     }
 
     public void detach() {
@@ -168,8 +210,9 @@ public class Waddle_dee extends Actor implements Enemy {
             body.setLinearVelocity(2f * lastmove, body.getLinearVelocity().y);
         }
 
-        if (colPlayer) {
-
+        if (colPlayer)
+        {
+            recibirDamage(-1);
             // Verificar si ha pasado suficiente tiempo desde la última colisión
             if (getTimeCollision()) {
                 // Actualizar el tiempo de la última colisión
@@ -251,6 +294,38 @@ public class Waddle_dee extends Actor implements Enemy {
     @Override
     public void actReferencia(Kirby kirby){
         colisiones.actReferencia(kirby);
+    }
+
+    public void recibirDamage(int salud) {
+        this.salud += salud;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
+
+    public void defDie(Waddle_dee waddleDee)
+    {
+        dieRun = new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                waddleDee.remove();
+            }
+        };
+    }
+
+    public void muerte()
+    {
+        body.getFixtureList().get(0).setSensor(true);
+
+        float timaAnimation = 0.3f;
+
+        this.addAction(Actions.sequence(
+            Actions.delay(timaAnimation), // Esperar la duración de la animación
+            Actions.run(dieRun)
+        ));
     }
 }
 
