@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.marbro.MainGame;
 import com.marbro.screens.level1.Level1;
 import com.marbro.screens.modeloScreen.AboutScreen;
@@ -41,7 +42,8 @@ public class MenuScreen implements Screen {
 
     private void initializeCameraAndStage() {
         camera = new OrthographicCamera();
-        stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera));
+        //stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera));
+        stage = new Stage(new ScreenViewport(camera));
     }
 
     // Este metodo sirve para cargar botones
@@ -110,6 +112,7 @@ public class MenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         sb.begin();
+        float positionX = Gdx.graphics.getWidth() / 2f - fondo.getWidth() / 2f;
         sb.draw(fondo, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         sb.end();
 
@@ -120,6 +123,17 @@ public class MenuScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
+        sb.getProjectionMatrix().setToOrtho2D(0, 0, width, height); // Ajusta la cámara al tamaño de la pantalla
+
+        float buttonXPosition = width / 2f;
+        float buttonYPosition = height / 2f;
+
+        for (TextButton button : buttons) {
+            button.setPosition(buttonXPosition - button.getWidth() / 2f, buttonYPosition);
+            buttonYPosition -= 100; // Ajuste para la posición vertical de los botones
+        }
+
+
     }
 
     @Override

@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.marbro.MainGame;
+import com.marbro.screens.level1.Level1;
 
 public class GameOverScreen implements Screen {
     private SpriteBatch batch;
@@ -34,8 +35,13 @@ public class GameOverScreen implements Screen {
 
         // Crear el botón
         TextButton button = new TextButton("Volver al Menu", skin);
-        button.setPosition(Gdx.graphics.getWidth() / 2f - 100, Gdx.graphics.getHeight() / 2f - 400);
-        button.setSize(400, 100);
+        button.setPosition(Gdx.graphics.getWidth() / 2f - 250, Gdx.graphics.getHeight() / 2f - 225);
+
+        button.setSize(200, 75);
+
+        TextButton button2 = new TextButton("Jugar de nuevo", skin);
+        button2.setPosition(Gdx.graphics.getWidth() / 2f + 50, Gdx.graphics.getHeight() / 2f - 225);
+        button2.setSize(200, 75);
 
         // Añadir oyente al botón para que vuelva al menú
         button.addListener(new ClickListener() {
@@ -45,8 +51,16 @@ public class GameOverScreen implements Screen {
             }
         });
 
+        button2.addListener((new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new Level1(game));
+            }
+        }));
+
         // Añadir el botón al escenario
         stage.addActor(button);
+        stage.addActor(button2);
 
         // Establecer la entrada procesada por el escenario
         Gdx.input.setInputProcessor(stage);
@@ -70,6 +84,7 @@ public class GameOverScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
+        batch.getProjectionMatrix().setToOrtho2D(0, 0, width, height);
     }
 
     @Override
