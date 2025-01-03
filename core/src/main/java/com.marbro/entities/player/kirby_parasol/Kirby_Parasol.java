@@ -52,6 +52,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
     public boolean onPlatform = false;
     public boolean fly = false;
     public boolean col = false;
+    public boolean isWin = false;
 
     //Controlador de colisiones
     private Controlador_Colisiones controlador;
@@ -481,6 +482,16 @@ public class Kirby_Parasol extends Actor implements Kirby {
         return body;
     }
 
+    @Override
+    public boolean isWin() {
+        return isWin;
+    }
+
+    @Override
+    public void setWin(boolean win) {
+        this.isWin = win;
+    }
+
     public static int getLastMove(){
         return lastmove;
     }
@@ -488,6 +499,8 @@ public class Kirby_Parasol extends Actor implements Kirby {
     public void actReferencias(Kirby kirby){
         screen.actReferencias(kirby);
     }
+
+
 }
 
 

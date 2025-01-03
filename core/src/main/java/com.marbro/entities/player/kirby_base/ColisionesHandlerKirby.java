@@ -2,6 +2,7 @@ package com.marbro.entities.player.kirby_base;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import static com.marbro.constants.Constantes.*;
 
 public class ColisionesHandlerKirby implements ContactListener
 {
@@ -30,6 +31,11 @@ public class ColisionesHandlerKirby implements ContactListener
             {
                 actor.setOnPlatform(true);
                 actor.setOnGround(true);
+            }
+
+            if (hanColisionado(contact, actor, "abismo"))
+            {
+                actor.quitarSalud(SALUD_KIRBY_MAX);
             }
             //Aqui se pueden agregar más CATEGORY_TIPOCOLISION HACERLO EN EL END CONTACT TAMBIEN
     }

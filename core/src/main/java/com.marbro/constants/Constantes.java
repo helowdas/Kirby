@@ -20,6 +20,8 @@ public class Constantes {
     public static final float IMPULSE_SALTO = 6.3f;
     public static final float VEL_FLY = 1.5f;
 
+    //Salud Kirba
+    public static final int SALUD_KIRBY_MAX = 5;
     //constantes Volumen
     public static final float VOLUMEN = 0.01f;
 

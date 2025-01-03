@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="350" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="531">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="350" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="559">
  <tileset firstgid="1" source="Terreno.tsx"/>
  <tileset firstgid="243" source="Pinchos.tsx"/>
  <tileset firstgid="244" source="pinchos2.tsx"/>
@@ -38,10 +38,21 @@
  </layer>
  <objectgroup id="12" name="mecanismos">
   <object id="523" name="palanca" x="4978.75" y="127.25" width="15.75" height="15.5"/>
+  <object id="550" name="bandera" x="5346.46" y="112.917" width="45.4167" height="42.8333"/>
  </objectgroup>
  <objectgroup id="13" name="bloque_mecanismo">
   <object id="528" name="bloque_M" x="4911.55" y="208.025" width="32.1679" height="48.7079"/>
   <object id="529" name="bloque_M" x="4911.54" y="256.714" width="32.1679" height="46.3215"/>
+ </objectgroup>
+ <objectgroup id="14" name="abismo">
+  <object id="551" x="544.5" y="398.25" width="303.875" height="1.625"/>
+  <object id="552" x="2016.56" y="396.521" width="431.625" height="3.29167"/>
+  <object id="553" x="3184.69" y="398.563" width="46.9583" height="1.625"/>
+  <object id="554" x="3776.29" y="398.506" width="96.0492" height="1.625"/>
+  <object id="555" x="4336.52" y="398.688" width="95.2083" height="1.625"/>
+  <object id="556" x="4592.11" y="398.665" width="79.9583" height="1.625"/>
+  <object id="557" x="4943.61" y="399.006" width="32.7765" height="1.625"/>
+  <object id="558" x="5247.7" y="398.703" width="64.5947" height="1.625"/>
  </objectgroup>
  <objectgroup id="9" name="techo">
   <object id="221" x="16.3182" y="48.5" width="5583" height="16"/>
@@ -268,16 +279,29 @@
   <object id="522" x="4736.67" y="127.833" width="14.9167" height="7.33333"/>
  </objectgroup>
  <objectgroup id="8" name="entities">
-  <object id="212" name="enemigo" x="419.333" y="297.333" width="20" height="20"/>
-  <object id="213" name="enemigo" x="1809.33" y="287.333" width="20" height="20"/>
-  <object id="217" name="enemigo" x="949.5" y="294.667" width="20" height="20"/>
-  <object id="354" name="waddle_dee_jefe" x="5098" y="219.333" width="50" height="54"/>
-  <object id="368" name="enemigo" x="2263.33" y="272.667" width="20" height="20"/>
-  <object id="369" name="enemigo" x="2376.67" y="192.667" width="20" height="20"/>
-  <object id="370" name="enemigo" x="2240.67" y="122" width="20" height="20"/>
-  <object id="373" name="enemigo" x="2768" y="197.5" width="20" height="20"/>
+  <object id="212" name="enemigo" x="416.666" y="292" width="20" height="20"/>
+  <object id="354" name="waddle_dee_jefe" x="5129.33" y="226.666" width="50" height="54"/>
+  <object id="531" name="enemigo" x="918" y="296" width="20" height="20"/>
+  <object id="532" name="enemigo" x="1116.66" y="150.666" width="20" height="20"/>
+  <object id="533" name="enemigo" x="1246.67" y="103.333" width="20" height="20"/>
+  <object id="534" name="enemigo" x="1362" y="151.334" width="20" height="20"/>
+  <object id="535" name="enemigo" x="1630.66" y="233.333" width="20" height="20"/>
+  <object id="536" name="enemigo" x="2277.33" y="118.333" width="20" height="20"/>
+  <object id="537" name="enemigo" x="2149.67" y="190.667" width="20" height="20"/>
+  <object id="538" name="enemigo" x="2178" y="272.667" width="20" height="20"/>
+  <object id="539" name="enemigo" x="2294" y="192.667" width="20" height="20"/>
+  <object id="540" name="enemigo" x="2536.67" y="293.667" width="20" height="20"/>
+  <object id="541" name="enemigo" x="2783.17" y="196.5" width="20" height="20"/>
+  <object id="542" name="enemigo" x="2878.17" y="197.5" width="20" height="20"/>
+  <object id="543" name="enemigo" x="3103" y="294" width="20" height="20"/>
+  <object id="544" name="enemigo" x="3554" y="150.667" width="20" height="20"/>
+  <object id="545" name="enemigo" x="3676.33" y="215.333" width="20" height="20"/>
+  <object id="546" name="enemigo" x="3739" y="151" width="20" height="20"/>
+  <object id="547" name="enemigo" x="4010.33" y="117" width="20" height="20"/>
+  <object id="548" name="enemigo" x="4278.67" y="183.333" width="20" height="20"/>
+  <object id="549" name="enemigo" x="4548.33" y="134" width="20" height="20"/>
  </objectgroup>
  <objectgroup id="11" name="player">
-  <object id="512" name="player" x="4699" y="270.083" width="20" height="21.1667"/>
+  <object id="512" name="player" x="300.333" y="291.75" width="20" height="21.1667"/>
  </objectgroup>
 </map>
