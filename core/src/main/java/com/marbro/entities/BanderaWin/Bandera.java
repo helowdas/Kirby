@@ -145,4 +145,9 @@ public class Bandera extends Actor implements Entity
             }
         };
     }
+
+    public void actReferencia(Kirby kirby)
+    {
+        this.kirby = kirby;
+    }
 }
