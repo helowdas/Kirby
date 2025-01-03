@@ -40,6 +40,7 @@ public class Palanca extends Actor implements Entity, IObservable
 
     //Controlador
     private Controlador_Colisiones controlador;
+    private CollisionHandlerPalanca colisiones;
 
     //entidades
     private ArrayList<Entity> entidades;
@@ -100,8 +101,8 @@ public class Palanca extends Actor implements Entity, IObservable
     }
 
     private void createContactListener(Kirby kirby){
-        CollisionHandlerPalanca colisionesHandler = new CollisionHandlerPalanca(this, kirby);
-        controlador.addListener(colisionesHandler);
+        colisiones = new CollisionHandlerPalanca(this, kirby);
+        controlador.addListener(colisiones);
     }
 
     @Override
@@ -165,5 +166,9 @@ public class Palanca extends Actor implements Entity, IObservable
     @Override
     public Body getBody() {
         return body;
+    }
+
+    public void actReferencia(Kirby kirby){
+        colisiones.actReferencia(kirby);
     }
 }

@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.marbro.MainGame;
 import com.marbro.TileMapHelpers.TileMapHelper;
 import com.marbro.colisions.Controlador_Colisiones;
+import com.marbro.entities.Palanca.Palanca;
 import com.marbro.entities.enemies.Factory.Enemy;
 import com.marbro.entities.enemies.Factory.Entity;
 import com.marbro.entities.player.Kirby;
@@ -276,6 +277,8 @@ public class Level1 implements Screen {
         for (Entity entidad : getEntidades()) {
             if (entidad instanceof Enemy) {
                 ((Enemy)entidad).actReferencia(kirby);
+            } else if (entidad instanceof Palanca){
+                ((Palanca)entidad).actReferencia(kirby);
             }
         }
     }

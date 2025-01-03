@@ -46,4 +46,8 @@ public class CollisionHandlerPalanca implements ContactListener
         return (contact.getFixtureA().getUserData().equals(userA) && contact.getFixtureB().getUserData().equals(userB))
             || (contact.getFixtureA().getUserData().equals(userB) && contact.getFixtureB().getUserData().equals(userA));
     }
+
+    public void actReferencia(Kirby kirby){
+        this.kirby = kirby;
+    }
 }
