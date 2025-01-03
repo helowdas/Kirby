@@ -57,6 +57,7 @@ public class Sir_Kibble extends Actor implements Enemy {
 
     //Controlador
     private Controlador_Colisiones controlador;
+    private ColisionesSirKibble colisiones;
 
     //Contador
     private ActionTimer contador;
@@ -85,8 +86,8 @@ public class Sir_Kibble extends Actor implements Enemy {
     }
 
     private void createContactListener(Kirby kirbyBase){
-        ColisionesSirKibble colisionesHandler = new ColisionesSirKibble(this,kirbyBase);
-        controlador.addListener(colisionesHandler);
+        colisiones = new ColisionesSirKibble(this,kirbyBase);
+        controlador.addListener(colisiones);
     }
 
     @Override
@@ -270,6 +271,11 @@ public class Sir_Kibble extends Actor implements Enemy {
     {
         long currentTime = System.currentTimeMillis();
         return currentTime;
+    }
+
+    @Override
+    public void actReferencia(Kirby kirby){
+        colisiones.actReferencia(kirby);
     }
 
 }

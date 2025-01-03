@@ -49,7 +49,7 @@ public class Kirby_base extends Actor implements Kirby {
     private boolean jump;
 
     //Colisiones del jugador
-    public boolean onGround = false;
+    public boolean onGround = true;
     public boolean onSpike = false;
     public boolean onWallRight = false;
     public boolean onWallLeft = false;
@@ -427,6 +427,7 @@ public class Kirby_base extends Actor implements Kirby {
         Kirby kirby = factory.createKirby(screen, body, rectangle, uData, salud);
         stage.addActor((Actor) kirby);
         screen.setKirby(kirby);
+        screen.actReferencias(kirby);
         remove();
         //dispose();
     }

@@ -103,6 +103,10 @@ public class ColisionesHandlerWaddle implements ContactListener
             || (contact.getFixtureA().getUserData().equals(userB) && contact.getFixtureB().getUserData().equals(userA));
     }
 
+    public void actReferencia(Kirby kirby){
+        this.kirby = kirby;
+    }
+
 }
 
 

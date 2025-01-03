@@ -115,6 +115,8 @@ public class Kirby_Parasol extends Actor implements Kirby {
         sounds = new SoundHelperKirby();
 
         this.salud = salud;
+
+        factory = new FactoryKirby();
     }
 
 
@@ -327,13 +329,12 @@ public class Kirby_Parasol extends Actor implements Kirby {
 
     public void hurt(){
         if (col){
-            BodyHelperService helper = new BodyHelperService();
-            Body body = helper.createBody(getX(), getY(), getWidth(), getHeight(), false, false, false, world);
-            Rectangle rectangle = new Rectangle(getX(), getY(), getWidth(), getHeight());
-            Kirby kirby = factory.createKirby(screen, body, rectangle, "kirby", salud);
+            Rectangle rectangle = new Rectangle(getX(), getY(), getWidth() * PPM / 2 + 3f, getHeight() * PPM / 2 + 3f);
+            Kirby kirby = factory.createKirby(screen, body, rectangle, "none", salud);
+            stage.addActor((Actor) kirby);
             screen.setKirby(kirby);
-            detach();
-            dispose();
+            screen.actReferencias(kirby);
+            remove();
         }
     }
 
@@ -482,6 +483,10 @@ public class Kirby_Parasol extends Actor implements Kirby {
 
     public static int getLastMove(){
         return lastmove;
+    }
+
+    public void actReferencias(Kirby kirby){
+        screen.actReferencias(kirby);
     }
 }
 

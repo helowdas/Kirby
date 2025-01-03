@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.marbro.MainGame;
 import com.marbro.TileMapHelpers.TileMapHelper;
 import com.marbro.colisions.Controlador_Colisiones;
+import com.marbro.entities.enemies.Factory.Enemy;
 import com.marbro.entities.enemies.Factory.Entity;
 import com.marbro.entities.player.Kirby;
 import com.marbro.scenes.Hud;
@@ -263,4 +264,13 @@ public class Level1 implements Screen {
     public ArrayList<Entity> getEntidades() {
         return entidades;
     }
+
+    public void actReferencias(Kirby kirby) {
+        for (Entity entidad : getEntidades()) {
+            if (entidad instanceof Enemy) {
+                ((Enemy)entidad).actReferencia(kirby);
+            }
+        }
+    }
+
 }

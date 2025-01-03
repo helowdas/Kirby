@@ -11,7 +11,6 @@ import com.marbro.colisions.Controlador_Colisiones;
 import com.marbro.contador.ActionTimer;
 import com.marbro.entities.enemies.Factory.Enemy;
 import com.marbro.entities.player.Kirby;
-import com.marbro.entities.player.kirby_base.Kirby_base;
 
 import static com.marbro.constants.Constantes.*;
 
@@ -47,6 +46,7 @@ public class Waddle_dee extends Actor implements Enemy {
 
     //Controlador
     private Controlador_Colisiones controlador;
+    private ColisionesHandlerWaddle colisiones;
 
     //Contador
     private ActionTimer contador;
@@ -85,8 +85,8 @@ public class Waddle_dee extends Actor implements Enemy {
     }
 
     private void createContactListener(Kirby kirby){
-        ColisionesHandlerWaddle colisionesHandler = new ColisionesHandlerWaddle(this, kirby);
-        controlador.addListener(colisionesHandler);
+        colisiones = new ColisionesHandlerWaddle(this, kirby);
+        controlador.addListener(colisiones);
     }
 
     @Override
@@ -246,6 +246,11 @@ public class Waddle_dee extends Actor implements Enemy {
     {
         long currentTime = System.currentTimeMillis();
        return currentTime;
+    }
+
+    @Override
+    public void actReferencia(Kirby kirby){
+        colisiones.actReferencia(kirby);
     }
 }
 
