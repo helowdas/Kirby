@@ -15,4 +15,6 @@ public interface Kirby {
     public void setCol(boolean col);
     public void accion(float delta);
     public Body getBody();
+    public boolean isWin();
+    public void setWin(boolean win);
 }

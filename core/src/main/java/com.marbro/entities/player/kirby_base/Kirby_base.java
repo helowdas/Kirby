@@ -56,6 +56,7 @@ public class Kirby_base extends Actor implements Kirby {
     public boolean onPlatform = false;
     public boolean fly = false;
     public boolean col = false;
+    public boolean isWin = false;
 
     //Controlador de colisiones
     private Controlador_Colisiones controlador;
@@ -436,4 +437,15 @@ public class Kirby_base extends Actor implements Kirby {
     public Body getBody() {
         return body;
     }
+
+    @Override
+    public boolean isWin() {
+        return isWin;
+    }
+
+    @Override
+    public void setWin(boolean win) {
+        this.isWin = win;
+    }
+
 }

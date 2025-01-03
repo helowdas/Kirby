@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.marbro.entities.BanderaWin.Bandera;
 import com.marbro.entities.Block_Mecanismo.Block_M;
 import com.marbro.entities.Palanca.Palanca;
 import com.marbro.entities.Platforms.PlatformHorizontal;
@@ -63,6 +64,7 @@ public class TileMapHelper
             parseMapObjects(tiledMap.getLayers().get("pinchos").getObjects(), "spike");
             parseMapObjects(tiledMap.getLayers().get("pared").getObjects(), "wall");
             parseMapObjects(tiledMap.getLayers().get("suelo").getObjects(), "block");
+            parseMapObjects(tiledMap.getLayers().get("abismo").getObjects(), "abismo");
             parseMapObjects(tiledMap.getLayers().get("bloque_mecanismo").getObjects(), "wall");
             parseMapObjects(tiledMap.getLayers().get("player").getObjects(), "player");
             parseMapObjects(tiledMap.getLayers().get("entities").getObjects(), "entity");
@@ -98,7 +100,7 @@ public class TileMapHelper
                                 gameScreen.getWorld()
                             );
 
-                            kirby = factory.createKirby(gameScreen, body, rectangle, "kirby", 5);
+                            kirby = factory.createKirby(gameScreen, body, rectangle, "kirby", SALUD_KIRBY_MAX);
 
                             gameScreen.setKirby(kirby);
                         }
@@ -117,21 +119,6 @@ public class TileMapHelper
                             gameScreen.getEntidades().add(new Waddle_dee(gameScreen.getWorld(), body,
                                     gameScreen.getControlador(), rectangle.width, rectangle.height, gameScreen.getKirby()));
 
-
-                        }
-                        else if(rectangleName.equals("Sir_Kibble"))
-                        {
-                            Body body = bodyHelperService.createBody(
-                                rectangle.getX() + rectangle.getWidth() / 2,
-                                rectangle.getY() + rectangle.getHeight() / 2,
-                                rectangle.getWidth(),
-                                rectangle.getHeight(),
-                                false, false, false,
-                                gameScreen.getWorld()
-                            );
-
-                            gameScreen.getEntidades().add(new Sir_Kibble(gameScreen.getWorld(), body,
-                                gameScreen.getControlador(), rectangle.width, rectangle.height, gameScreen.getKirby()));
 
                         }
 
@@ -255,6 +242,22 @@ public class TileMapHelper
 
                             gameScreen.getEntidades().add(new Block_M(gameScreen.getWorld(), body,
                                 rectangle.width, rectangle.height));
+
+                        }
+                        else if (rectangleName.equals("bandera"))
+                        {
+                            Body body = bodyHelperService.createBody(
+                                rectangle.getX() + rectangle.getWidth()/2,
+                                rectangle.getY() + rectangle.getHeight()/2,
+                                rectangle.getWidth(),
+                                rectangle.getHeight(),
+                                true, false, true,
+                                gameScreen.getWorld()
+                            );
+
+                            gameScreen.getEntidades().add(new Bandera(gameScreen.getWorld(), body,
+                                rectangle.width, rectangle.height, gameScreen.getControlador(),
+                                gameScreen.getKirby()));
 
                         }
 
