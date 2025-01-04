@@ -55,6 +55,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
     public boolean col = false;
     public boolean isWin = false;
     public boolean isAttack = false;
+    public boolean isBossDefeat = false;
 
     //Controlador de colisiones
     private Controlador_Colisiones controlador;
@@ -531,6 +532,16 @@ public class Kirby_Parasol extends Actor implements Kirby {
 
         body.createFixture(fixtureDef);
         body.getFixtureList().get(1).setUserData("attack");
+    }
+
+    @Override
+    public boolean isBossDefeat() {
+        return isBossDefeat;
+    }
+
+    @Override
+    public void setBossDefeat(boolean bossDefeat) {
+        isBossDefeat = bossDefeat;
     }
 }
 

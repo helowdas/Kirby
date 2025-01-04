@@ -75,6 +75,9 @@ public class Waddle_dee extends Actor implements Enemy {
     //Run de Muerte
     protected Runnable dieRun;
 
+    //Player
+    Kirby kirby;
+
     //constructor
     public Waddle_dee(World world, Body body,
                       Controlador_Colisiones controlador,
@@ -102,6 +105,7 @@ public class Waddle_dee extends Actor implements Enemy {
         this.animationExplosive = new AnimationExplosionEnemy(MainGame.getAssetManager());
         //definir salud
         salud = 2;
+        this.kirby = kirby;
 
         //definir Runnable
         defDie(this);
@@ -223,7 +227,6 @@ public class Waddle_dee extends Actor implements Enemy {
 
                 // Aplicar la fuerza al enemigo
                 body.applyLinearImpulse(new Vector2(forceX, forceY), body.getWorldCenter(), true);
-
                 recibirDamage(-1);
                 pain.start();
             }
@@ -311,6 +314,10 @@ public class Waddle_dee extends Actor implements Enemy {
             public void run()
             {
                 waddleDee.remove();
+                if(waddleDee instanceof Waddle_dee_Jefe)
+                {
+                    waddleDee.kirby.setBossDefeat(true);
+                }
             }
         };
     }

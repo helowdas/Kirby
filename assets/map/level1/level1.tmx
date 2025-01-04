@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="350" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="561">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="350" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="564">
  <tileset firstgid="1" source="Terreno.tsx"/>
  <tileset firstgid="243" source="Pinchos.tsx"/>
  <tileset firstgid="244" source="pinchos2.tsx"/>
@@ -302,6 +302,6 @@
   <object id="549" name="enemigo" x="4548.33" y="134" width="20" height="20"/>
  </objectgroup>
  <objectgroup id="11" name="player">
-  <object id="560" name="player" x="304.667" y="288.083" width="20" height="21.1667"/>
+  <object id="563" name="player" x="302" y="282.75" width="20" height="21.1667"/>
  </objectgroup>
 </map>
