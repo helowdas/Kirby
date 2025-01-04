@@ -60,6 +60,7 @@ public class ColisionesHandlerWaddle implements ContactListener
         if(hanColisionado(contact, actor, kirby))
         {
             actor.setColPlayer(true);
+            actor.recibirDamage(-1);
             kirby.setCol(true);
 
             if(!Gdx.input.isKeyPressed(Input.Keys.F))

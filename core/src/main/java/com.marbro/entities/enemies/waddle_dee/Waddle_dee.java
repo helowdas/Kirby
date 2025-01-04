@@ -227,7 +227,7 @@ public class Waddle_dee extends Actor implements Enemy {
 
                 // Aplicar la fuerza al enemigo
                 body.applyLinearImpulse(new Vector2(forceX, forceY), body.getWorldCenter(), true);
-                recibirDamage(-1);
+
                 pain.start();
             }
         }
