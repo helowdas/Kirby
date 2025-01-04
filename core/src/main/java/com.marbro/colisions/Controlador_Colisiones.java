@@ -14,6 +14,10 @@ public class Controlador_Colisiones implements ContactListener {
     public void addListener(ContactListener listener) {
         listeners.add(listener);
     }
+    public void removeListener(ContactListener listener)
+    {
+        listeners.remove(listener);
+    }
 
     @Override
     public void beginContact(Contact contact) {

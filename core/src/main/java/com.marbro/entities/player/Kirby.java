@@ -17,4 +17,5 @@ public interface Kirby {
     public Body getBody();
     public boolean isWin();
     public void setWin(boolean win);
+    public boolean getAttack();
 }

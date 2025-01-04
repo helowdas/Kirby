@@ -1,5 +1,7 @@
 package com.marbro.entities.enemies.waddle_dee;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.physics.box2d.*;
 import com.marbro.entities.player.Kirby;
 import com.marbro.entities.player.kirby_base.Kirby_base;
@@ -28,6 +30,7 @@ public class ColisionesHandlerWaddle implements ContactListener
         if (hanColisionado(contact, actor, "spike"))
         {
             actor.setOnSpike(true);
+            actor.recibirDamage(-2);
         }
 
         if (hanColisionado(contact, actor, "wall"))
@@ -40,11 +43,29 @@ public class ColisionesHandlerWaddle implements ContactListener
             actor.setOnGround(true);
         }
 
+        if(hanColisionado(contact, actor, "abismo"))
+        {
+            actor.recibirDamage(-2);
+        }
+
+        if(hanColisionado(contact, actor, "attack"))
+        {
+            if (kirby.getAttack())
+            {
+                actor.setColPlayer(true);
+                actor.recibirDamage(-2);
+            }
+        }
+
         if(hanColisionado(contact, actor, kirby))
         {
             actor.setColPlayer(true);
             kirby.setCol(true);
-            kirby.quitarSalud(1);
+
+            if(!Gdx.input.isKeyPressed(Input.Keys.F))
+            {
+                kirby.quitarSalud(1);
+            }
         }
     }
 

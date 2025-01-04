@@ -25,6 +25,7 @@ public class ColisionesHandlerKirbyParasol implements ContactListener
         if (hanColisionado(contact, actor, "spike"))
         {
             actor.setOnSpike(true);
+            actor.quitarSalud(1);
         }
 
         if (hanColisionado(contact, actor, "platform"))
