@@ -27,7 +27,7 @@ public class HelpScreen implements Screen {
     @Override
     public void show() {
         batch = new SpriteBatch();
-        helpTexture = new Texture(Gdx.files.internal("fondos/sos.jpg"));
+        helpTexture = new Texture(Gdx.files.internal("fondos/Ayuda.png"));
         stage = new Stage();
 
         // Carga de skin
@@ -35,8 +35,8 @@ public class HelpScreen implements Screen {
 
         // Crear el botón
         TextButton button = new TextButton("Volver al Menu", skin);
-        button.setPosition(Gdx.graphics.getWidth() / 2f - 100, Gdx.graphics.getHeight() / 2f - 400);
-        button.setSize(400, 100);
+        button.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f-275);
+        button.setSize(250, 75);
 
         // Añadir oyente al botón para que vuelva al menú
         button.addListener(new ClickListener() {

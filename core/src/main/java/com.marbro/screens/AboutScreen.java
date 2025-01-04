@@ -1,4 +1,4 @@
-package com.marbro.screens.modeloScreen;
+package com.marbro.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -10,9 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.marbro.MainGame;
-import com.marbro.screens.MenuScreen;
 
 public class AboutScreen implements Screen {
     private MainGame game;
@@ -28,16 +26,19 @@ public class AboutScreen implements Screen {
     @Override
     public void show() {
         batch = new SpriteBatch();
-        helpTexture = new Texture(Gdx.files.internal("fondos/sos.jpg"));
+        helpTexture = new Texture(Gdx.files.internal("fondos/Acerca_De.png"));
         stage = new Stage();
 
         // Carga de skin
         skin = new Skin(Gdx.files.internal("uiskin.json"));
 
-        // Crear el botón
+         // Crear el botón
         TextButton button = new TextButton("Volver al Menu", skin);
-        button.setPosition(Gdx.graphics.getWidth() / 2f - 100, Gdx.graphics.getHeight() / 2f - 400);
-        button.setSize(400, 100);
+        button.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f-275);
+        button.setSize(250, 75);
+
+
+
 
         // Añadir oyente al botón para que vuelva al menú
         button.addListener(new ClickListener() {
@@ -70,6 +71,7 @@ public class AboutScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height);
+        batch.getProjectionMatrix().setToOrtho2D(0, 0, width, height);
     }
 
     @Override
