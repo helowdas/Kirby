@@ -139,6 +139,7 @@ public class Kirby_base extends Actor implements Kirby {
     @Override
     public void act(float delta)
     {
+        System.out.println(isAttack);
         super.act(delta);
         if (!contador.isRunning()){
             contador.start();

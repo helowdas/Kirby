@@ -137,6 +137,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
     @Override
     public void act(float delta)
     {
+        System.out.println(isAttack);
         super.act(delta);
         if (contador != null)
             if (!contador.isRunning()){
