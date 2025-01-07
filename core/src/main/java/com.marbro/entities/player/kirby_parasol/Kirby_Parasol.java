@@ -18,6 +18,7 @@ import com.marbro.entities.player.Kirby;
 //import com.marbro.entities.EntitiesFactory;
 import com.marbro.entities.player.FactoryKirby;
 import com.marbro.entities.player.kirby_base.AnimationHelperKirby;
+import com.marbro.entities.player.kirby_base.ColisionesHandlerKirby;
 import com.marbro.entities.player.kirby_base.EstadoKirby;
 import com.marbro.scenes.Hud;
 import com.marbro.screens.level1.Level1;
@@ -53,6 +54,8 @@ public class Kirby_Parasol extends Actor implements Kirby {
     public boolean fly = false;
     public boolean col = false;
     public boolean isWin = false;
+    public boolean isAttack = false;
+    public boolean isBossDefeat = false;
 
     //Controlador de colisiones
     private Controlador_Colisiones controlador;
@@ -86,6 +89,9 @@ public class Kirby_Parasol extends Actor implements Kirby {
     //Otros
     private float width, height;
 
+    //controlador de coliones kirby
+    ColisionesHandlerKirbyParasol colisionesHandlerKirby;
+
 
     public Kirby_Parasol(World world, Stage stage, Body body, Controlador_Colisiones controlador, float width, float height,
                   Level1 screen, int salud)
@@ -96,6 +102,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
         this.stage = stage;
         this.body = body;
         body.getFixtureList().get(0).setUserData(this);
+        body.getFixtureList().get(1).setUserData("attack");
         this.width = width;
         this.height = height;
 
@@ -118,16 +125,19 @@ public class Kirby_Parasol extends Actor implements Kirby {
         this.salud = salud;
 
         factory = new FactoryKirby();
+
     }
 
 
     private void createContactListener(){
-        ColisionesHandlerKirbyParasol colisionesHandler = new ColisionesHandlerKirbyParasol(this);
-        controlador.addListener(colisionesHandler);
+        colisionesHandlerKirby = new ColisionesHandlerKirbyParasol(this);
+        controlador.addListener(colisionesHandlerKirby);
     }
 
     @Override
-    public void act(float delta) {
+    public void act(float delta)
+    {
+        System.out.println(isAttack);
         super.act(delta);
         if (contador != null)
             if (!contador.isRunning()){
@@ -248,6 +258,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
         lastmove = -1;
         if (onGround && onPlatform && !jump && estado != EstadoKirbyParasol.ATACANDO) {
             estado = EstadoKirbyParasol.CAMINANDO;
+            this.isAttack = false;
         }
     }
 
@@ -271,6 +282,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
 
         if (estado != EstadoKirbyParasol.ATACANDO && body.getLinearVelocity().y > 0 && !onPlatform && !fly) {
             estado = EstadoKirbyParasol.SALTANDO;
+            this.isAttack = false;
         }
 
     }
@@ -279,6 +291,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
         if (estado != EstadoKirbyParasol.ATACANDO) {
             if (jump && -3.5f < vel.y && vel.y < 0f) {
                 estado = EstadoKirbyParasol.CAYENDO;
+                this.isAttack = false;
             } else {
                 if (vel.y < 0 && !onGround) {
                     estado = EstadoKirbyParasol.CAYENDO;
@@ -335,6 +348,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
             stage.addActor((Actor) kirby);
             screen.setKirby(kirby);
             screen.actReferencias(kirby);
+            this.controlador.removeListener(colisionesHandlerKirby);
             remove();
         }
     }
@@ -350,6 +364,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
         if (Gdx.input.isKeyPressed(Input.Keys.F) && attackDelayTimer <= 0) {
             if (estado != EstadoKirbyParasol.ATACANDO) {
                 estado = EstadoKirbyParasol.ATACANDO;
+                this.isAttack = true;
                 attackTimer = 0; // Reiniciar el temporizador de la animación
                 animations.resetAnimation(estado); // Reseteo al iniciar ataque
             }
@@ -359,6 +374,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
             // Detener la aspiración si ha alcanzado la duración máxima
             if (attackTimer >= ATTACK_DURATION) {
                 estado = EstadoKirbyParasol.QUIETO;
+                this.isAttack = false;
                 attackTimer = 0;  // Reiniciar el temporizador de la animación
                 attackDelayTimer = ATTACK_DELAY; // Iniciar timer de delay
                 animations.resetAnimation(estado); // Reseteo al terminar ataque
@@ -369,6 +385,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
             // Mantener la animación mientras se presiona la tecla
             if (!Gdx.input.isKeyPressed(Input.Keys.F)) {
                 estado = EstadoKirbyParasol.QUIETO;
+                this.isAttack = false;
                 attackTimer = 0; // Reiniciar el temporizador y poner en espera
                 animations.resetAnimation(estado); // Reseteo al detener ataque
             }
@@ -500,7 +517,33 @@ public class Kirby_Parasol extends Actor implements Kirby {
         screen.actReferencias(kirby);
     }
 
+    @Override
+    public boolean getAttack() {
+        return isAttack;
+    }
 
+    public void createAttack()
+    {
+        FixtureDef fixtureDef = new FixtureDef();
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(getWidth() * 2, getHeight()/2);
+        fixtureDef.shape = shape;
+        fixtureDef.isSensor = true;
+        shape.dispose();
+
+        body.createFixture(fixtureDef);
+        body.getFixtureList().get(1).setUserData("attack");
+    }
+
+    @Override
+    public boolean isBossDefeat() {
+        return isBossDefeat;
+    }
+
+    @Override
+    public void setBossDefeat(boolean bossDefeat) {
+        isBossDefeat = bossDefeat;
+    }
 }
 
 

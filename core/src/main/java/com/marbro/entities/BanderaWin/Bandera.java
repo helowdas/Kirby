@@ -80,6 +80,7 @@ public class Bandera extends Actor implements Entity
 
         sprite.setSize(getWidth(), getHeight());
         sprite.setPosition(posX, posY);
+
         if(isActive)
         {
             sprite = animation.getFrameActual(delta);
@@ -116,12 +117,15 @@ public class Bandera extends Actor implements Entity
 
     public void active()
     {
-        isActive = true;
-        float timaAnimation = 0.85f;
+        if(kirby.isBossDefeat())
+        {
+            isActive = true;
+            float timaAnimation = 0.85f;
 
-        this.addAction(Actions.sequence(
-            Actions.delay(timaAnimation), Actions.run(winRunnable)
-        ));
+            this.addAction(Actions.sequence(
+                Actions.delay(timaAnimation), Actions.run(winRunnable)
+            ));
+        }
 
     }
 

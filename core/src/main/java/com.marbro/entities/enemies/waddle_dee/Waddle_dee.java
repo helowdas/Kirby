@@ -21,59 +21,62 @@ import static com.marbro.constants.Constantes.*;
 
 public class Waddle_dee extends Actor implements Enemy {
     //Private animaciones
-    private Animation_Base_Loop walk;
-    private Animation_Base_Loop fall;
-    private Animation_Base_Loop hurt;
-    private AnimationHelperWaddle animations;
+    protected Animation_Base_Loop walk;
+    protected Animation_Base_Loop fall;
+    protected Animation_Base_Loop hurt;
+    protected AnimationHelperWaddle animations;
 
     //Booleanos de estado
-    private boolean jump;
+    protected boolean jump;
 
-    private World world;
-    private Body body;
-    private Fixture fixture;
-    private Fixture fixture2;
-    private float width;
-    private float height;
+    protected World world;
+    protected Body body;
+    protected Fixture fixture;
+    protected Fixture fixture2;
+    protected float width;
+    protected float height;
 
     //Estado del jugador
-    private EstadoWaddleDee estado;
-    private int lastmove = -1;
+    protected EstadoWaddleDee estado;
+    protected int lastmove = -1;
 
     //Atributos del jugador
-    private boolean life;
+    protected boolean life;
 
     //Colisiones
-    private boolean onGround;
-    private boolean onSpike;
-    private boolean onWall;
-    private boolean colPlayer;
-    private boolean isAlive = true;
+    protected boolean onGround;
+    protected boolean onSpike;
+    protected boolean onWall;
+    protected boolean colPlayer;
+    protected boolean isAlive = true;
 
     //Controlador
-    private Controlador_Colisiones controlador;
-    private ColisionesHandlerWaddle colisiones;
+    protected Controlador_Colisiones controlador;
+    protected ColisionesHandlerWaddle colisiones;
 
     //Contador
-    private ActionTimer contador;
-    private ActionTimer pain;
+    protected ActionTimer contador;
+    protected ActionTimer pain;
 
     // Atributos para manejar el tiempo
-     private long lastCollisionTime = 0;
-     private static final long COLLISION_COOLDOWN = 1500; // 1.5 segundos en milisegundos
+    protected long lastCollisionTime = 0;
+    protected static final long COLLISION_COOLDOWN = 1500; // 1.5 segundos en milisegundos
 
     //Estados waddle
-    private boolean herido;
+    protected boolean herido;
 
     //saludo Waddle dee
-    private int salud;
+    protected int salud;
 
     //animacion muerte
-    private AnimationExplosionEnemy animationExplosive;
+    protected AnimationExplosionEnemy animationExplosive;
     //sprite
     Sprite sprite;
     //Run de Muerte
-    private Runnable dieRun;
+    protected Runnable dieRun;
+
+    //Player
+    Kirby kirby;
 
     //constructor
     public Waddle_dee(World world, Body body,
@@ -101,7 +104,8 @@ public class Waddle_dee extends Actor implements Enemy {
         //cargar animacion
         this.animationExplosive = new AnimationExplosionEnemy(MainGame.getAssetManager());
         //definir salud
-        salud = 1;
+        salud = 2;
+        this.kirby = kirby;
 
         //definir Runnable
         defDie(this);
@@ -212,7 +216,6 @@ public class Waddle_dee extends Actor implements Enemy {
 
         if (colPlayer)
         {
-            recibirDamage(-1);
             // Verificar si ha pasado suficiente tiempo desde la última colisión
             if (getTimeCollision()) {
                 // Actualizar el tiempo de la última colisión
@@ -224,7 +227,6 @@ public class Waddle_dee extends Actor implements Enemy {
 
                 // Aplicar la fuerza al enemigo
                 body.applyLinearImpulse(new Vector2(forceX, forceY), body.getWorldCenter(), true);
-
 
                 pain.start();
             }
@@ -312,6 +314,10 @@ public class Waddle_dee extends Actor implements Enemy {
             public void run()
             {
                 waddleDee.remove();
+                if(waddleDee instanceof Waddle_dee_Jefe)
+                {
+                    waddleDee.kirby.setBossDefeat(true);
+                }
             }
         };
     }
@@ -327,6 +333,7 @@ public class Waddle_dee extends Actor implements Enemy {
             Actions.run(dieRun)
         ));
     }
+
 }
 
 

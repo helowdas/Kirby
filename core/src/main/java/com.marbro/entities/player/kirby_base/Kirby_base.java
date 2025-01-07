@@ -57,6 +57,8 @@ public class Kirby_base extends Actor implements Kirby {
     public boolean fly = false;
     public boolean col = false;
     public boolean isWin = false;
+    public boolean isAttack = false;
+    public boolean isBossDefeat = false;
 
     //Controlador de colisiones
     private Controlador_Colisiones controlador;
@@ -86,6 +88,10 @@ public class Kirby_base extends Actor implements Kirby {
 
     //Efectos de sonidos
     private SoundHelperKirby sounds;
+
+    //controlador de coliones kirby
+    ColisionesHandlerKirby colisionesHandlerKirby;
+
 
     //constructor
     public Kirby_base(World world, Stage stage, Body body,
@@ -120,16 +126,20 @@ public class Kirby_base extends Actor implements Kirby {
         sounds = new SoundHelperKirby();
 
         this.salud = salud;
+
+        createAttack();
     }
 
 
     private void createContactListener(){
-        ColisionesHandlerKirby colisionesHandler = new ColisionesHandlerKirby(this);
-        controlador.addListener(colisionesHandler);
+        colisionesHandlerKirby = new ColisionesHandlerKirby(this);
+        controlador.addListener(colisionesHandlerKirby);
     }
 
     @Override
-    public void act(float delta) {
+    public void act(float delta)
+    {
+        System.out.println(isAttack);
         super.act(delta);
         if (!contador.isRunning()){
             contador.start();
@@ -423,12 +433,14 @@ public class Kirby_base extends Actor implements Kirby {
         return height;
     }
 
-    public void setPower(String uData){
+    public void setPower(String uData)
+    {
         Rectangle rectangle = new Rectangle(getX(), getY(), getWidth(), getHeight());
         Kirby kirby = factory.createKirby(screen, body, rectangle, uData, salud);
         stage.addActor((Actor) kirby);
         screen.setKirby(kirby);
         screen.actReferencias(kirby);
+        this.controlador.removeListener(colisionesHandlerKirby);
         remove();
         //dispose();
     }
@@ -448,4 +460,31 @@ public class Kirby_base extends Actor implements Kirby {
         this.isWin = win;
     }
 
+    @Override
+    public boolean getAttack() {
+        return isAttack;
+    }
+
+    public void createAttack()
+    {
+        FixtureDef fixtureDef = new FixtureDef();
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(getWidth() * 2, getHeight()/2);
+        fixtureDef.shape = shape;
+        fixtureDef.isSensor = true;
+        shape.dispose();
+
+        body.createFixture(fixtureDef);
+        body.getFixtureList().get(1).setUserData("attack");
+    }
+
+    @Override
+    public boolean isBossDefeat() {
+        return isBossDefeat;
+    }
+
+    @Override
+    public void setBossDefeat(boolean bossDefeat) {
+        isBossDefeat = bossDefeat;
+    }
 }
