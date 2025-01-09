@@ -59,6 +59,8 @@ public class Kirby_Parasol extends Actor implements Kirby {
 
     //Controlador de colisiones
     private Controlador_Colisiones controlador;
+    private FixtureDef ataque;
+    private Fixture area;
 
     //Atributos del jugador
     private boolean life;
@@ -126,6 +128,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
 
         factory = new FactoryKirby();
 
+        createAttack();
     }
 
 
@@ -349,6 +352,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
             screen.setKirby(kirby);
             screen.actReferencias(kirby);
             this.controlador.removeListener(colisionesHandlerKirby);
+            this.body.destroyFixture(area);
             remove();
         }
     }
@@ -524,14 +528,14 @@ public class Kirby_Parasol extends Actor implements Kirby {
 
     public void createAttack()
     {
-        FixtureDef fixtureDef = new FixtureDef();
+        ataque = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(getWidth() * 2, getHeight()/2);
-        fixtureDef.shape = shape;
-        fixtureDef.isSensor = true;
+        ataque.shape = shape;
+        ataque.isSensor = true;
         shape.dispose();
 
-        body.createFixture(fixtureDef);
+        area = body.createFixture(ataque);
         body.getFixtureList().get(1).setUserData("attack");
     }
 

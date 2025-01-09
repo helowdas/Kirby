@@ -99,15 +99,14 @@ public class ColisionesHandlerKirbyParasol implements ContactListener
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {}
 
-    private boolean hanColisionado(Contact contact, Object userA, Object userB)
-    {
-        Object fixtureA = contact.getFixtureA().getUserData();
-        Object fixtureB = contact.getFixtureB().getUserData();
+    private boolean hanColisionado(Contact contact, Object userA, Object userB) {
+        if (contact.getFixtureA().getUserData() == null && contact.getFixtureB().getUserData() == null)
+            System.out.println(contact.getFixtureA().getUserData() + " " + contact.getFixtureB().getUserData());
 
-        boolean isContact = (fixtureA.equals(userA) && fixtureB.equals(userB))
-            || (fixtureA.equals(userB) && fixtureB.equals(userA));
-
-        return isContact;
+        if (contact.getFixtureA().getUserData() != null && contact.getFixtureB().getUserData() != null)
+            return (contact.getFixtureA().getUserData().equals(userA) && contact.getFixtureB().getUserData().equals(userB))
+                || (contact.getFixtureA().getUserData().equals(userB) && contact.getFixtureB().getUserData().equals(userA));
+        return false;
     }
 }
 

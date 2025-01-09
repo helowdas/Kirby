@@ -22,6 +22,7 @@ import com.marbro.entities.enemies.Factory.Entity;
 import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
 import com.marbro.entities.player.FactoryKirby;
 import com.marbro.entities.player.Kirby;
+import com.marbro.entities.player.kirby_parasol.Kirby_Parasol;
 import com.marbro.scenes.Hud;
 import com.marbro.screens.level1.Level1;
 import com.marbro.sounds.SoundHelperKirby;
@@ -62,6 +63,7 @@ public class Kirby_base extends Actor implements Kirby {
 
     //Controlador de colisiones
     private Controlador_Colisiones controlador;
+    private Fixture area;
 
     //Atributos del jugador
     private boolean life;
@@ -91,7 +93,6 @@ public class Kirby_base extends Actor implements Kirby {
 
     //controlador de coliones kirby
     ColisionesHandlerKirby colisionesHandlerKirby;
-
 
     //constructor
     public Kirby_base(World world, Stage stage, Body body,
@@ -127,7 +128,8 @@ public class Kirby_base extends Actor implements Kirby {
 
         this.salud = salud;
 
-        createAttack();
+        if (area == null)
+            createAttack();
     }
 
 
@@ -441,8 +443,8 @@ public class Kirby_base extends Actor implements Kirby {
         screen.setKirby(kirby);
         screen.actReferencias(kirby);
         this.controlador.removeListener(colisionesHandlerKirby);
+        ((Kirby_Parasol) kirby).createAttack();
         remove();
-        //dispose();
     }
 
     @Override
@@ -474,7 +476,7 @@ public class Kirby_base extends Actor implements Kirby {
         fixtureDef.isSensor = true;
         shape.dispose();
 
-        body.createFixture(fixtureDef);
+        area = body.createFixture(fixtureDef);
         body.getFixtureList().get(1).setUserData("attack");
     }
 
