@@ -7,7 +7,7 @@ public class Constantes {
     public static final short CATEGORY_PLAYER = 0x0001;  // 00000001
 
     //constantes de ZOOM
-    public static  final float ZOOM = 0.5f;
+    public static  final float ZOOM = 0.42f;
 
     //constantes de Gravedad
     public static  final float GRAVEDAD = -10f;

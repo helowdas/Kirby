@@ -1,18 +1,24 @@
 package com.marbro.entities.enemies.Sir_Kibble;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Timer;
+import com.marbro.MainGame;
 import com.marbro.animation.Animation_Base_Loop;
 import com.marbro.colisions.Controlador_Colisiones;
 import com.marbro.contador.ActionTimer;
+import com.marbro.entities.AnimationExplosion.AnimationExplosionEnemy;
 import com.marbro.entities.enemies.Factory.Enemy;
 
 
+import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
+import com.marbro.entities.enemies.waddle_dee.Waddle_dee_Jefe;
 import com.marbro.entities.player.Kirby;
 import com.marbro.entities.player.kirby_base.Kirby_base;
 
@@ -48,6 +54,15 @@ public class Sir_Kibble extends Actor implements Enemy {
 
     //Atributos del jugador
     private boolean life;
+    private int salud; //atributos de salud del enemigo
+    private boolean isAlive = true;
+
+    //Run de Muerte
+    protected Runnable dieRun;
+    //animacion muerte
+    protected AnimationExplosionEnemy animationExplosive;
+    //sprite
+    Sprite sprite;
 
     //Colisiones
     private boolean onGround;
@@ -77,6 +92,12 @@ public class Sir_Kibble extends Actor implements Enemy {
         this.estado = EstadoSirKibble.CAYENDO;
 
         life = true;
+        this.salud = 2;
+        //cargar animacion
+        this.animationExplosive = new AnimationExplosionEnemy(MainGame.getAssetManager());
+
+        //definir Runnable
+        defDie(this);
 
         this.controlador = controlador;
         createContactListener(kirby);
@@ -93,9 +114,19 @@ public class Sir_Kibble extends Actor implements Enemy {
     @Override
     public void act(float delta) {
         super.act(delta);
+
+        if(salud <= 0)
+        {
+            setAlive(false);
+            muerte();
+            sprite = animationExplosive.getFrameActual(delta);
+        }
+
         if (!contador.isRunning()){
             contador.start();
         }
+
+
         //Actualizar las animaciones
         animations.update(delta);
         updateEnemyState();
@@ -115,7 +146,16 @@ public class Sir_Kibble extends Actor implements Enemy {
         setSize(width/PPM, height/PPM); // Ajusta estos valores según el tamaño deseado de tu sprite en el mundo Box2D
 
         TextureRegion frame = drawEnemy();
-        batch.draw(frame, getX(), getY(), getWidth(), getHeight());
+        if(isAlive)
+        {
+            batch.draw(frame, getX(), getY(), getWidth(), getHeight());
+        }
+        else
+        {
+            sprite.setPosition(getX(), getY());
+            sprite.setSize(getWidth(), getHeight());
+            sprite.draw(batch);
+        }
     }
 
     public void detach()
@@ -262,6 +302,39 @@ public class Sir_Kibble extends Actor implements Enemy {
         return;
     }
 
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
+
+    public void muerte()
+    {
+        body.getFixtureList().get(0).setSensor(true);
+
+        float timaAnimation = 0.3f;
+
+        this.addAction(Actions.sequence(
+            Actions.delay(timaAnimation), // Esperar la duración de la animación
+            Actions.run(dieRun)
+        ));
+    }
+
+    public void defDie(Sir_Kibble Sir_Kibble)
+    {
+        dieRun = new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                Sir_Kibble.remove();
+
+            }
+        };
+    }
+
+    public void recibirDamage(int salud) {
+        this.salud += salud;
+    }
+
     public boolean getTimeCollision()
     {
         return getCurrentTime() - lastCollisionTime > COLLISION_COOLDOWN;
@@ -272,6 +345,10 @@ public class Sir_Kibble extends Actor implements Enemy {
         long currentTime = System.currentTimeMillis();
         return currentTime;
     }
+
+
+
+
 
     @Override
     public void actReferencia(Kirby kirby){

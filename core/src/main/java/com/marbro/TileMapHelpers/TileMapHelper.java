@@ -18,7 +18,7 @@ import com.marbro.entities.Platforms.PlatformVertical;
 import com.marbro.entities.enemies.Factory.RandomEnemyFactory;
 import com.marbro.entities.enemies.Sir_Kibble.Sir_Kibble;
 import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
-import com.marbro.entities.enemies.waddle_dee.Waddle_dee_Jefe;
+import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
 import com.marbro.entities.player.FactoryKirby;
 import com.marbro.entities.player.Kirby;
 import com.marbro.entities.player.kirby_base.Kirby_base;
@@ -117,7 +117,7 @@ public class TileMapHelper
                                     gameScreen.getWorld()
                             );
 
-                            gameScreen.getEntidades().add(new Waddle_dee_Jefe(gameScreen.getWorld(), body,
+                            gameScreen.getEntidades().add(new Waddle_dee(gameScreen.getWorld(), body,
                                     gameScreen.getControlador(), rectangle.width, rectangle.height, gameScreen.getKirby()));
 
 
