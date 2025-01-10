@@ -155,7 +155,7 @@ public class Level1 implements Screen {
     {
         if(kirby.isWin())
         {
-            ((MainGame) Gdx.app.getApplicationListener()).setScreen(new WinScreen(game));
+            game.setScreen(MainGame.getWinScreen());
         }
         else if (!(kirby.getSalud() <= 0) && hud.getTime() > 0){
             update(delta);
@@ -185,7 +185,7 @@ public class Level1 implements Screen {
             //Dibuja el HUD
             hud.stage.draw();
         } else {
-            ((MainGame) Gdx.app.getApplicationListener()).setScreen(new GameOverScreen(game));
+            game.setScreen(MainGame.getGameOverScreen());
         }
     }
 

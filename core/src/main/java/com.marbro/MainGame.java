@@ -5,12 +5,19 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.marbro.screens.MenuScreen;
+import com.marbro.screens.*;
+import com.marbro.screens.level1.Level1;
 
 public class MainGame extends Game
 {
     public SpriteBatch batch;
     private static AssetManager assetManager = new AssetManager();
+    private static MenuScreen menuScreen;
+    private static GameOverScreen gameOverScreen;
+    private static WinScreen winScreen;
+    private static HelpScreen helpScreen;
+    private static AboutScreen aboutScreen;
+    private static Level1 level1;
 
     @Override
     public void create()
@@ -44,7 +51,18 @@ public class MainGame extends Game
         assetManager.finishLoading(); //assets cargados
 
         batch = new SpriteBatch();
-        setScreen(new MenuScreen(   this));
+
+        //cargar todas las pantallas
+
+        level1 = new Level1(this);
+        gameOverScreen = new GameOverScreen(this);
+        winScreen = new WinScreen(this);
+        helpScreen = new HelpScreen(this);
+        aboutScreen = new AboutScreen(this);
+        menuScreen = new MenuScreen(this);
+
+        //iniciar juego
+        setScreen(getMenuScreen());
     }
 
 
@@ -65,4 +83,29 @@ public class MainGame extends Game
     {
         return assetManager;
     }
+
+    public static AboutScreen getAboutScreen() {
+        return aboutScreen;
+    }
+
+    public static GameOverScreen getGameOverScreen() {
+        return gameOverScreen;
+    }
+
+    public static HelpScreen getHelpScreen() {
+        return helpScreen;
+    }
+
+    public static MenuScreen getMenuScreen() {
+        return menuScreen;
+    }
+
+    public static WinScreen getWinScreen() {
+        return winScreen;
+    }
+
+    public static Level1 getLevel1() {
+        return level1;
+    }
+
 }

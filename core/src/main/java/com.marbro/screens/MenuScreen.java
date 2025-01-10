@@ -87,9 +87,9 @@ public class MenuScreen implements Screen {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (name.equals("Jugar")) { game.setScreen(new Level1(game));} // Cambia a la pantalla del nivel 1
-                if(name.equals("Ayuda")){ game.setScreen(new HelpScreen(game));} //cambia la pantalla a la parte de como jugar
-                if(name.equals("Acerca de")){ game.setScreen(new AboutScreen(game));}
+                if (name.equals("Jugar")) { game.setScreen(MainGame.getLevel1());} // Cambia a la pantalla del nivel 1
+                if(name.equals("Ayuda")){ game.setScreen(MainGame.getHelpScreen());} //cambia la pantalla a la parte de como jugar
+                if(name.equals("Acerca de")){ game.setScreen(MainGame.getAboutScreen());}
                 //cambia a la pantalla donde se detalla el lenguaje de programacion y las librerias utilizadas y desarrolladores
 
                 if (name.equals("Salir")) { Gdx.app.exit();}
