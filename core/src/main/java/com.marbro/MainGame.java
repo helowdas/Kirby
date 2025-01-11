@@ -6,7 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.marbro.screens.*;
-import com.marbro.screens.level1.Level1;
+    import com.marbro.screens.level1.Level1;
 
 public class MainGame extends Game
 {
@@ -17,6 +17,7 @@ public class MainGame extends Game
     private static WinScreen winScreen;
     private static HelpScreen helpScreen;
     private static AboutScreen aboutScreen;
+    private LoadingScreen loadingScreen;
     private static Level1 level1;
 
     @Override
@@ -48,10 +49,17 @@ public class MainGame extends Game
         assetManager.load("entities/explosion_enemy/4.png", Texture.class);
         assetManager.load("entities/explosion_enemy/5.png", Texture.class);
         assetManager.load("entities/explosion_enemy/6.png", Texture.class);
-        assetManager.finishLoading(); //assets cargados
 
         batch = new SpriteBatch();
 
+        //cargar todos los recursos
+        loadingScreen = new LoadingScreen(this, assetManager);
+        setScreen(loadingScreen);
+
+    }
+
+    public void finishLoading()
+    {
         //cargar todas las pantallas
 
         level1 = new Level1(this);
@@ -64,7 +72,6 @@ public class MainGame extends Game
         //iniciar juego
         setScreen(getMenuScreen());
     }
-
 
     @Override
     public void render()
