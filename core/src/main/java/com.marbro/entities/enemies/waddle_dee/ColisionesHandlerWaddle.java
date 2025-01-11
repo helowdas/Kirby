@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.physics.box2d.*;
 import com.marbro.entities.player.Kirby;
 import com.marbro.entities.player.kirby_base.Kirby_base;
+import static com.marbro.constants.Constantes.*;
 
 ;
 
@@ -30,7 +31,7 @@ public class ColisionesHandlerWaddle implements ContactListener
         if (hanColisionado(contact, actor, "spike"))
         {
             actor.setOnSpike(true);
-            actor.recibirDamage(-2);
+            actor.recibirDamage(- actor.getSalud());
         }
 
         if (hanColisionado(contact, actor, "wall"))
@@ -45,7 +46,7 @@ public class ColisionesHandlerWaddle implements ContactListener
 
         if(hanColisionado(contact, actor, "abismo"))
         {
-            actor.recibirDamage(-2);
+            actor.recibirDamage(- actor.getSalud());
         }
 
         if(hanColisionado(contact, actor, "attack"))
@@ -53,7 +54,7 @@ public class ColisionesHandlerWaddle implements ContactListener
             if (kirby.getAttack())
             {
                 actor.setColPlayer(true);
-                actor.recibirDamage(-2);
+                actor.recibirDamage(- ATTACK_DAMAGE_KIRBY_PARASOL);
             }
         }
 
@@ -76,17 +77,17 @@ public class ColisionesHandlerWaddle implements ContactListener
     {
         if (hanColisionado(contact, actor, "block"))
         {
-            actor.setOnGround(true);
+            actor.setOnGround(false);
         }
 
         if (hanColisionado(contact, actor, "spike"))
         {
-            actor.setOnSpike(true);
+            actor.setOnSpike(false);
         }
 
         if (hanColisionado(contact, actor, "wall"))
         {
-            actor.setOnWall(true);
+            actor.setOnWall(false);
         }
 
         if (hanColisionado(contact, actor, "platform"))

@@ -92,7 +92,7 @@ public class Sir_Kibble extends Actor implements Enemy {
         this.estado = EstadoSirKibble.CAYENDO;
 
         life = true;
-        this.salud = 2;
+        this.salud = 3;
         //cargar animacion
         this.animationExplosive = new AnimationExplosionEnemy(MainGame.getAssetManager());
 
@@ -355,4 +355,7 @@ public class Sir_Kibble extends Actor implements Enemy {
         colisiones.actReferencia(kirby);
     }
 
+    public int getSalud() {
+        return salud;
+    }
 }

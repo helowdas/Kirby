@@ -1,9 +1,11 @@
 package com.marbro.entities.enemies.Sir_Kibble;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.physics.box2d.*;
 import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
 import com.marbro.entities.player.Kirby;
-
+import static com.marbro.constants.Constantes.*;
 
 public class ColisionesSirKibble implements ContactListener {
 
@@ -27,6 +29,7 @@ public class ColisionesSirKibble implements ContactListener {
         if (hanColisionado(contact, actor, "spike"))
         {
             actor.setOnSpike(true);
+            actor.recibirDamage(- actor.getSalud());
         }
 
         if (hanColisionado(contact, actor, "wall"))
@@ -34,16 +37,35 @@ public class ColisionesSirKibble implements ContactListener {
             actor.setOnWall(true);
         }
 
+        if(hanColisionado(contact, actor, "abismo"))
+        {
+            actor.recibirDamage(- actor.getSalud());
+        }
+
         if (hanColisionado(contact, actor, "platform"))
         {
             actor.setOnGround(true);
         }
 
+        if(hanColisionado(contact, actor, "attack"))
+        {
+            if (kirby.getAttack())
+            {
+                actor.setColPlayer(true);
+                actor.recibirDamage(- ATTACK_DAMAGE_KIRBY_PARASOL);
+            }
+        }
+
         if(hanColisionado(contact, actor, kirby))
         {
             actor.setColPlayer(true);
+            actor.recibirDamage(-1);
             kirby.setCol(true);
-            kirby.quitarSalud(1);
+
+            if(!Gdx.input.isKeyPressed(Input.Keys.F))
+            {
+                kirby.quitarSalud(1);
+            }
         }
     }
 
@@ -53,17 +75,17 @@ public class ColisionesSirKibble implements ContactListener {
     {
         if (hanColisionado(contact, actor, "block"))
         {
-            actor.setOnGround(true);
-        }
-
-        if (hanColisionado(contact, actor, "spike"))
-        {
-            actor.setOnSpike(true);
+            actor.setOnGround(false);
         }
 
         if (hanColisionado(contact, actor, "wall"))
         {
-            actor.setOnWall(true);
+            actor.setOnWall(false);
+        }
+
+        if (hanColisionado(contact, actor, "spike"))
+        {
+            actor.setOnSpike(false);
         }
 
         if (hanColisionado(contact, actor, "platform"))

@@ -101,8 +101,10 @@ public class Waddle_dee extends Actor implements Enemy {
         contador = new ActionTimer();
         pain = new ActionTimer();
         colPlayer = false;
+
         //cargar animacion
         this.animationExplosive = new AnimationExplosionEnemy(MainGame.getAssetManager());
+
         //definir salud
         salud = 2;
         this.kirby = kirby;
@@ -334,6 +336,9 @@ public class Waddle_dee extends Actor implements Enemy {
         ));
     }
 
+    public int getSalud() {
+        return salud;
+    }
 }
 
 
