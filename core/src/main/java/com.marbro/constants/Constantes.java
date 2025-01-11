@@ -22,6 +22,10 @@ public class Constantes {
 
     //Salud Kirba
     public static final int SALUD_KIRBY_MAX = 5;
+
+    //Daño ataque Kirby
+    public static final int ATTACK_DAMAGE_KIRBY_PARASOL = 2;
+
     //constantes Volumen
     public static final float VOLUMEN = 0.01f;
 
