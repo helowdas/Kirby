@@ -128,8 +128,11 @@ public class Kirby_base extends Actor implements Kirby {
 
         this.salud = salud;
 
-        if (area == null)
+        if (body.getFixtureList().size == 1)
+        {
             createAttack();
+        }
+
     }
 
 
@@ -141,7 +144,6 @@ public class Kirby_base extends Actor implements Kirby {
     @Override
     public void act(float delta)
     {
-        System.out.println(isAttack);
         super.act(delta);
         if (!contador.isRunning()){
             contador.start();
@@ -443,7 +445,7 @@ public class Kirby_base extends Actor implements Kirby {
         screen.setKirby(kirby);
         screen.actReferencias(kirby);
         this.controlador.removeListener(colisionesHandlerKirby);
-        ((Kirby_Parasol) kirby).createAttack();
+        //((Kirby_Parasol) kirby).createAttack();
         remove();
     }
 
@@ -474,10 +476,10 @@ public class Kirby_base extends Actor implements Kirby {
         shape.setAsBox(getWidth() * 2, getHeight()/2);
         fixtureDef.shape = shape;
         fixtureDef.isSensor = true;
-        shape.dispose();
 
         area = body.createFixture(fixtureDef);
-        body.getFixtureList().get(1).setUserData("attack");
+        area.setUserData("attack");
+        shape.dispose();
     }
 
     @Override

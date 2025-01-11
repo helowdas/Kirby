@@ -40,7 +40,6 @@ public class LoadingScreen implements Screen
     @Override
     public void render(float delta)
     {
-        System.out.println(progress);
         ScreenUtils.clear(0f, 0f, 0f, 1f);
 
         //ese metodo devuelve verdadero si todo se ha cargado

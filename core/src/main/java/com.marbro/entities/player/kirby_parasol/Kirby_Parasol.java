@@ -104,7 +104,6 @@ public class Kirby_Parasol extends Actor implements Kirby {
         this.stage = stage;
         this.body = body;
         body.getFixtureList().get(0).setUserData(this);
-        body.getFixtureList().get(1).setUserData("attack");
         this.width = width;
         this.height = height;
 
@@ -128,7 +127,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
 
         factory = new FactoryKirby();
 
-        createAttack();
+        //createAttack();
     }
 
 
@@ -140,6 +139,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
     @Override
     public void act(float delta)
     {
+        isAttack = true;
         System.out.println(isAttack);
         super.act(delta);
         if (contador != null)
@@ -352,7 +352,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
             screen.setKirby(kirby);
             screen.actReferencias(kirby);
             this.controlador.removeListener(colisionesHandlerKirby);
-            this.body.destroyFixture(area);
+            //this.body.destroyFixture(area);
             remove();
         }
     }
@@ -528,15 +528,15 @@ public class Kirby_Parasol extends Actor implements Kirby {
 
     public void createAttack()
     {
-        ataque = new FixtureDef();
+        FixtureDef fixtureDef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(getWidth() * 2, getHeight()/2);
-        ataque.shape = shape;
-        ataque.isSensor = true;
-        shape.dispose();
+        fixtureDef.shape = shape;
+        fixtureDef.isSensor = true;
 
-        area = body.createFixture(ataque);
-        body.getFixtureList().get(1).setUserData("attack");
+        area = body.createFixture(fixtureDef);
+        area.setUserData("attack");
+        shape.dispose();
     }
 
     @Override
