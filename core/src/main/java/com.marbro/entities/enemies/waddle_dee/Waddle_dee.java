@@ -110,7 +110,7 @@ public class Waddle_dee extends Actor implements Enemy {
         this.kirby = kirby;
 
         //definir Runnable
-        defDie(this);
+        defDie(this, controlador);
     }
 
     private void createContactListener(Kirby kirby){
@@ -231,6 +231,7 @@ public class Waddle_dee extends Actor implements Enemy {
                 body.applyLinearImpulse(new Vector2(forceX, forceY), body.getWorldCenter(), true);
 
                 pain.start();
+                System.out.println("hola");
             }
         }
 
@@ -308,7 +309,7 @@ public class Waddle_dee extends Actor implements Enemy {
         isAlive = alive;
     }
 
-    public void defDie(Waddle_dee waddleDee)
+    public void defDie(Waddle_dee waddleDee, Controlador_Colisiones controladorColisiones)
     {
         dieRun = new Runnable()
         {
@@ -316,6 +317,8 @@ public class Waddle_dee extends Actor implements Enemy {
             public void run()
             {
                 waddleDee.remove();
+                controladorColisiones.removeListener(waddleDee.colisiones);
+
                 if(waddleDee instanceof Waddle_dee_Jefe)
                 {
                     waddleDee.kirby.setBossDefeat(true);

@@ -96,11 +96,12 @@ public class Sir_Kibble extends Actor implements Enemy {
         //cargar animacion
         this.animationExplosive = new AnimationExplosionEnemy(MainGame.getAssetManager());
 
-        //definir Runnable
-        defDie(this);
 
         this.controlador = controlador;
         createContactListener(kirby);
+
+        //definir Runnable
+        defDie(this, controlador);
 
         contador = new ActionTimer();
         pain = new ActionTimer();
@@ -222,6 +223,7 @@ public class Sir_Kibble extends Actor implements Enemy {
 
 
                 pain.start();
+
             }
         }
 
@@ -318,7 +320,7 @@ public class Sir_Kibble extends Actor implements Enemy {
         ));
     }
 
-    public void defDie(Sir_Kibble Sir_Kibble)
+    public void defDie(Sir_Kibble Sir_Kibble, Controlador_Colisiones controlador)
     {
         dieRun = new Runnable()
         {
@@ -326,7 +328,7 @@ public class Sir_Kibble extends Actor implements Enemy {
             public void run()
             {
                 Sir_Kibble.remove();
-
+                controlador.removeListener(Sir_Kibble.colisiones);
             }
         };
     }

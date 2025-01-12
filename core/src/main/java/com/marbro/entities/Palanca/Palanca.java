@@ -152,6 +152,7 @@ public class Palanca extends Actor implements Entity, IObservable
         sprite.flip(true, false);
         this.notificar();
         sounds.playSound();
+        controlador.removeListener(colisiones);
     }
 
     public void setFlip(boolean flip) {

@@ -35,6 +35,7 @@ public class Bandera extends Actor implements Entity
 
     //Controlador
     private Controlador_Colisiones controlador;
+    private ColisionHandlerBandera colisiones;
 
     //animacion
     private OpenAnimation animation;
@@ -62,7 +63,7 @@ public class Bandera extends Actor implements Entity
         this.kirby = kirby;
 
         //definir runnable
-        defWinRun(this);
+        defWinRun(this, controlador);
 
     }
 
@@ -95,8 +96,8 @@ public class Bandera extends Actor implements Entity
     }
 
     private void createContactListener(Kirby kirby){
-        ColisionHandlerBandera colisionesHandler = new ColisionHandlerBandera(this, kirby);
-        controlador.addListener(colisionesHandler);
+        colisiones = new ColisionHandlerBandera(this, kirby);
+        controlador.addListener(colisiones);
     }
 
     @Override
@@ -138,7 +139,7 @@ public class Bandera extends Actor implements Entity
         return isActive;
     }
 
-    public void defWinRun(Bandera bandera)
+    public void defWinRun(Bandera bandera, Controlador_Colisiones controlador)
     {
         winRunnable = new Runnable()
         {
@@ -146,6 +147,7 @@ public class Bandera extends Actor implements Entity
             public void run()
             {
                 bandera.kirby.setWin(true);
+                controlador.removeListener(bandera.colisiones);
             }
         };
     }

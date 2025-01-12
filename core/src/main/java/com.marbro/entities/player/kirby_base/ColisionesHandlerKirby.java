@@ -25,6 +25,7 @@ public class ColisionesHandlerKirby implements ContactListener
             if (hanColisionado(contact, actor, "spike"))
             {
                 actor.setOnSpike(true);
+                actor.setOnGround(true);
                 actor.quitarSalud(1);
             }
 
@@ -50,7 +51,9 @@ public class ColisionesHandlerKirby implements ContactListener
                 actor.setOnGround(false);
             }
 
-            if (hanColisionado(contact, actor, "spike")) {
+            if (hanColisionado(contact, actor, "spike"))
+            {
+                actor.setOnGround(false);
                 actor.setOnSpike(false);
             }
 
