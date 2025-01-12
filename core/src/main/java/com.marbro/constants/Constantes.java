@@ -4,7 +4,7 @@ import com.marbro.entities.player.Kirby;
 
 public class Constantes {
     public static final float PPM = 32.0f; // Ajusta el valor de PPM según tus necesidades
-
+    public static final short CATEGORY_PLAYER = 0x0001;
 
     //constantes de ZOOM
     public static  final float ZOOM = 0.42f;
