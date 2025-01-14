@@ -2,12 +2,14 @@ package com.marbro.entities.player.kirby_base;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.marbro.entities.player.Kirby;
+
 import static com.marbro.constants.Constantes.*;
 
 public class ColisionesHandlerKirby implements ContactListener
 {
     //atributos
-    private Kirby_base actor;
+    private Kirby actor;
 
     //constructor
     public ColisionesHandlerKirby(Kirby_base actor) {
@@ -99,6 +101,11 @@ public class ColisionesHandlerKirby implements ContactListener
             return (contact.getFixtureA().getUserData().equals(userA) && contact.getFixtureB().getUserData().equals(userB))
                 || (contact.getFixtureA().getUserData().equals(userB) && contact.getFixtureB().getUserData().equals(userA));
         return false;
+    }
+
+    public void actReferencia(Kirby kirby)
+    {
+        this.actor = kirby;
     }
 }
 
