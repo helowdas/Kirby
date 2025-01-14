@@ -339,7 +339,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
 
     public void setPower(Enemy enemy){
         if (col){
-            Rectangle rectangle = new Rectangle(getX(), getY(), getWidth() * PPM / 2 + 3f, getHeight() * PPM / 2 + 3f);
+            Rectangle rectangle = new Rectangle(getX(), getY(), 20f, 20f);
             Kirby kirby = factory.createKirby(screen, body, rectangle, null, salud, this.colisionesHandlerKirby);
             stage.addActor((Actor) kirby);
             screen.setKirby(kirby);
@@ -356,36 +356,36 @@ public class Kirby_Parasol extends Actor implements Kirby {
         }
 
         // Iniciar aspiración si el delay ha terminado
-        if (Gdx.input.isKeyPressed(Input.Keys.F) && attackDelayTimer <= 0) {
-            if (estado != EstadoKirbyParasol.ATACANDO) {
+        if (Gdx.input.isKeyPressed(Input.Keys.F) && attackDelayTimer <= 0 &&
+            estado != EstadoKirbyParasol.PLANEANDO &&
+            estado != EstadoKirbyParasol.VOLAR &&
+            estado != EstadoKirbyParasol.PREVOLAR
+        ) {
+            if (estado != EstadoKirbyParasol.ATACANDO && estado != EstadoKirbyParasol.CAYENDO) {
                 estado = EstadoKirbyParasol.ATACANDO;
                 this.isAttack = true;
+                sounds.playSound("attack");
                 attackTimer = 0; // Reiniciar el temporizador de la animación
                 animations.resetAnimation(estado); // Reseteo al iniciar ataque
             }
+        }
+
+        // Continuar la animación de ataque aunque se suelte la tecla F
+        if (estado == EstadoKirbyParasol.ATACANDO) {
             attackTimer += delta;
-            ataque();
+            ataque(); // Continuar ataque
 
             // Detener la aspiración si ha alcanzado la duración máxima
             if (attackTimer >= ATTACK_DURATION) {
                 estado = EstadoKirbyParasol.QUIETO;
                 this.isAttack = false;
-                attackTimer = 0;  // Reiniciar el temporizador de la animación
+                attackTimer = 0; // Reiniciar el temporizador de la animación
                 attackDelayTimer = ATTACK_DELAY; // Iniciar timer de delay
                 animations.resetAnimation(estado); // Reseteo al terminar ataque
             }
-        } else if (estado == EstadoKirbyParasol.ATACANDO) {
-            attackDelayTimer = ATTACK_DELAY; // Asegurar el delay solo se reinicia si se detuvo el ataque
-
-            // Mantener la animación mientras se presiona la tecla
-            if (!Gdx.input.isKeyPressed(Input.Keys.F)) {
-                estado = EstadoKirbyParasol.QUIETO;
-                this.isAttack = false;
-                attackTimer = 0; // Reiniciar el temporizador y poner en espera
-                animations.resetAnimation(estado); // Reseteo al detener ataque
-            }
         }
     }
+
 
     private void planear(float delta){
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && estado == EstadoKirbyParasol.CAYENDO) {
