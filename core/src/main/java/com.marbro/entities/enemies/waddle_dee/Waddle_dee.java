@@ -49,6 +49,7 @@ public class Waddle_dee extends Actor implements Enemy {
     protected boolean onWall;
     protected boolean colPlayer;
     protected boolean isAlive = true;
+    private boolean isInsideAttack = false;
 
     //Controlador
     protected Controlador_Colisiones controlador;
@@ -121,7 +122,9 @@ public class Waddle_dee extends Actor implements Enemy {
     @Override
     public void act(float delta)
     {
+
         super.act(delta);
+
         if(salud <= 0)
         {
             setAlive(false);
@@ -231,7 +234,6 @@ public class Waddle_dee extends Actor implements Enemy {
                 body.applyLinearImpulse(new Vector2(forceX, forceY), body.getWorldCenter(), true);
 
                 pain.start();
-                System.out.println("hola");
             }
         }
 
@@ -297,7 +299,9 @@ public class Waddle_dee extends Actor implements Enemy {
     }
 
     @Override
-    public void actReferencia(Kirby kirby){
+    public void actReferencia(Kirby kirby)
+    {
+        this.kirby = kirby;
         colisiones.actReferencia(kirby);
     }
 
@@ -317,7 +321,6 @@ public class Waddle_dee extends Actor implements Enemy {
             public void run()
             {
                 waddleDee.remove();
-                controladorColisiones.removeListener(waddleDee.colisiones);
 
                 if(waddleDee instanceof Waddle_dee_Jefe)
                 {
@@ -341,6 +344,10 @@ public class Waddle_dee extends Actor implements Enemy {
 
     public int getSalud() {
         return salud;
+    }
+
+    public void setInsideAttack(boolean insideAttack) {
+        isInsideAttack = insideAttack;
     }
 }
 

@@ -23,6 +23,7 @@ public class ColisionesHandlerWaddle implements ContactListener
     @Override
     public void beginContact(Contact contact)
     {
+
         if (hanColisionado(contact, actor, "block"))
         {
             actor.setOnGround(true);
@@ -51,6 +52,7 @@ public class ColisionesHandlerWaddle implements ContactListener
 
         if(hanColisionado(contact, actor, "attack"))
         {
+            actor.setInsideAttack(true);
             if (kirby.getAttack())
             {
                 actor.setColPlayer(true);
@@ -58,15 +60,17 @@ public class ColisionesHandlerWaddle implements ContactListener
             }
         }
 
-        if(hanColisionado(contact, actor, kirby))
+        if(actor.isAlive)
         {
-            actor.setColPlayer(true);
-            actor.recibirDamage(-1);
-            kirby.setCol(true);
-
-            if(!Gdx.input.isKeyPressed(Input.Keys.F))
+            if (hanColisionado(contact, actor, kirby))
             {
-                kirby.quitarSalud(1);
+                actor.setColPlayer(true);
+                actor.recibirDamage(-1);
+                kirby.setCol(true);
+
+                if (!Gdx.input.isKeyPressed(Input.Keys.F)) {
+                    kirby.quitarSalud(1);
+                }
             }
         }
     }
@@ -95,11 +99,19 @@ public class ColisionesHandlerWaddle implements ContactListener
             actor.setOnGround(false);
         }
 
+        if(hanColisionado(contact, actor, "attack"))
+        {
+            actor.setColPlayer(false);
+            actor.setInsideAttack(false);
+        }
+
         if(hanColisionado(contact, actor, kirby))
         {
             actor.setColPlayer(false);
             kirby.setCol(false);
         }
+
+
 
     }
 
@@ -112,6 +124,7 @@ public class ColisionesHandlerWaddle implements ContactListener
             contact.setEnabled(actor.getTimeCollision());
         }
 
+
     }
 
     @Override
@@ -121,8 +134,6 @@ public class ColisionesHandlerWaddle implements ContactListener
     }
 
     private boolean hanColisionado(Contact contact, Object userA, Object userB) {
-        if (contact.getFixtureA().getUserData() == null && contact.getFixtureB().getUserData() == null)
-            System.out.println(contact.getFixtureA().getUserData() + " " + contact.getFixtureB().getUserData());
 
         if (contact.getFixtureA().getUserData() != null && contact.getFixtureB().getUserData() != null)
             return (contact.getFixtureA().getUserData().equals(userA) && contact.getFixtureB().getUserData().equals(userB))
