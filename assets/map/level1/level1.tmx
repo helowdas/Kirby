@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="350" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="566">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="350" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="567">
  <tileset firstgid="1" source="Terreno.tsx"/>
  <tileset firstgid="243" source="Pinchos.tsx"/>
  <tileset firstgid="244" source="pinchos2.tsx"/>
@@ -130,7 +130,6 @@
   <object id="367" name="platform_horizontal_invert" x="2287.67" y="218.833" width="130" height="4.33333"/>
   <object id="371" name="platform_horizontal_S" x="2696.5" y="219.833" width="260" height="4.33333"/>
   <object id="380" x="1168.51" y="127.136" width="110.813" height="6.72727"/>
-  <object id="396" x="1407.67" y="64.6502" width="0.727273" height="31.3189"/>
   <object id="424" x="1297.03" y="174.977" width="95.1766" height="6.72727"/>
   <object id="426" x="1041.08" y="174.636" width="110.51" height="6.72727"/>
   <object id="427" x="1392.2" y="238.848" width="15.2978" height="6.72727"/>
@@ -254,6 +253,7 @@
   <object id="514" x="3327.52" y="271.997" width="0.703804" height="15.8807"/>
   <object id="515" x="3359.52" y="256.247" width="0.703804" height="15.8807"/>
   <object id="516" x="3391.52" y="240.122" width="0.703804" height="15.8807"/>
+  <object id="566" x="1407.49" y="64.3945" width="1.61364" height="31.7564"/>
  </objectgroup>
  <objectgroup id="10" name="pinchos">
   <object id="402" x="1023.88" y="239.92" width="7.125" height="63.2614"/>
