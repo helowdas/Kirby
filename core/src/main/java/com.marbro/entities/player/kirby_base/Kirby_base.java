@@ -219,7 +219,7 @@ public class Kirby_base extends Actor implements Kirby {
             mantenerseQuieto(vel);
         }
 
-        if (vel.x != 0 && onGround) {
+        if (vel.x == VELOCIDAD && (onGround || onPlatform)) {
             estado = EstadoKirby.CAMINANDO;
         }
     }
@@ -227,7 +227,7 @@ public class Kirby_base extends Actor implements Kirby {
     private void moverDerecha(Vector2 vel) {
         body.setLinearVelocity(VELOCIDAD, vel.y);
         lastmove = 1;
-        if (onGround && onPlatform && !jump) {
+        if (onGround || onPlatform && !jump) {
             estado = EstadoKirby.CAMINANDO;
         }
     }
@@ -235,7 +235,7 @@ public class Kirby_base extends Actor implements Kirby {
     private void moverIzquierda(Vector2 vel) {
         body.setLinearVelocity(-VELOCIDAD, vel.y);
         lastmove = -1;
-        if (onGround && onPlatform && !jump) {
+        if (onGround || onPlatform && !jump) {
             estado = EstadoKirby.CAMINANDO;
         }
     }
