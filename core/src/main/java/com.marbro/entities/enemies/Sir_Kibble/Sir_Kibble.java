@@ -344,10 +344,11 @@ public class Sir_Kibble extends Actor implements Enemy {
         return salud;
     }
 
-    public void absorvido()
+    public void absorbido()
     {
         body.getFixtureList().get(0).setSensor(true);
         this.remove();
         setAlive(false);
     }
+
 }
