@@ -78,6 +78,9 @@ public class Sir_Kibble extends Actor implements Enemy {
     private ActionTimer contador;
     private ActionTimer pain;
 
+    //kirby
+    private Kirby kirby;
+
 
     public Sir_Kibble(World world, Body body,Controlador_Colisiones controlador, float width, float height, Kirby kirby)
     {
@@ -96,7 +99,7 @@ public class Sir_Kibble extends Actor implements Enemy {
         //cargar animacion
         this.animationExplosive = new AnimationExplosionEnemy(MainGame.getAssetManager());
 
-
+        this.kirby = kirby;
         this.controlador = controlador;
         createContactListener(kirby);
 
@@ -113,7 +116,8 @@ public class Sir_Kibble extends Actor implements Enemy {
     }
 
     @Override
-    public void act(float delta) {
+    public void act(float delta)
+    {
         super.act(delta);
 
         if(salud <= 0)
@@ -274,8 +278,8 @@ public class Sir_Kibble extends Actor implements Enemy {
     }
 
     @Override
-    public void setHerido(boolean hurt) {
-        System.out.println("g");
+    public void setHerido(boolean hurt)
+    {
     }
 
     public void removeEnemy(){
@@ -330,11 +334,20 @@ public class Sir_Kibble extends Actor implements Enemy {
 
 
     @Override
-    public void actReferencia(Kirby kirby){
+    public void actReferencia(Kirby kirby)
+    {
+        this.kirby = kirby;
         colisiones.actReferencia(kirby);
     }
 
     public int getSalud() {
         return salud;
+    }
+
+    public void absorvido()
+    {
+        body.getFixtureList().get(0).setSensor(true);
+        this.remove();
+        setAlive(false);
     }
 }

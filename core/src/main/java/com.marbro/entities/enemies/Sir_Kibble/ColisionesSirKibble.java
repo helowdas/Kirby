@@ -3,6 +3,7 @@ package com.marbro.entities.enemies.Sir_Kibble;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.physics.box2d.*;
+import com.marbro.entities.enemies.Factory.Boss;
 import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
 import com.marbro.entities.player.Kirby;
 import static com.marbro.constants.Constantes.*;
@@ -56,15 +57,28 @@ public class ColisionesSirKibble implements ContactListener {
             }
         }
 
-        if(hanColisionado(contact, actor, kirby))
+        if(actor.isAlive())
         {
-            actor.setColPlayer(true);
-            actor.recibirDamage(-1);
-            kirby.setCol(true);
+            if (hanColisionado(contact, actor, kirby)) {
+                actor.setColPlayer(true);
+                actor.recibirDamage(-1);
+                kirby.setCol(true);
 
-            if(!Gdx.input.isKeyPressed(Input.Keys.F))
-            {
-                kirby.quitarSalud(1);
+                if(actor instanceof Boss)
+                {
+                    kirby.quitarSalud(1);
+                }
+                else
+                {
+                    if (!Gdx.input.isKeyPressed(Input.Keys.F)) {
+                        kirby.quitarSalud(1);
+                    }
+                    else
+                    {
+                        kirby.setPower(actor);
+                        actor.absorvido();
+                    }
+                }
             }
         }
     }
@@ -93,6 +107,11 @@ public class ColisionesSirKibble implements ContactListener {
             actor.setOnGround(false);
         }
 
+        if(hanColisionado(contact, actor, "attack"))
+        {
+            actor.setColPlayer(false);
+        }
+
         if(hanColisionado(contact, actor, kirby))
         {
             actor.setColPlayer(false);
@@ -119,8 +138,6 @@ public class ColisionesSirKibble implements ContactListener {
     }
 
     private boolean hanColisionado(Contact contact, Object userA, Object userB) {
-        if (contact.getFixtureA().getUserData() == null && contact.getFixtureB().getUserData() == null)
-            System.out.println(contact.getFixtureA().getUserData() + " " + contact.getFixtureB().getUserData());
 
         if (contact.getFixtureA().getUserData() != null && contact.getFixtureB().getUserData() != null)
             return (contact.getFixtureA().getUserData().equals(userA) && contact.getFixtureB().getUserData().equals(userB))
