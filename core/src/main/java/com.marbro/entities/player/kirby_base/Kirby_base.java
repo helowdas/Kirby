@@ -137,12 +137,11 @@ public class Kirby_base extends Actor implements Kirby {
         this.colisionesHandlerKirby.actReferencia(this);
     }
 
-    
+
 
     @Override
     public void act(float delta)
     {
-        System.out.println(onGround);
         super.act(delta);
         if (!contador.isRunning()){
             contador.start();
