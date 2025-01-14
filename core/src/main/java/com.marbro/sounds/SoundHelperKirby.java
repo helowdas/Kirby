@@ -21,16 +21,19 @@ public class SoundHelperKirby {
         sounds.put("jump", Gdx.audio.newSound(Gdx.files.internal("entities/player/sounds/kirby_jump.mp3")));
         sounds.put("hurt", Gdx.audio.newSound(Gdx.files.internal("entities/player/sounds/kirby_hurt.mp3")));
         sounds.put("abs", Gdx.audio.newSound(Gdx.files.internal("entities/player/sounds/kirby_abs.mp3")));
+        sounds.put("attack", Gdx.audio.newSound(Gdx.files.internal("entities/player/sounds/parasol_sound.mp3")));
 
         // Establecer tiempos de enfriamiento en milisegundos
         cooldowns.put("jump", 200L); // 200 ms
         cooldowns.put("hurt", 300L); // 300 ms
         cooldowns.put("abs", 2000L); // 2000 ms (2 segundos)
+        cooldowns.put("attack", 100L);
 
         // Inicializar tiempos de última reproducción
         lastPlayTime.put("jump", 0L);
         lastPlayTime.put("hurt", 0L);
         lastPlayTime.put("abs", 0L);
+        lastPlayTime.put("attack",0L);
     }
 
     public long playSound(String sound) {
@@ -49,6 +52,8 @@ public class SoundHelperKirby {
                         soundId = s.play(0.5f);
                     } else if (sound.equals("abs")) {
                         soundId = s.loop(1.0f); // Reproduce en loop para detenerlo fácilmente
+                    } else if (sound.equals("attack")){
+                        soundId = s.play(0.25f);
                     }
                     soundIds.put(sound, soundId);
                     lastPlayTime.put(sound, currentTime);
