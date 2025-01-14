@@ -219,7 +219,7 @@ public class Kirby_base extends Actor implements Kirby {
             mantenerseQuieto(vel);
         }
 
-        if (vel.x != 0 && onGround && estado != EstadoKirby.ASPIRANDO) {
+        if (vel.x != 0 && onGround) {
             estado = EstadoKirby.CAMINANDO;
         }
     }
@@ -227,7 +227,7 @@ public class Kirby_base extends Actor implements Kirby {
     private void moverDerecha(Vector2 vel) {
         body.setLinearVelocity(VELOCIDAD, vel.y);
         lastmove = 1;
-        if (onGround && onPlatform && !jump && estado != EstadoKirby.ASPIRANDO) {
+        if (onGround && onPlatform && !jump) {
             estado = EstadoKirby.CAMINANDO;
         }
     }
@@ -235,7 +235,7 @@ public class Kirby_base extends Actor implements Kirby {
     private void moverIzquierda(Vector2 vel) {
         body.setLinearVelocity(-VELOCIDAD, vel.y);
         lastmove = -1;
-        if (onGround && onPlatform && !jump && estado != EstadoKirby.ASPIRANDO) {
+        if (onGround && onPlatform && !jump) {
             estado = EstadoKirby.CAMINANDO;
         }
     }
@@ -324,7 +324,11 @@ public class Kirby_base extends Actor implements Kirby {
         }
 
         // Iniciar aspiración si el delay ha terminado
-        if (Gdx.input.isKeyPressed(Input.Keys.F) && aspiracionDelayTimer <= 0 && estado != EstadoKirby.VOLAR && estado != EstadoKirby.PREVOLAR) {
+        if (Gdx.input.isKeyPressed(Input.Keys.F) &&
+            aspiracionDelayTimer <= 0 &&
+            estado != EstadoKirby.VOLAR &&
+            estado != EstadoKirby.PREVOLAR &&
+            estado != EstadoKirby.CAMINANDO) {
             estado = EstadoKirby.ASPIRANDO;
             aspiracionTimer += delta;
             accion(delta);
