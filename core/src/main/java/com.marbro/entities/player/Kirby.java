@@ -1,6 +1,7 @@
 package com.marbro.entities.player;
 
 import com.badlogic.gdx.physics.box2d.Body;
+import com.marbro.entities.enemies.Factory.Enemy;
 
 public interface Kirby {
     public void detach();
@@ -20,4 +21,10 @@ public interface Kirby {
     public boolean isBossDefeat();
     public void setBossDefeat(boolean boss_defeat);
     public boolean getAttack();
+    public void setPower(Enemy Udata);
+    public void setOnWallRight(boolean colision);
+    public void setOnWallLeft(boolean onWallLeft);
+    public void setOnPlatform(boolean onPlatform);
+    public void setOnGround(boolean colision);
+    public void setOnSpike(boolean colision);
 }
