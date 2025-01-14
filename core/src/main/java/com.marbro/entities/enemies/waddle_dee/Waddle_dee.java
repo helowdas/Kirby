@@ -14,6 +14,7 @@ import com.marbro.colisions.Controlador_Colisiones;
 import com.marbro.contador.ActionTimer;
 import com.marbro.entities.AnimationExplosion.AnimationExplosionEnemy;
 import com.marbro.entities.Block_Mecanismo.Block_M;
+import com.marbro.entities.enemies.Factory.Boss;
 import com.marbro.entities.enemies.Factory.Enemy;
 import com.marbro.entities.player.Kirby;
 
@@ -49,7 +50,6 @@ public class Waddle_dee extends Actor implements Enemy {
     protected boolean onWall;
     protected boolean colPlayer;
     protected boolean isAlive = true;
-    private boolean isInsideAttack = false;
 
     //Controlador
     protected Controlador_Colisiones controlador;
@@ -322,7 +322,7 @@ public class Waddle_dee extends Actor implements Enemy {
             {
                 waddleDee.remove();
 
-                if(waddleDee instanceof Waddle_dee_Jefe)
+                if(waddleDee instanceof Boss)
                 {
                     waddleDee.kirby.setBossDefeat(true);
                 }
@@ -346,9 +346,13 @@ public class Waddle_dee extends Actor implements Enemy {
         return salud;
     }
 
-    public void setInsideAttack(boolean insideAttack) {
-        isInsideAttack = insideAttack;
+    public void absorvido()
+    {
+        body.getFixtureList().get(0).setSensor(true);
+        this.remove();
+        setAlive(false);
     }
+
 }
 
 

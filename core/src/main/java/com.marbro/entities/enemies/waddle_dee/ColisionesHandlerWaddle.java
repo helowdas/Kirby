@@ -3,6 +3,7 @@ package com.marbro.entities.enemies.waddle_dee;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.physics.box2d.*;
+import com.marbro.entities.enemies.Factory.Boss;
 import com.marbro.entities.player.Kirby;
 import com.marbro.entities.player.kirby_base.Kirby_base;
 import static com.marbro.constants.Constantes.*;
@@ -52,7 +53,6 @@ public class ColisionesHandlerWaddle implements ContactListener
 
         if(hanColisionado(contact, actor, "attack"))
         {
-            actor.setInsideAttack(true);
             if (kirby.getAttack())
             {
                 actor.setColPlayer(true);
@@ -68,9 +68,22 @@ public class ColisionesHandlerWaddle implements ContactListener
                 actor.recibirDamage(-1);
                 kirby.setCol(true);
 
-                if (!Gdx.input.isKeyPressed(Input.Keys.F)) {
+                if(actor instanceof Boss)
+                {
                     kirby.quitarSalud(1);
                 }
+                else
+                {
+                    if (!Gdx.input.isKeyPressed(Input.Keys.F)) {
+                        kirby.quitarSalud(1);
+                    }
+                    else
+                    {
+                        kirby.setPower(actor);
+                        actor.absorvido();
+                    }
+                }
+
             }
         }
     }
@@ -102,7 +115,6 @@ public class ColisionesHandlerWaddle implements ContactListener
         if(hanColisionado(contact, actor, "attack"))
         {
             actor.setColPlayer(false);
-            actor.setInsideAttack(false);
         }
 
         if(hanColisionado(contact, actor, kirby))
