@@ -11,7 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.marbro.MainGame;
-import com.marbro.screens.level1.Level1;
+
+import static com.marbro.scenes.Hud.resetTimer;
 
 public class GameOverScreen implements Screen {
     private SpriteBatch batch;
@@ -75,6 +76,8 @@ public class GameOverScreen implements Screen {
         batch.draw(gameOverTexture, Gdx.graphics.getWidth() / 2f - gameOverTexture.getWidth() / 2f,
             Gdx.graphics.getHeight() / 2f - gameOverTexture.getHeight() / 2f);
         batch.end();
+
+        resetTimer();
 
         // Renderizar el escenario
         stage.act(delta);

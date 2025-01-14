@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.marbro.MainGame;
 import com.marbro.screens.level1.Level1;
 
+import static com.marbro.scenes.Hud.resetTimer;
+
 public class WinScreen implements Screen {
     private MainGame game;
     private Stage stage;
@@ -76,6 +78,8 @@ public class WinScreen implements Screen {
         {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        resetTimer();
 
         batch.begin();
         batch.draw(fondo_cielo, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
