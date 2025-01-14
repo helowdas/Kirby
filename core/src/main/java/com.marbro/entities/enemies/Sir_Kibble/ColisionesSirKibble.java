@@ -76,7 +76,7 @@ public class ColisionesSirKibble implements ContactListener {
                     else
                     {
                         kirby.setPower(actor);
-                        actor.absorvido();
+                        actor.absorbido();
                     }
                 }
             }

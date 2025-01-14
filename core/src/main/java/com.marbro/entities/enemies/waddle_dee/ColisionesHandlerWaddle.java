@@ -80,7 +80,7 @@ public class ColisionesHandlerWaddle implements ContactListener
                     else
                     {
                         kirby.setPower(actor);
-                        actor.absorvido();
+                        actor.absorbido();
                     }
                 }
 
