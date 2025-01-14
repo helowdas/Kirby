@@ -92,11 +92,11 @@ public class Kirby_Parasol extends Actor implements Kirby {
     private float width, height;
 
     //controlador de coliones kirby
-    ColisionesHandlerKirbyParasol colisionesHandlerKirby;
+    ColisionesHandlerKirby colisionesHandlerKirby;
 
 
     public Kirby_Parasol(World world, Stage stage, Body body, Controlador_Colisiones controlador, float width, float height,
-                  Level1 screen, int salud)
+                  Level1 screen, int salud, ColisionesHandlerKirby colisionesHandlerKirby)
     {
         this.screen = screen;
 
@@ -106,6 +106,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
         body.getFixtureList().get(0).setUserData(this);
         this.width = width;
         this.height = height;
+        this.colisionesHandlerKirby = colisionesHandlerKirby;
 
         this.estado = EstadoKirbyParasol.QUIETO;
         life = true;
@@ -117,7 +118,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
         animations = new AnimationHelperKirbyParasol();
 
         this.controlador = controlador;
-        createContactListener();
+        //createContactListener();
 
         this.screen = screen;
 
@@ -127,18 +128,18 @@ public class Kirby_Parasol extends Actor implements Kirby {
 
         factory = new FactoryKirby();
 
-        //createAttack();
     }
 
 
-    private void createContactListener(){
+    /*private void createContactListener(){
         colisionesHandlerKirby = new ColisionesHandlerKirbyParasol(this);
         controlador.addListener(colisionesHandlerKirby);
-    }
+    }*/
 
     @Override
     public void act(float delta)
     {
+        System.out.println(onGround);
         super.act(delta);
         if (contador != null)
             if (!contador.isRunning()){
@@ -222,7 +223,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
         if (contador.getElapsedTime() > 0.2f)
             accion(delta);
         planear(delta);
-        hurt();
+        setPower(null);
         verificarCondicionesEspeciales(vel);
     }
 
@@ -342,10 +343,10 @@ public class Kirby_Parasol extends Actor implements Kirby {
 
     }
 
-    public void hurt(){
+    public void setPower(Enemy enemy){
         if (col){
             Rectangle rectangle = new Rectangle(getX(), getY(), getWidth() * PPM / 2 + 3f, getHeight() * PPM / 2 + 3f);
-            Kirby kirby = factory.createKirby(screen, body, rectangle, "none", salud);
+            Kirby kirby = factory.createKirby(screen, body, rectangle, null, salud, this.colisionesHandlerKirby);
             stage.addActor((Actor) kirby);
             screen.setKirby(kirby);
             screen.actReferencias(kirby);

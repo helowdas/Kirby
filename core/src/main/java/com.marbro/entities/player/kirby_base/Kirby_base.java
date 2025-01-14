@@ -97,7 +97,7 @@ public class Kirby_base extends Actor implements Kirby {
     //constructor
     public Kirby_base(World world, Stage stage, Body body,
                       Controlador_Colisiones controlador,
-                      float width, float height, Level1 screen, int salud)
+                      float width, float height, Level1 screen, int salud, ColisionesHandlerKirby colisionesHandlerKirby)
     {
         this.world = world;
         this.stage = stage;
@@ -105,6 +105,7 @@ public class Kirby_base extends Actor implements Kirby {
         body.getFixtureList().get(0).setUserData(this);
         this.width = width;
         this.height = height;
+        this.colisionesHandlerKirby = colisionesHandlerKirby;
 
         this.estado = EstadoKirby.QUIETO;
         life = true;
@@ -116,7 +117,7 @@ public class Kirby_base extends Actor implements Kirby {
         animations = new AnimationHelperKirby();
 
         this.controlador = controlador;
-        createContactListener();
+
 
         this.instancia = instancia;
 
@@ -133,17 +134,18 @@ public class Kirby_base extends Actor implements Kirby {
             createAttack();
         }
 
+        this.colisionesHandlerKirby.actReferencia(this);
     }
 
 
     private void createContactListener(){
-        colisionesHandlerKirby = new ColisionesHandlerKirby(this);
         controlador.addListener(colisionesHandlerKirby);
     }
 
     @Override
     public void act(float delta)
     {
+        System.out.println(onGround);
         super.act(delta);
         if (!contador.isRunning()){
             contador.start();
@@ -358,34 +360,9 @@ public class Kirby_base extends Actor implements Kirby {
         this.salud -= puntos;
     }
 
-    @Override
+    //@Override
     public void accion(float delta) {
-        ArrayList<Entity> entidades = screen.getEntidades();
-        Body body = CalculadoraDistancia.encontrarCuerpoMasCercano(this.body, this.world, 2f);
-        if (body != null) {
-            for (int i = 0; i < entidades.size(); i++) {
-                Entity entidad = entidades.get(i);
-                if (entidad.getBody() == body && entidad instanceof Enemy) {
-                    Enemy enemy = (Enemy) entidad;
-                    setPower(enemy.getUdata());
 
-                    // Eliminar el cuerpo del enemigo del mundo Box2D
-                    Array<Fixture> fixtures = new Array<>(body.getFixtureList());
-                    for (Fixture fixture : fixtures) {
-                        body.destroyFixture(fixture);
-                    }
-                    world.destroyBody(body);
-
-                    // Eliminar del arraylist
-                    entidades.remove(i);
-
-                    // Eliminar la textura del enemigo del Stage
-                    ((Actor)enemy).remove();
-
-                    break;
-                }
-            }
-        }
     }
 
 
@@ -437,10 +414,11 @@ public class Kirby_base extends Actor implements Kirby {
         return height;
     }
 
-    public void setPower(String uData)
+    public void setPower(Enemy uData)
     {
         Rectangle rectangle = new Rectangle(getX(), getY(), getWidth(), getHeight());
-        Kirby kirby = factory.createKirby(screen, body, rectangle, uData, salud);
+        Kirby kirby = factory.createKirby(screen, body, rectangle, uData, salud, colisionesHandlerKirby);
+        this.colisionesHandlerKirby.actReferencia(kirby);
         stage.addActor((Actor) kirby);
         screen.setKirby(kirby);
         screen.actReferencias(kirby);

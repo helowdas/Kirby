@@ -34,15 +34,6 @@ public class ColisionesHandlerKirbyParasol implements ContactListener
             actor.setOnPlatform(true);
             actor.setOnGround(true);
         }
-        if (hanColisionado(contact, actor, "block"))
-        {
-            actor.setOnGround(true);
-        }
-
-        if (hanColisionado(contact, actor, "spike"))
-        {
-            actor.setOnSpike(true);
-        }
 
         if (hanColisionado(contact, actor, "abismo"))
         {
