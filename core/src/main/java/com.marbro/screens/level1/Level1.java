@@ -24,8 +24,6 @@ import com.marbro.entities.enemies.Factory.Enemy;
 import com.marbro.entities.enemies.Factory.Entity;
 import com.marbro.entities.player.Kirby;
 import com.marbro.scenes.Hud;
-import com.marbro.screens.GameOverScreen;
-import com.marbro.screens.WinScreen;
 
 
 import java.util.ArrayList;
@@ -105,8 +103,6 @@ public class Level1 implements Screen {
 
         //crear arreglos de entidades
         entidades = new ArrayList<Entity>();
-
-
     }
 
     @Override
