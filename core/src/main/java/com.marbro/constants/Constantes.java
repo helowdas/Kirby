@@ -13,7 +13,7 @@ public class Constantes {
     public static  final float GRAVEDAD = -10f;
 
     //constante Debuguer
-    public static  final boolean DEBUG = true;
+    public static  final boolean DEBUG = false;
 
     //constantes movimiento kirby
     public static final float VELOCIDAD = 5f;
@@ -33,6 +33,4 @@ public class Constantes {
     public static final float VELOCIDAD_PLATFORM = 1.5f;
     public static final float DELAY = 1.0f;
 
-    //Instancia del kirby
-    //public static Kirby instancia = null;
 }
