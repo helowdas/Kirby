@@ -43,12 +43,15 @@ public class ColisionHandlerBandera implements ContactListener
     }
 
     private boolean hanColisionado(Contact contact, Object userA, Object userB) {
-        if (contact.getFixtureA().getUserData() == null && contact.getFixtureB().getUserData() == null)
-            System.out.println(contact.getFixtureA().getUserData() + " " + contact.getFixtureB().getUserData());
 
         if (contact.getFixtureA().getUserData() != null && contact.getFixtureB().getUserData() != null)
             return (contact.getFixtureA().getUserData().equals(userA) && contact.getFixtureB().getUserData().equals(userB))
                 || (contact.getFixtureA().getUserData().equals(userB) && contact.getFixtureB().getUserData().equals(userA));
         return false;
+    }
+
+    public void actReferencia(Kirby kirby)
+    {
+        this.kirby = kirby;
     }
 }

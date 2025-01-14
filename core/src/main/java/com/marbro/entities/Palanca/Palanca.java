@@ -48,6 +48,9 @@ public class Palanca extends Actor implements Entity, IObservable
     //sonido
     private SoundHelperLever sounds;
 
+    //kirby
+    Kirby kirby;
+
     public Palanca(World world, Body body, float width, float height,
                    Controlador_Colisiones controlador, Kirby kirby,  ArrayList<Entity> entidades)
     {
@@ -59,7 +62,7 @@ public class Palanca extends Actor implements Entity, IObservable
         this.texture = MainGame.getAssetManager().get("entities/lever/0.png");
         this.sprite = new Sprite(texture);
 
-
+        this.kirby = kirby;
         this.controlador = controlador;
         createContactListener(kirby);
 
@@ -152,7 +155,6 @@ public class Palanca extends Actor implements Entity, IObservable
         sprite.flip(true, false);
         this.notificar();
         sounds.playSound();
-        controlador.removeListener(colisiones);
     }
 
     public void setFlip(boolean flip) {
@@ -169,7 +171,9 @@ public class Palanca extends Actor implements Entity, IObservable
         return body;
     }
 
-    public void actReferencia(Kirby kirby){
+    public void actReferencia(Kirby kirby)
+    {
+        this.kirby = kirby;
         colisiones.actReferencia(kirby);
     }
 }
