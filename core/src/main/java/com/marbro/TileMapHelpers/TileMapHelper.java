@@ -22,6 +22,7 @@ import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
 import com.marbro.entities.enemies.waddle_dee.Waddle_dee_Jefe;
 import com.marbro.entities.player.FactoryKirby;
 import com.marbro.entities.player.Kirby;
+import com.marbro.entities.player.kirby_base.ColisionesHandlerKirby;
 import com.marbro.entities.player.kirby_base.Kirby_base;
 import com.marbro.screens.level1.Level1;
 import static com.marbro.constants.Constantes.*;
@@ -102,7 +103,11 @@ public class TileMapHelper
                                 gameScreen.getWorld()
                             );
 
-                            kirby = factory.createKirby(gameScreen, body, rectangle, "kirby", SALUD_KIRBY_MAX);
+                            ColisionesHandlerKirby colisionesHandlerKirby = new ColisionesHandlerKirby(null);
+
+                            kirby = factory.createKirby(gameScreen, body, rectangle, null, SALUD_KIRBY_MAX, colisionesHandlerKirby);
+
+                            gameScreen.getControlador().addListener(colisionesHandlerKirby);
 
                             gameScreen.setKirby(kirby);
                         }
