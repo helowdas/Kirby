@@ -131,11 +131,6 @@ public class Kirby_Parasol extends Actor implements Kirby {
     }
 
 
-    /*private void createContactListener(){
-        colisionesHandlerKirby = new ColisionesHandlerKirbyParasol(this);
-        controlador.addListener(colisionesHandlerKirby);
-    }*/
-
     @Override
     public void act(float delta)
     {

@@ -137,10 +137,7 @@ public class Kirby_base extends Actor implements Kirby {
         this.colisionesHandlerKirby.actReferencia(this);
     }
 
-
-    private void createContactListener(){
-        controlador.addListener(colisionesHandlerKirby);
-    }
+    
 
     @Override
     public void act(float delta)
