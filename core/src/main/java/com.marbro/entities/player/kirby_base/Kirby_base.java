@@ -75,7 +75,7 @@ public class Kirby_base extends Actor implements Kirby {
     //Contador
     ActionTimer contador;
     private static final float ASPIRACION_DURATION = 2f;
-    private static final float ASPIRACION_DELAY = 1.5f;
+    private static final float ASPIRACION_DELAY = 0f;
     private float aspiracionTimer = 0;
     private float aspiracionDelayTimer = 0;
 
@@ -324,7 +324,7 @@ public class Kirby_base extends Actor implements Kirby {
         }
 
         // Iniciar aspiración si el delay ha terminado
-        if (Gdx.input.isKeyPressed(Input.Keys.F) && aspiracionDelayTimer <= 0) {
+        if (Gdx.input.isKeyPressed(Input.Keys.F) && aspiracionDelayTimer <= 0 && estado != EstadoKirby.VOLAR && estado != EstadoKirby.PREVOLAR) {
             estado = EstadoKirby.ASPIRANDO;
             aspiracionTimer += delta;
             accion(delta);
