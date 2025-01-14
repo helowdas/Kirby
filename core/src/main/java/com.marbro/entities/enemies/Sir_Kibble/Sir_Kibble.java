@@ -208,7 +208,9 @@ public class Sir_Kibble extends Actor implements Enemy {
             body.setLinearVelocity(2f * lastmove, body.getLinearVelocity().y);
         }
 
-        if (colPlayer) {
+        if (colPlayer)
+        {
+            colPlayer = false;
             // Verificar si ha pasado suficiente tiempo desde la última colisión
             if (getTimeCollision()) {
                 // Actualizar el tiempo de la última colisión
@@ -221,14 +223,13 @@ public class Sir_Kibble extends Actor implements Enemy {
                 // Aplicar la fuerza al enemigo
                 body.applyLinearImpulse(new Vector2(forceX, forceY), body.getWorldCenter(), true);
 
-
                 pain.start();
 
             }
         }
 
-        if (pain.getElapsedTime() > 1f) {
-            enableCollisionWithPlayer(body);
+        if (pain.getElapsedTime() > 1f)
+        {
             pain.reset();
             pain.pause();
         }
@@ -262,29 +263,6 @@ public class Sir_Kibble extends Actor implements Enemy {
         colPlayer = colision;
     }
 
-    public void disableCollisionForSeconds(Body body, float seconds) {
-        for (Fixture fixture : body.getFixtureList()) {
-            Filter filter = fixture.getFilterData();
-            filter.maskBits &= ~CATEGORY_PLAYER; // Excluir la categoría del jugador
-            fixture.setFilterData(filter);
-        }
-
-        // Establecer un temporizador para reactivar la colisión después de 'seconds' segundos
-        Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                enableCollisionWithPlayer(body);
-            }
-        }, seconds);
-    }
-
-    public void enableCollisionWithPlayer(Body body) {
-        for (Fixture fixture : body.getFixtureList()) {
-            Filter filter = fixture.getFilterData();
-            filter.maskBits |= CATEGORY_PLAYER; // Incluir de nuevo la categoría del jugador
-            fixture.setFilterData(filter);
-        }
-    }
 
 
     public Body getBody(){
@@ -328,7 +306,6 @@ public class Sir_Kibble extends Actor implements Enemy {
             public void run()
             {
                 Sir_Kibble.remove();
-                controlador.removeListener(Sir_Kibble.colisiones);
             }
         };
     }
