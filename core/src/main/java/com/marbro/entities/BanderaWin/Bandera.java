@@ -147,7 +147,6 @@ public class Bandera extends Actor implements Entity
             public void run()
             {
                 bandera.kirby.setWin(true);
-                controlador.removeListener(bandera.colisiones);
             }
         };
     }
@@ -155,5 +154,6 @@ public class Bandera extends Actor implements Entity
     public void actReferencia(Kirby kirby)
     {
         this.kirby = kirby;
+        colisiones.actReferencia(kirby);
     }
 }

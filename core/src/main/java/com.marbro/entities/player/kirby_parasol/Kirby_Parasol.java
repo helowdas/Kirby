@@ -139,8 +139,6 @@ public class Kirby_Parasol extends Actor implements Kirby {
     @Override
     public void act(float delta)
     {
-        isAttack = true;
-        System.out.println(isAttack);
         super.act(delta);
         if (contador != null)
             if (!contador.isRunning()){
@@ -351,8 +349,6 @@ public class Kirby_Parasol extends Actor implements Kirby {
             stage.addActor((Actor) kirby);
             screen.setKirby(kirby);
             screen.actReferencias(kirby);
-            this.controlador.removeListener(colisionesHandlerKirby);
-            //this.body.destroyFixture(area);
             remove();
         }
     }
@@ -488,12 +484,12 @@ public class Kirby_Parasol extends Actor implements Kirby {
         if (frame.getRegionWidth() == 64 ){
             // Ajustar la posicion del sprite
              posX = (body.getPosition().x) - (getWidth());
-             posY = (body.getPosition().y ) - (getHeight() / 2) + 0.25f;
+             posY = (body.getPosition().y ) - (getHeight() / 2) + 0.15f;
         }
 
         if (frame.getRegionWidth() == 128){
              posX = (body.getPosition().x) - (getWidth());
-             posY = (body.getPosition().y ) - (getHeight() / 2) + 0.75f;
+             posY = (body.getPosition().y ) - (getHeight() / 2) + 0.60f;
         }
 
         setPosition(posX, posY);
