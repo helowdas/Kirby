@@ -57,7 +57,7 @@
  <objectgroup id="9" name="techo">
   <object id="221" x="16.3182" y="48.5" width="5583" height="16"/>
   <object id="266" x="3456.96" y="180.331" width="318.006" height="0.680398"/>
-  <object id="280" x="3792.92" y="180.314" width="62.109" height="0.680398"/>
+  <object id="280" x="3793.01" y="179.814" width="62.0152" height="1.26929"/>
   <object id="281" x="3857.03" y="164.324" width="29.9757" height="0.680398"/>
   <object id="282" x="3889" y="148.307" width="206.027" height="0.680398"/>
   <object id="283" x="4096.97" y="164.347" width="30.0893" height="0.680398"/>
@@ -107,7 +107,7 @@
   <object id="239" x="3360" y="255.511" width="32.1818" height="9.98864"/>
   <object id="240" x="3392.18" y="239.465" width="383.818" height="10.0355"/>
   <object id="261" x="3456.97" y="175.439" width="318.305" height="2.09234"/>
-  <object id="262" x="3792.84" y="175.144" width="62.3615" height="2.06893"/>
+  <object id="262" x="3792.81" y="175.144" width="62.3927" height="3.03768"/>
   <object id="263" x="3856.53" y="159.162" width="30.8578" height="1.48864"/>
   <object id="264" x="3888.81" y="143.497" width="206.358" height="1.23864"/>
   <object id="265" x="4096.48" y="159.193" width="31.0453" height="1.48864"/>
@@ -165,8 +165,8 @@
   <object id="268" x="3775.84" y="240.01" width="0.3125" height="159.943"/>
   <object id="269" x="3455.91" y="176.738" width="0.3125" height="3.62306"/>
   <object id="270" x="3775.75" y="176.759" width="0.3125" height="3.62306"/>
-  <object id="271" x="3791.89" y="176.704" width="0.3125" height="3.62306"/>
-  <object id="272" x="3855.8" y="176.688" width="0.3125" height="3.62306"/>
+  <object id="271" x="3791.89" y="176.704" width="0.78125" height="3.62306"/>
+  <object id="272" x="3855.24" y="176.688" width="0.868056" height="3.62306"/>
   <object id="273" x="3855.9" y="160.688" width="0.3125" height="3.62306"/>
   <object id="274" x="3887.8" y="160.751" width="0.3125" height="3.62306"/>
   <object id="275" x="3887.87" y="144.707" width="0.3125" height="3.62306"/>
