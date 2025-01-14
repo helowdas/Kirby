@@ -444,8 +444,6 @@ public class Kirby_base extends Actor implements Kirby {
         stage.addActor((Actor) kirby);
         screen.setKirby(kirby);
         screen.actReferencias(kirby);
-        this.controlador.removeListener(colisionesHandlerKirby);
-        //((Kirby_Parasol) kirby).createAttack();
         remove();
     }
 
@@ -473,7 +471,7 @@ public class Kirby_base extends Actor implements Kirby {
     {
         FixtureDef fixtureDef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(getWidth() * 2, getHeight()/2);
+        shape.setAsBox(getWidth() * 1.5f, getHeight()/2);
         fixtureDef.shape = shape;
         fixtureDef.isSensor = true;
 
