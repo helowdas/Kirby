@@ -18,7 +18,7 @@ public class Hud {
     private Viewport viewport;
 
     //Atributos del mundo
-    private Integer worldTimer;
+    public static Integer worldTimer;
     private float timeCount;
     private int score;
 
@@ -107,6 +107,10 @@ public class Hud {
         playerLives = healt;
         livesLabel.setText(String.format("Lives: %01d", playerLives));
 
+    }
+
+    public static void resetTimer(){
+        worldTimer = 300;
     }
 
 
