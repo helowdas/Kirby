@@ -34,6 +34,7 @@ public class ColisionesHandlerWaddle implements ContactListener
         {
             actor.setOnSpike(true);
             actor.recibirDamage(- actor.getSalud());
+            actor.instakilltrue();
         }
 
         if (hanColisionado(contact, actor, "wall"))
@@ -49,6 +50,7 @@ public class ColisionesHandlerWaddle implements ContactListener
         if(hanColisionado(contact, actor, "abismo"))
         {
             actor.recibirDamage(- actor.getSalud());
+            actor.instakilltrue();
         }
 
         if(hanColisionado(contact, actor, "attack"))
