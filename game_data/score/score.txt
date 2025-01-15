@@ -1,0 +1,2 @@
+Pepe Pollo,5300
+chicken little,300
