@@ -8,14 +8,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.marbro.MainGame;
-import com.marbro.screens.level1.Level1;
 
 import java.util.ArrayList;
+
+import static com.marbro.MainGame.usuario;
 
 public class MenuScreen implements Screen {
 
@@ -23,49 +25,35 @@ public class MenuScreen implements Screen {
     private Stage stage;
     private ArrayList<TextButton> buttons;
     private ArrayList<String> buttonNames;
-    private TextButton play;
     private OrthographicCamera camera;
     private Texture fondo;
     private SpriteBatch sb;
+    private Label label;
+
 
     public MenuScreen(MainGame game) {
         this.game = game;
         initializeCameraAndStage();
         initializeSkinAndButtonNames();
         createAndAddButtonsToStage();
-
         fondo = new Texture(Gdx.files.internal("fondos/fondo_menu.jpg"));
         sb = new SpriteBatch();
     }
 
     private void initializeCameraAndStage() {
         camera = new OrthographicCamera();
-        //stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera));
         stage = new Stage(new ScreenViewport(camera));
     }
 
-    // Este metodo sirve para cargar botones
     private void initializeSkinAndButtonNames() {
-        //Declarar los arreglos
         buttons = new ArrayList<>();
         buttonNames = new ArrayList<>();
-
-        //Boton de jugar
         buttonNames.add("Jugar");
-
-        //Boton de opciones
         buttonNames.add("Ayuda");
-
-        //Boton de ayuda y controles del juego
         buttonNames.add("Acerca de");
-
-        //Boton de salir
         buttonNames.add("Salir");
-
-
     }
 
-    //Este metodo sirve para crear y agregar los botones a la pantalla
     private void createAndAddButtonsToStage() {
         float buttonXPosition = Gdx.graphics.getWidth() / 2f;
         float buttonYPosition = Gdx.graphics.getHeight() / 2f;
@@ -74,27 +62,51 @@ public class MenuScreen implements Screen {
             TextButton button = createButton(name, 0);
             button.setPosition(buttonXPosition, buttonYPosition);
             buttonYPosition -= 100; // Ajuste para la posición vertical de los botones
-            button.setSize(200, 50); // Cambia 200 y 50 a los valores de ancho y alto deseados
+            button.setSize(200, 50); // Ajuste el tamaño de los botones
             buttons.add(button);
             stage.addActor(button);
         }
+
+        TextButton button = createButton("Ranking", 0);
+        button.setPosition(50, 50);
+        button.setSize(100, 50);
+        stage.addActor(button);
+
+        // Crear y agregar una etiqueta para mostrar el nombre del jugador
+        Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = skin.getFont("default-font");
+        System.out.println(usuario);
+        label = new Label("Jugador: " + usuario, labelStyle);
+        label.setPosition(50, Gdx.graphics.getHeight() - 50); // Posicionar la etiqueta
+
+        stage.addActor(label);
     }
 
     private TextButton createButton(String name, float yPosition) {
-        Skin skin = new Skin(Gdx.files.internal("uiskin.json")); // Asegúrate de tener un skin para los botones
+        Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
         TextButton button = new TextButton(name, skin);
         button.setPosition(Gdx.graphics.getWidth() / 2f - button.getWidth() / 2f, yPosition);
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (name.equals("Jugar")) { game.setScreen(MainGame.getLevel1());} // Cambia a la pantalla del nivel 1
-                if(name.equals("Ayuda")){ game.setScreen(MainGame.getHelpScreen());} //cambia la pantalla a la parte de como jugar
-                if(name.equals("Acerca de")){ game.setScreen(MainGame.getAboutScreen());}
-                //cambia a la pantalla donde se detalla el lenguaje de programacion y las librerias utilizadas y desarrolladores
-
-                if (name.equals("Salir")) { Gdx.app.exit();}
-                // Agrega más condicionales si tienes más botones con diferentes acciones
-
+                switch (name) {
+                    case "Jugar":
+                        game.setScreen(MainGame.getLevel1());
+                        break;
+                    case "Ayuda":
+                        game.setScreen(MainGame.getHelpScreen());
+                        break;
+                    case "Acerca de":
+                        game.setScreen(MainGame.getAboutScreen());
+                        break;
+                    case "Ranking":
+                        game.setScreen(MainGame.getRankingScreen());
+                        break;
+                    case "Salir":
+                        Gdx.app.exit();
+                        break;
+                }
             }
         });
         return button;
@@ -110,7 +122,6 @@ public class MenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         sb.begin();
-        float positionX = Gdx.graphics.getWidth() / 2f - fondo.getWidth() / 2f;
         sb.draw(fondo, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         sb.end();
 
@@ -121,17 +132,7 @@ public class MenuScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
-        sb.getProjectionMatrix().setToOrtho2D(0, 0, width, height); // Ajusta la cámara al tamaño de la pantalla
-
-        float buttonXPosition = width / 2f;
-        float buttonYPosition = height / 2f;
-
-        for (TextButton button : buttons) {
-            button.setPosition(buttonXPosition - button.getWidth() / 2f, buttonYPosition);
-            buttonYPosition -= 100; // Ajuste para la posición vertical de los botones
-        }
-
-
+        sb.getProjectionMatrix().setToOrtho2D(0, 0, width, height);
     }
 
     @Override
@@ -147,4 +148,19 @@ public class MenuScreen implements Screen {
     public void dispose() {
         stage.dispose();
     }
+
+    public void updatePlayerNameLabel() {
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+        labelStyle.font = skin.getFont("default-font");
+
+        if (label != null) {
+            label.remove();
+        }
+
+        label = new Label("Jugador: " + usuario, labelStyle);
+        label.setPosition(50, Gdx.graphics.getHeight() - 50); // Posicionar la etiqueta
+        stage.addActor(label);
+    }
+
 }
