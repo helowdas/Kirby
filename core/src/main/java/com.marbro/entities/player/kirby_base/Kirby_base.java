@@ -23,12 +23,14 @@ import com.marbro.entities.enemies.waddle_dee.Waddle_dee;
 import com.marbro.entities.player.FactoryKirby;
 import com.marbro.entities.player.Kirby;
 import com.marbro.entities.player.kirby_parasol.Kirby_Parasol;
+import com.marbro.ranking.Ranking;
 import com.marbro.scenes.Hud;
 import com.marbro.screens.level1.Level1;
 import com.marbro.sounds.SoundHelperKirby;
 
 import java.util.ArrayList;
 
+import static com.marbro.MainGame.usuario;
 import static com.marbro.constants.Constantes.*;
 
 public class Kirby_base extends Actor implements Kirby {
@@ -69,9 +71,6 @@ public class Kirby_base extends Actor implements Kirby {
     private boolean life;
     private int salud;
 
-    //Calculadora distancia
-    CalculadoraDistancia cal;
-
     //Contador
     ActionTimer contador;
     private static final float ASPIRACION_DURATION = 2f;
@@ -94,6 +93,9 @@ public class Kirby_base extends Actor implements Kirby {
     //controlador de coliones kirby
     ColisionesHandlerKirby colisionesHandlerKirby;
 
+    //datos del jugador
+    public static int puntuacion = 0;
+
     //constructor
     public Kirby_base(World world, Stage stage, Body body,
                       Controlador_Colisiones controlador,
@@ -110,16 +112,11 @@ public class Kirby_base extends Actor implements Kirby {
         this.estado = EstadoKirby.QUIETO;
         life = true;
 
-        cal = new CalculadoraDistancia();
-
         contador = new ActionTimer();
 
         animations = new AnimationHelperKirby();
 
         this.controlador = controlador;
-
-
-        this.instancia = instancia;
 
         this.screen = screen;
 
@@ -137,11 +134,10 @@ public class Kirby_base extends Actor implements Kirby {
         this.colisionesHandlerKirby.actReferencia(this);
     }
 
-
-
     @Override
     public void act(float delta)
     {
+        Hud.actScore(puntuacion);
         super.act(delta);
         if (!contador.isRunning()){
             contador.start();

@@ -27,6 +27,7 @@ import com.marbro.sounds.SoundHelperKirby;
 import java.util.ArrayList;
 
 import static com.marbro.constants.Constantes.*;
+import static com.marbro.entities.player.kirby_base.Kirby_base.puntuacion;
 
 public class Kirby_Parasol extends Actor implements Kirby {
     //Animaciones
@@ -134,6 +135,7 @@ public class Kirby_Parasol extends Actor implements Kirby {
     @Override
     public void act(float delta)
     {
+        Hud.actScore(puntuacion);
         super.act(delta);
         if (contador != null)
             if (!contador.isRunning()){
