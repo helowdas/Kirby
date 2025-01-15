@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.marbro.ranking.Ranking;
 import com.marbro.screens.*;
     import com.marbro.screens.level1.Level1;
 
@@ -19,6 +20,10 @@ public class MainGame extends Game
     private static AboutScreen aboutScreen;
     private LoadingScreen loadingScreen;
     private static Level1 level1;
+    private static RankingScreen rankingScreen;
+
+    public static String usuario = " registrese";
+    public static int puntuacion_archivos = 0;
 
     @Override
     public void create()
@@ -68,8 +73,8 @@ public class MainGame extends Game
         helpScreen = new HelpScreen(this);
         aboutScreen = new AboutScreen(this);
         menuScreen = new MenuScreen(this);
+        rankingScreen = new RankingScreen(Ranking.getInstance(), this);
 
-        //iniciar juego
         setScreen(getMenuScreen());
     }
 
@@ -114,5 +119,7 @@ public class MainGame extends Game
     public static Level1 getLevel1() {
         return level1;
     }
+
+    public static RankingScreen getRankingScreen() {return rankingScreen;}
 
 }
