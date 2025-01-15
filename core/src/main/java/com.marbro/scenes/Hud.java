@@ -10,7 +10,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.marbro.entities.player.Kirby;
+import com.marbro.ranking.Ranking;
 import com.marbro.screens.level1.Level1;
+
+import static com.marbro.MainGame.puntuacion_archivos;
 
 public class Hud {
     //Camara y escenario
@@ -20,13 +23,12 @@ public class Hud {
     //Atributos del mundo
     public static Integer worldTimer;
     private float timeCount;
-    private int score;
+    private static int score;
 
     //Screen
     private Level1 screen;
 
     Label countDownLabel;
-    Label scoreLabel;
     Label timeLabel;
     Label levelLabel;
     Label worldLabel;
@@ -36,6 +38,7 @@ public class Hud {
     // Hud.java
 
     public static Label livesLabel;
+    public static Label scoreLabel;
 
     private Kirby kirby;
 
@@ -43,7 +46,7 @@ public class Hud {
         // Inicialización de variables
         worldTimer = 300;
         timeCount = 0;
-        score = 0;
+        score = puntuacion_archivos;
         kirby = screen.getKirby();
 
         viewport = new FitViewport(800, 600, new OrthographicCamera());
@@ -111,6 +114,11 @@ public class Hud {
 
     public static void resetTimer(){
         worldTimer = 300;
+    }
+
+    public static void actScore(int puntos) {
+        Hud.score = Ranking.getInstance().obtenerPuntuacion();
+        scoreLabel.setText(String.format("Puntos: %01d", score + puntos));
     }
 
 
