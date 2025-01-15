@@ -11,7 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.marbro.MainGame;
+import com.marbro.ranking.Ranking;
 
+import static com.marbro.MainGame.*;
+import static com.marbro.entities.player.kirby_base.Kirby_base.puntuacion;
 import static com.marbro.scenes.Hud.resetTimer;
 
 public class GameOverScreen implements Screen {
@@ -27,6 +30,9 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void show() {
+        Ranking.getInstance().modificarPuntuacion(usuario, puntuacion);
+        puntuacion = 0;
+
         batch = new SpriteBatch();
         gameOverTexture = new Texture(Gdx.files.internal("fondos/gameover.png"));
         stage = new Stage();
