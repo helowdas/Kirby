@@ -12,8 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.marbro.MainGame;
+import com.marbro.ranking.Ranking;
 import com.marbro.screens.level1.Level1;
 
+import static com.marbro.MainGame.usuario;
+import static com.marbro.entities.player.kirby_base.Kirby_base.puntuacion;
 import static com.marbro.scenes.Hud.resetTimer;
 
 public class WinScreen implements Screen {
@@ -30,6 +33,10 @@ public class WinScreen implements Screen {
 
     @Override
     public void show() {
+        System.out.println("puntuacion " + puntuacion);
+        Ranking.getInstance().modificarPuntuacion(usuario, puntuacion);
+        puntuacion = 0;
+
         batch = new SpriteBatch();
         kirby_imagen = new Texture(Gdx.files.internal("fondos/kirby_imagen_ganar.png"));
         fondo_cielo = new Texture(Gdx.files.internal("fondos/fondo_cielo.png"));
@@ -76,6 +83,7 @@ public class WinScreen implements Screen {
     @Override
     public void render(float delta)
         {
+        Ranking.getInstance().guardarPuntuaciones(usuario, puntuacion);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
