@@ -25,6 +25,7 @@ import com.marbro.entities.player.kirby_base.Kirby_base;
 
 
 import static com.marbro.constants.Constantes.*;
+import static com.marbro.entities.player.kirby_base.Kirby_base.puntuacion;
 
 public class Sir_Kibble extends Actor implements Enemy {
 
@@ -78,9 +79,12 @@ public class Sir_Kibble extends Actor implements Enemy {
     private ActionTimer contador;
     private ActionTimer pain;
 
+    //instakill
+    private boolean instakill;
+    private boolean debePuntuar = true;
+
     //kirby
     private Kirby kirby;
-
 
     public Sir_Kibble(World world, Body body,Controlador_Colisiones controlador, float width, float height, Kirby kirby)
     {
@@ -108,6 +112,8 @@ public class Sir_Kibble extends Actor implements Enemy {
 
         contador = new ActionTimer();
         pain = new ActionTimer();
+
+        instakill = false;
     }
 
     private void createContactListener(Kirby kirbyBase){
@@ -310,8 +316,14 @@ public class Sir_Kibble extends Actor implements Enemy {
             public void run()
             {
                 Sir_Kibble.remove();
+
+                if (!instakill && debePuntuar) {
+                    puntuar();
+                    debePuntuar = false;
+                }
             }
         };
+
     }
 
     public void recibirDamage(int salud) {
@@ -349,6 +361,14 @@ public class Sir_Kibble extends Actor implements Enemy {
         body.getFixtureList().get(0).setSensor(true);
         this.remove();
         setAlive(false);
+    }
+
+    public void puntuar() {
+        puntuacion+=200;
+    }
+
+    public void instakilltrue(){
+        instakill=true;
     }
 
 }

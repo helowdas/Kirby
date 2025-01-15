@@ -19,6 +19,7 @@ import com.marbro.entities.enemies.Factory.Enemy;
 import com.marbro.entities.player.Kirby;
 
 import static com.marbro.constants.Constantes.*;
+import static com.marbro.entities.player.kirby_base.Kirby_base.puntuacion;
 
 public class Waddle_dee extends Actor implements Enemy {
     //Private animaciones
@@ -79,6 +80,10 @@ public class Waddle_dee extends Actor implements Enemy {
     //Player
     Kirby kirby;
 
+    //instakill
+    private boolean instakill;
+    private boolean debePuntuar = true;
+
     //constructor
     public Waddle_dee(World world, Body body,
                       Controlador_Colisiones controlador,
@@ -112,6 +117,8 @@ public class Waddle_dee extends Actor implements Enemy {
 
         //definir Runnable
         defDie(this, controlador);
+
+        instakill = false;
     }
 
     private void createContactListener(Kirby kirby){
@@ -180,8 +187,6 @@ public class Waddle_dee extends Actor implements Enemy {
             this.remove(); // Eliminar la entidad del mundo de juego
         }
     }
-
-
 
 
     @Override
@@ -321,11 +326,19 @@ public class Waddle_dee extends Actor implements Enemy {
             public void run()
             {
                 waddleDee.remove();
-
                 if(waddleDee instanceof Boss)
                 {
                     waddleDee.kirby.setBossDefeat(true);
+                    if (debePuntuar) {
+                        puntuar(1000);
+                        debePuntuar = false;
+                    }
                 }
+                if (!instakill)
+                    if (debePuntuar) {
+                        puntuar(100);
+                        debePuntuar = false;
+                    }
             }
         };
     }
@@ -351,6 +364,14 @@ public class Waddle_dee extends Actor implements Enemy {
         body.getFixtureList().get(0).setSensor(true);
         this.remove();
         setAlive(false);
+    }
+
+    public void puntuar(int points) {
+        puntuacion+=points;
+    }
+
+    public void instakilltrue(){
+        instakill=true;
     }
 
 }
