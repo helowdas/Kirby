@@ -211,6 +211,7 @@ public class Ranking {
 
     public void cerrarSesion(){
         if (usuario != null) {}
+        guardarPuntuaciones(usuario, obtenerPuntuacion());
         usuario = null;
         puntuacion_archivos = 0;
     }
