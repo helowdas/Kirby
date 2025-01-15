@@ -77,8 +77,12 @@ public class Ranking {
         return listaPuntuaciones;
     }
 
+
     // Función para modificar la puntuación de un jugador existente
     public void modificarPuntuacion(String nombreJugador, int nuevaPuntuacion) {
+        if (nombreJugador == null)
+            return;
+
         FileHandle archivo = Gdx.files.local("game_data/score/score.txt");
         String[] lineas = archivo.readString().split("\n");
         StringBuilder contenidoModificado = new StringBuilder();
@@ -95,14 +99,11 @@ public class Ranking {
 
         archivo.writeString(contenidoModificado.toString(), false);
 
-        // borrar esto, es para debuguear
-        if (puntuacionAnterior != -1) {
-            System.out.println("La puntuación anterior de " + nombreJugador + " era: " + puntuacionAnterior);
-        } else {
-            System.out.println("No ha iniciado sesion");
+        // Cambiar de System.out.println a JOptionPane
+        if (puntuacionAnterior == -1){
+            JOptionPane.showMessageDialog(null, "No ha iniciado sesión, la puntuacion no sera guardada :(");
         }
     }
-
 
     // Método para registrar un jugador usando JOptionPane
     public String registrarJugador() {
@@ -128,6 +129,10 @@ public class Ranking {
     public void eliminarJugador() {
         FileHandle archivo = Gdx.files.local("game_data/score/score.txt");
         String nombreJugador = JOptionPane.showInputDialog("Ingrese el nombre del jugador que desea eliminar:)");
+
+        if (nombreJugador == null)
+            return;
+
         String[] lineas = archivo.readString().split("\n");
         StringBuilder contenidoModificado = new StringBuilder();
         boolean borrado = false;
@@ -210,15 +215,15 @@ public class Ranking {
 
 
     public void cerrarSesion(){
-        if (usuario != null) {}
-        guardarPuntuaciones(usuario, obtenerPuntuacion());
-        usuario = null;
         puntuacion_archivos = 0;
+        usuario = " registrese";
     }
 
     // Método para validar que la entrada solo contenga letras, números y un espacio entre caracteres, y que comience con un carácter alfabético
     public boolean validarEntrada(String entrada) {
-        return entrada.matches("^[a-zA-Z](?:[a-zA-Z0-9]*(?: [a-zA-Z0-9]+)*)$");
+        if (entrada != null)
+            return entrada.matches("^[a-zA-Z](?:[a-zA-Z0-9]*(?: [a-zA-Z0-9]+)*)$");
+        return false;
     }
 
 }
