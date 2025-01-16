@@ -27,6 +27,7 @@ public class RankingScreen implements Screen {
     private Ranking ranking;
     private Stage stage;
     private MainGame game;
+    private Texture fondo_imagen;
 
     public RankingScreen(Ranking ranking, MainGame game) {
         this.ranking = ranking;
@@ -44,25 +45,31 @@ public class RankingScreen implements Screen {
         // Carga de skin
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
 
+        //cargar el fondo de la pantalla
+        fondo_imagen = new Texture(Gdx.files.internal("fondos/imagen_ranking.png"));
+
         // Crear el botón
         TextButton button = new TextButton("Volver al Menu", skin);
-        button.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f-275);
-        button.setSize(250, 75);
+        button.setPosition(Gdx.graphics.getWidth() / 2f-100, Gdx.graphics.getHeight() / 2f-315);
+        button.setSize(200, 50);
 
         // Boton de registrarse
         TextButton registrarse = new TextButton("Registrarse / Iniciar Sesion ", skin);
-        registrarse.setPosition(Gdx.graphics.getWidth() / 2f + 50, Gdx.graphics.getHeight() / 2f-275 + 100);
-        registrarse.setSize(200, 75);
+        registrarse.setPosition(Gdx.graphics.getWidth() / 2f - 100, Gdx.graphics.getHeight() / 2f-315 + 100);
+        registrarse.setSize(200, 50);
 
         // Boton de eliminar jugador
         TextButton eliminar = new TextButton("Eliminar jugador", skin);
-        eliminar.setPosition(Gdx.graphics.getWidth() / 2f + 50, Gdx.graphics.getHeight() / 2f-275 + 200);
+        eliminar.setPosition(Gdx.graphics.getWidth() / 2f - 100, Gdx.graphics.getHeight() / 2f-315 + 200);
+        eliminar.setSize(200, 50);
 
         TextButton cambiar = new TextButton("Cambiar nombre", skin);
-        cambiar.setPosition(Gdx.graphics.getWidth() / 2f + 50, Gdx.graphics.getHeight() / 2f-275 + 300);
+        cambiar.setPosition(Gdx.graphics.getWidth() / 2f - 100, Gdx.graphics.getHeight() / 2f-315 + 300);
+        cambiar.setSize(200, 50);
 
         TextButton cerrar_sesion = new TextButton("Cerrar sesion", skin);
-        cerrar_sesion.setPosition(Gdx.graphics.getWidth() / 2f + 50, Gdx.graphics.getHeight() / 2f-275 + 400);
+        cerrar_sesion.setPosition(Gdx.graphics.getWidth() / 2f - 100, Gdx.graphics.getHeight() / 2f-315 + 400);
+        cerrar_sesion.setSize(200, 50);
 
         // Añadir oyente al botón para que vuelva al menú
         button.addListener(new ClickListener() {
@@ -125,21 +132,24 @@ public class RankingScreen implements Screen {
     @Override
     public void render(float delta) {
         // Limpieza de la pantalla con color azul
-        Gdx.gl.glClearColor(0, 0, 1, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        List<String> listaRanking = ranking.obtenerRanking();
+        batch.draw(fondo_imagen, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
+        List<String> listaRanking = ranking.obtenerRanking();
         // Mostrar las puntuaciones en la pantalla
         for (int i = 0; i < listaRanking.size(); i++) {
             String texto = (i + 1) + ". " + listaRanking.get(i);
             font.draw(batch, texto, 100, 400 - i * 20, 1, Align.left, false);
         }
 
+
+
+
         stage.act();
         stage.draw();
-
         batch.end();
     }
 
@@ -166,6 +176,7 @@ public class RankingScreen implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
+        fondo_imagen.dispose();
         font.dispose();
     }
 }
