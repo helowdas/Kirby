@@ -27,7 +27,7 @@ public class Constantes {
     public static final int ATTACK_DAMAGE_KIRBY_PARASOL = 2;
 
     //constantes Volumen
-    public static final float VOLUMEN = 0.01f;
+    public static final float VOLUMEN = 0.1f;
 
     //constantes movimiento plataforma
     public static final float VELOCIDAD_PLATFORM = 1.5f;
