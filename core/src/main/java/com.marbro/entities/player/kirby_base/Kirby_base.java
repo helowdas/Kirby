@@ -16,7 +16,6 @@ import com.marbro.animation.Animation_Base_Loop;
 import com.marbro.animation.Animation_Base_Normal;
 import com.marbro.colisions.Controlador_Colisiones;
 import com.marbro.contador.ActionTimer;
-import com.marbro.distance.CalculadoraDistancia;
 import com.marbro.entities.enemies.Factory.Enemy;
 import com.marbro.entities.enemies.Factory.Entity;
 import com.marbro.entities.enemies.waddle_dee.Waddle_dee;

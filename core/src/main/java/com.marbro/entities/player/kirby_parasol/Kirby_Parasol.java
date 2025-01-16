@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.marbro.TileMapHelpers.BodyHelperService;
 import com.marbro.colisions.Controlador_Colisiones;
 import com.marbro.contador.ActionTimer;
-import com.marbro.distance.CalculadoraDistancia;
 import com.marbro.entities.enemies.Factory.Enemy;
 import com.marbro.entities.player.Kirby;
 //import com.marbro.entities.EntitiesFactory;
@@ -67,8 +66,6 @@ public class Kirby_Parasol extends Actor implements Kirby {
     private boolean life;
     private int salud;
 
-    //Calculadora distancia
-    CalculadoraDistancia cal;
 
     //Contador
     ActionTimer contador;
@@ -111,8 +108,6 @@ public class Kirby_Parasol extends Actor implements Kirby {
 
         this.estado = EstadoKirbyParasol.QUIETO;
         life = true;
-
-        cal = new CalculadoraDistancia();
 
         contador = new ActionTimer();
 
