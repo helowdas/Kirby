@@ -24,6 +24,7 @@ public class MainGame extends Game
 
     public static String usuario = " registrese";
     public static int puntuacion_archivos = 0;
+    public static boolean sesionEstado = false;
 
     @Override
     public void create()
