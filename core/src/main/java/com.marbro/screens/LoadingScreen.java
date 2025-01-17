@@ -78,7 +78,6 @@ public class LoadingScreen implements Screen
 
     @Override
     public void hide() {
-
     }
 
     @Override

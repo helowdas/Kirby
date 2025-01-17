@@ -76,7 +76,6 @@ public class MenuScreen implements Screen {
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = skin.getFont("default-font");
-        System.out.println(usuario);
         label = new Label("Jugador: " + usuario, labelStyle);
         label.setPosition(50, Gdx.graphics.getHeight() - 50); // Posicionar la etiqueta
 
@@ -108,8 +107,11 @@ public class MenuScreen implements Screen {
                         break;
                 }
             }
+
         });
         return button;
+
+
     }
 
     @Override
@@ -142,7 +144,9 @@ public class MenuScreen implements Screen {
     public void resume() {}
 
     @Override
-    public void hide() {}
+    public void hide() {
+        Gdx.input.setInputProcessor(null);
+    }
 
     @Override
     public void dispose() {

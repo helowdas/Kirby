@@ -111,7 +111,7 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void hide() {
-        dispose();
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override

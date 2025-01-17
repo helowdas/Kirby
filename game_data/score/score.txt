@@ -1,3 +1,2 @@
-Pepe Pollo,5300
+Pepe Pollo,5500
 chicken little,300
- registrese,4700
