@@ -15,6 +15,9 @@ import com.marbro.MainGame;
 import com.marbro.ranking.Ranking;
 import com.marbro.screens.level1.Level1;
 
+import javax.swing.*;
+
+import static com.marbro.MainGame.sesionEstado;
 import static com.marbro.MainGame.usuario;
 import static com.marbro.entities.player.kirby_base.Kirby_base.puntuacion;
 import static com.marbro.scenes.Hud.resetTimer;
@@ -33,8 +36,11 @@ public class WinScreen implements Screen {
 
     @Override
     public void show() {
-        System.out.println("puntuacion " + puntuacion);
-        Ranking.getInstance().modificarPuntuacion(usuario, puntuacion);
+        if (sesionEstado){
+            Ranking.getInstance().modificarPuntuacion(usuario, puntuacion);
+        } else {
+            JOptionPane.showMessageDialog(null, "No ha iniciado sesión, la puntuacion no sera guardada :(");
+        }
         puntuacion = 0;
 
         batch = new SpriteBatch();
@@ -83,7 +89,9 @@ public class WinScreen implements Screen {
     @Override
     public void render(float delta)
         {
-        Ranking.getInstance().guardarPuntuaciones(usuario, puntuacion);
+        if (sesionEstado){
+            Ranking.getInstance().guardarPuntuaciones(usuario, puntuacion);
+        }
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

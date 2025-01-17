@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.marbro.MainGame;
 import com.marbro.ranking.Ranking;
 
+import javax.swing.*;
+
 import static com.marbro.MainGame.*;
 import static com.marbro.entities.player.kirby_base.Kirby_base.puntuacion;
 import static com.marbro.scenes.Hud.resetTimer;
@@ -30,7 +32,12 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void show() {
-        Ranking.getInstance().modificarPuntuacion(usuario, puntuacion);
+        if (sesionEstado){
+            Ranking.getInstance().modificarPuntuacion(usuario, puntuacion);
+        } else {
+            JOptionPane.showMessageDialog(null, "No ha iniciado sesión, la puntuacion no sera guardada :(");
+        }
+
         puntuacion = 0;
 
         batch = new SpriteBatch();
