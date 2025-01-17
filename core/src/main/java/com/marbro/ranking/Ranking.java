@@ -10,8 +10,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.marbro.MainGame.puntuacion_archivos;
-import static com.marbro.MainGame.usuario;
+import static com.marbro.MainGame.*;
 
 
 public class Ranking {
@@ -32,6 +31,9 @@ public class Ranking {
 
     // Método para verificar si un jugador existe en el archivo
     public boolean jugadorRegistrado(String nombreJugador) {
+        if (nombreJugador == null)
+            return false;
+
         FileHandle archivo = Gdx.files.local("game_data/score/score.txt");
         String[] lineas = archivo.readString().split("\n");
 
@@ -80,9 +82,9 @@ public class Ranking {
 
     // Función para modificar la puntuación de un jugador existente
     public void modificarPuntuacion(String nombreJugador, int nuevaPuntuacion) {
-        if (nombreJugador == null)
+        if (nombreJugador == null){
             return;
-
+        }
         FileHandle archivo = Gdx.files.local("game_data/score/score.txt");
         String[] lineas = archivo.readString().split("\n");
         StringBuilder contenidoModificado = new StringBuilder();
@@ -98,11 +100,6 @@ public class Ranking {
         }
 
         archivo.writeString(contenidoModificado.toString(), false);
-
-        // Cambiar de System.out.println a JOptionPane
-        if (puntuacionAnterior == -1){
-            JOptionPane.showMessageDialog(null, "No ha iniciado sesión, la puntuacion no sera guardada :(");
-        }
     }
 
     // Método para registrar un jugador usando JOptionPane
@@ -116,11 +113,14 @@ public class Ranking {
             guardarPuntuaciones(nombreJugador, 0);
             if (!nuevo) {
                 JOptionPane.showMessageDialog(null, "Bienvenido de nuevo! " + nombreJugador);
+                sesionEstado = true;
             }else{
                 JOptionPane.showMessageDialog(null, "Bienvenido nuevo usuario! " + nombreJugador);
+                sesionEstado = true;
             }
         } else {
             JOptionPane.showMessageDialog(null, "El nombre no puede estar vacio");
+            return " registrese";
         }
         return nombreJugador;
     }
