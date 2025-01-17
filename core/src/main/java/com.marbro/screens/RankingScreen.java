@@ -18,8 +18,7 @@ import com.marbro.ranking.Ranking;
 
 import java.util.List;
 
-import static com.marbro.MainGame.getMenuScreen;
-import static com.marbro.MainGame.usuario;
+import static com.marbro.MainGame.*;
 
 public class RankingScreen implements Screen {
     private SpriteBatch batch;
@@ -105,6 +104,7 @@ public class RankingScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Ranking.getInstance().cerrarSesion();
+                sesionEstado = false;
             }
         });
 
@@ -170,7 +170,6 @@ public class RankingScreen implements Screen {
 
     @Override
     public void hide() {
-
     }
 
     @Override
