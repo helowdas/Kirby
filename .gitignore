@@ -1,7 +1,7 @@
 ## Gradle:
 .gradle/
 gradle-app.setting
-/gradle/gradle-daemon-jvm.properties
+/assets/gradle/gradle-daemon-jvm.properties
 /build/
 /android/build/
 /core/build/
